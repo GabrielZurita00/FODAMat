@@ -1,4 +1,4 @@
-# Astro w/ Tauri 
+# FODAMat 
 
 ## 🚀 Project Structure
 

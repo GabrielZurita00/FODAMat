@@ -1,8 +1,8 @@
 # FODAMat 
 
-## 🚀 Project Structure
+## 🚀 Estructura del proyecto
 
-Inside of your Astro project, you'll see the following folders and files:
+La estructura es de la siguiente manera:
 
 ```
 /
@@ -10,40 +10,48 @@ Inside of your Astro project, you'll see the following folders and files:
 │   └── favicon.svg
 ├── src/
 │   ├── components/
-│   │   └── Card.astro
+│   │   ├── Card.astro
+│   │   ├── CounterReact.jsx
+│   │   └── CounterVue.vue
 │   ├── layouts/
 │   │   └── Layout.astro
 │   └── pages/
+│       ├── counter.astro
+│       ├── ejemplo.astro
 │       └── index.astro
 ├── src-tauri/
 │   ├── icons/
 │   ├── src/
 │   │   └── main.rs
 │   ├── tauri-conf.json/
+├── FODAMat_0.0.0_x64_en-US.msi
+├── FODAMat.exe
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Astro busca archivos con extensión `.astro` o `.md` en `src/pages/`. Cada archivo dentro representa una ruta basada en su nombre.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+En `src/components/` se pueden crear componentes de Astro/React/Vue/Svelte/Preact.
 
-Any static assets, like images, can be placed in the `public/` directory.
+Cualquier imagen, docuento o archivo estático puede estar en la carpeta `public/`.
 
-All Tauri files are in the `src-tauri/` directory.
+Las configuraciones de Tauri estan en `src-tauri/`.
 
-## 🧞 Commands
+Se presentan el instalador y ejecutable de la versión 0.0.0 en la raíz.
 
-All commands are run from the root of the project, from a terminal:
+## 🧞 Comandos
 
-| Command           | Action                                       |
-| :---------------- | :------------------------------------------- |
-| `npm install`     | Installs dependencies                        |
-| `npm run dev`     | Starts local dev server at `localhost:3000`  |
-| `npm run build`   | Build your production site to `./dist/`      |
-| `npm run preview` | Preview your build locally, before deploying |
-| `npx tauri dev`   | Start the windows dev                        |
-| `npx tauri build` | Build the project                            |
+Desde una terminal en la raíz del proyecto se pueden ejecutar:
 
-## 👀 Want to learn more?
+| Command           | Action                                                                   |
+| :---------------- | :----------------------------------------------------------------------- |
+| `npm install`     | Instala dependencias                                                     |
+| `npm run dev`     | Inicia servidor local de desarrollo en `localhost:3000`                  |
+| `npm run build`   | Construye la página para producción en `./dist/`                         |
+| `npm run preview` | Para revisar la build antes del deploy                                   |
+| `npx tauri dev`   | Inicia el programa local para Windows                                    |
+| `npx tauri build` | Construye el proyecto en `./src-tauri/target`                            |
 
-Feel free to check [the Astro documentation](https://docs.astro.build) and [the Tauri documentation](https://tauri.app/v1/guides/).
+## 👀 Para mas información
+
+Puede revisar la [documentación de Astro](https://docs.astro.build) y la [documentación de Tauri](https://tauri.app/v1/guides/).

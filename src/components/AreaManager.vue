@@ -42,7 +42,7 @@
       }
     },
     mounted() {
-        this.count = parseInt(localStorage.getItem("areas"))
+      if (localStorage.getItem("areas")!==null)  this.count = parseInt(localStorage.getItem("areas"))
     }
   };
   </script>

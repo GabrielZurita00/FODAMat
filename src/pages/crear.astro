@@ -2,13 +2,14 @@
 import Layout from '../layouts/Layout.astro';
 import AreaManager from '../components/AreaManager.vue';
 
-//window.localStorage.setItem("")
 ---
 
 <Layout title="Nuevo FODA">
-    <main>
-        <h1>Nuevo <span class="text-gradient">FODA</span></h1>
-        <div class="left-menu">
+    <main class="parent">
+		<div class="div1">
+			<h1>Nuevo <span class="text-gradient">FODA</span></h1>
+		</div>
+        <div class="left-menu div2">
             <AreaManager client:visible/>
         </div>
     </main>
@@ -25,6 +26,13 @@ import AreaManager from '../components/AreaManager.vue';
 		margin: 0;
 		color: rgb(var(--blue-accent));
 	}
+	.parent {
+		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+		grid-template-rows: repeat(5, 1fr);
+		grid-column-gap: 0px;
+		grid-row-gap: 0px;
+	}
 	.text-gradient {
 		background-image: linear-gradient(45deg, rgb(var(--red-accent)), rgb(255, 0, 0) 30%, rgb(255, 82, 83) 60%);
 		-webkit-background-clip: text;
@@ -35,4 +43,6 @@ import AreaManager from '../components/AreaManager.vue';
     .left-menu{
         float: left;
     }
+	.div1 { grid-area: 1 / 1 / 2 / 6; }
+	.div2 { grid-area: 2 / 1 / 6 / 6; }
 </style>

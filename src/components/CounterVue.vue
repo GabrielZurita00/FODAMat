@@ -1,6 +1,7 @@
 <template>
-    <div>Vue Count: {{ count }} {{ demo }}</div>
+    
     <button @click="subtract">-</button>
+    <div>{{ count }}</div>
     <button @click="add">+</button>
 </template>
   

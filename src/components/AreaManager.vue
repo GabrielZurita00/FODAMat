@@ -1,21 +1,32 @@
 <template>
-
-    <div class="vertical-menu" v-if="count>=0">
+  <div class="parent">
+    <div class="div1">
+      <div class="vertical-menu" v-if="count>=0">
         <a href="#" class="active"><h3>Áreas:</h3></a>
         <a href="#" v-for="area in count" :key="area" @click="show(area)">Área {{ area }}</a>
+      </div>
+      <button @click="subtract">-</button>
+      <button @click="add">+</button>
     </div>
-    <button @click="subtract">-</button>
-    <button @click="add">+</button>
+    <div class="div2">
+      <FodaInput :show="selected"/>
+    </div>
+  </div>
+    
 </template>
   
 <script>
+import FodaInput from './FodaInput.vue'
+
   export default {
     name: "AreaManager",
+    components: { FodaInput },
     props: {
     },
     data() {
       return {
         count: 0,
+        selected: 0
       };
     },
     methods: {
@@ -36,8 +47,8 @@
         localStorage.removeItem(`Area${this.count+1}`)
       },
       show(area){
-        let foda = JSON.parse(localStorage.getItem(`Area${area}`))
-        console.log(foda);
+        
+        this.selected=area
 
       }
     },
@@ -69,4 +80,15 @@
   background-color: rgb(var(--blue-accent)); /* Add a green color to the "active/current" link */
   color: white;
 }
+
+.parent {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  }
+  
+  .div1 { grid-area: 1 / 1 / 6 / 3; }
+  .div2 { grid-area: 1 / 3 / 6 / 6; }
 </style>

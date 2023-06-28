@@ -1,27 +1,66 @@
 <template>
     {{ "Área "+show }}
-    <div class="parent" v-if="show>0"> 
-        <div class="div1">F
-            <button @click="subtractF">-</button>
-            <div>{{ foda.f }}</div>
-            <button @click="addF">+</button>
+    <div class="foda">
+        <div class="parent counters" v-if="show>0"> 
+            <div class="div1">F
+                <button @click="subtractF">-</button>
+                <div>{{ foda.f }}</div>
+                <button @click="addF">+</button>
+            </div>
+            <div class="div2">O
+                <button @click="subtractO">-</button>
+                <div>{{ foda.o }}</div>
+                <button @click="addO">+</button>
+            </div>
+            <div class="div3">D
+                <button @click="subtractD">-</button>
+                <div>{{ foda.d }}</div>
+                <button @click="addD">+</button>
+            </div>
+            <div class="div4">A
+                <button @click="subtractA">-</button>
+                <div>{{ foda.a }}</div>
+                <button @click="addA">+</button>
+            </div>
         </div>
-        <div class="div2">O
-            <button @click="subtractO">-</button>
-            <div>{{ foda.o }}</div>
-            <button @click="addO">+</button>
-        </div>
-        <div class="div3">D
-            <button @click="subtractD">-</button>
-            <div>{{ foda.d }}</div>
-            <button @click="addD">+</button>
-        </div>
-        <div class="div4">A
-            <button @click="subtractA">-</button>
-            <div>{{ foda.a }}</div>
-            <button @click="addA">+</button>
+        <div class="table">
+            <table>
+                <tr>
+                    <th></th>
+                    <th v-for="col in foda.o" :key="col">{{ "O"+col }}</th>
+                    <th v-for="col in foda.a" :key="col">{{ "A"+col }}</th>
+                    <th>Total</th>
+                </tr>
+                <tr v-for="row in foda.f" :key="row">
+                    <td style="font-weight: bold;">{{ "F"+row }}</td>
+                    <td v-for="col in foda.o" :key="col">
+                        <input type="number" style="width:30px;">
+                    </td>
+                    <td v-for="col in foda.a" :key="col">
+                        <input type="number" style="width:30px;">
+                    </td>
+                    <td></td>
+                </tr>
+                <tr v-for="row in foda.d" :key="row">
+                    <td style="font-weight: bold;">{{ "D"+row }}</td>
+                    <td v-for="col in foda.o" :key="col">
+                        <input type="number" style="width:30px;">
+                    </td>
+                    <td v-for="col in foda.a" :key="col">
+                        <input type="number" style="width:30px;">
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold;">Total</td>
+                    <td v-for="col in foda.o" :key="col"></td>
+                    <td v-for="col in foda.a" :key="col"></td>
+                    <td></td>
+                </tr>
+            </table>
         </div>
     </div>
+    
 </template>
   
 <script>
@@ -118,4 +157,21 @@
         height: 30px;
         justify-content: space-evenly;
     }
+    .foda{
+        display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            grid-column-gap: 0px;
+            grid-row-gap: 0px;
+    }
+    .counters{
+        grid-area: 1 / 1 / 5 / 2;
+        height: 300px;
+    }
+    .table{
+        grid-area: 1 / 2 / 5 / 5;
+    }
+    table, th, td {
+        border:1px solid black;
+      }
 </style>

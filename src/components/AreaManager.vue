@@ -21,8 +21,6 @@ import FodaInput from './FodaInput.vue'
   export default {
     name: "AreaManager",
     components: { FodaInput },
-    props: {
-    },
     data() {
       return {
         count: 0,
@@ -47,9 +45,7 @@ import FodaInput from './FodaInput.vue'
         localStorage.removeItem(`Area${this.count+1}`)
       },
       show(area){
-        
         this.selected=area
-
       }
     },
     mounted() {
@@ -59,36 +55,36 @@ import FodaInput from './FodaInput.vue'
   </script>
   
 <style scoped>
-.vertical-menu {
+  .vertical-menu {
   width: 200px; 
   align-content: left;
-}
+  }
 
-.vertical-menu a {
+  .vertical-menu a {
   background-color: #eee; 
-  color: rgb(varvar(--blue-accent)); /* Black text color */
-  display: block; /* Make the links appear below each other */
-  padding: 12px; /* Add some padding */
-  text-decoration: none; /* Remove underline from links */
-}
+  color: rgb(varvar(--blue-accent)); 
+  display: block; 
+  padding: 12px; 
+  text-decoration: none; 
+  }
 
-.vertical-menu a:hover {
-  background-color: #ccc; /* Dark grey background on mouse-over */
-}
+  .vertical-menu a:hover {
+  background-color: #ccc; 
+  }
 
-.vertical-menu a.active {
-  background-color: rgb(var(--blue-accent)); /* Add a green color to the "active/current" link */
+  .vertical-menu a.active {
+  background-color: rgb(var(--blue-accent)); 
   color: white;
-}
+  }
 
-.parent {
+  .parent {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(5, 1fr);
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   }
-  
+
   .div1 { grid-area: 1 / 1 / 6 / 3; }
   .div2 { grid-area: 1 / 3 / 6 / 6; }
 </style>

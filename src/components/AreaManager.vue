@@ -3,10 +3,11 @@
     <div class="div1">
       <div class="vertical-menu" v-if="count>=0">
         <a href="#" class="active"><h3>Áreas:</h3></a>
-        <a href="#" v-for="area in count" :key="area" @click="show(area)">Área {{ area }}</a>
+        <a href="#" v-for="area in count" :key="area" @click="show(area)">Área {{ area }}
+          <button v-if="count>1"  @click="remove(area)">-</button>
+        </a>
       </div>
-      <button @click="subtract">-</button>
-      <button @click="add">+</button>
+      <button @click="add">Agregar Area +</button>
     </div>
     <div class="div2">
       <FodaInput :show="selected"/>
@@ -23,33 +24,45 @@ import FodaInput from './FodaInput.vue'
     components: { FodaInput },
     data() {
       return {
-        count: 0,
-        selected: 0
+        count: 1,
+        selected: 1,
+        foda: { areas: [{
+          f: 1,
+          o: 1,
+          d: 1,
+          a: 1
+        }] }
       };
     },
     methods: {
       add() {
-        this.count++;
-        localStorage.setItem("areas", this.count)
-        const foda = {
-            f: 0,
-            o: 0,
-            d: 0,
-            a: 0
-        }
-        localStorage.setItem(`Area${this.count}`, JSON.stringify(foda))
+        this.foda.areas.push({
+          f:1,
+          o:1,
+          d:1,
+          a:1
+        })
+        this.count = this.foda.areas.length
+        localStorage.setItem("FODA", JSON.stringify(this.foda))
       },
-      subtract() {
-        this.count--;
-        localStorage.setItem("areas", this.count)
-        localStorage.removeItem(`Area${this.count+1}`)
+      remove(area) {
+        if (this.selected===area && area>=1) this.selected=area-1
+        if (this.selected===area && area===1) this.selected=area+1
+        this.foda.areas.splice(area-1,1)
+        this.count = this.foda.areas.length
+        localStorage.setItem("FODA", JSON.stringify(this.foda))
+        this.foda = JSON.parse(localStorage.getItem("FODA"))
       },
       show(area){
         this.selected=area
       }
     },
     mounted() {
-      if (localStorage.getItem("areas")!==null)  this.count = parseInt(localStorage.getItem("areas"))
+      if (localStorage.getItem("FODA")!==null){
+        this.foda = JSON.parse(localStorage.getItem("FODA"))
+      }
+      this.count = this.foda.areas.length
+      this.selected = 1
     }
   };
   </script>

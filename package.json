@@ -14,15 +14,18 @@
     "@astrojs/react": "^2.2.1",
     "@astrojs/svelte": "^2.2.0",
     "@astrojs/vue": "^2.2.1",
+    "@popperjs/core": "^2.11.8",
     "@tauri-apps/api": "^1.2.0",
+    "@types/bootstrap": "^5.2.6",
     "@types/react": "^18.2.8",
     "@types/react-dom": "^18.2.4",
     "astro": "^2.5.7",
+    "astro-bootstrap": "^0.6.1",
+    "bootstrap": "^5.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "svelte": "^3.59.1",
-    "vue": "^3.3.4",
-    "vuelidate": "^0.7.7"
+    "vue": "^3.3.4"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.2.3",

@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="parent-area">
     <div class="div1-area">
       <div class="vertical-menu" v-if="count>=0">
@@ -11,76 +12,105 @@
     </div>
     <div class="div2-area">
       <h1 v-if="selected>0">{{ "Área "+selected }}</h1>
-  <div class="foda">
-      <div class="table">
-          <table>
-              <tr>
-                  <td></td>
-                  <td></td>
-                  <th :colspan="values.o"> 
-                    <button @click="subtractO" v-if="values.o>1">-</button>
-                    O 
-                    <button @click="addO">+</button>
-                  </th>
-                  <th :colspan="values.a"> 
-                    <button @click="subtractA" v-if="values.a>1">-</button>
-                    A 
-                    <button @click="addA">+</button>
-                  </th>
-                  <th rowspan="2">Total</th>
-              </tr>
-              <tr>
-                  <td></td>
-                  <td></td>
-                  <th v-for="col in values.o" :key="col">{{ "O"+col }}</th>
-                  <th v-for="col in values.a" :key="col">{{ "A"+col }}</th>
-              </tr>
-              <tr v-for="row in values.f" :key="row">
-                  <th v-if="row==1" :rowspan="values.f">
-                    <button @click="subtractF" v-if="values.f>1">-</button>
-                    F
-                    <button @click="addF">+</button>
-                  </th>
-                  <th>{{ "F"+row }}</th>
-                  <td v-for="col in values.o" :key="col">
-                      <input type="number" style="width:30px;">
-                  </td>
-                  <td v-for="col in values.a" :key="col">
-                      <input type="number" style="width:30px;">
-                  </td>
-                  <td></td>
-              </tr>
-              <tr v-for="row in values.d" :key="row">
-                <th v-if="row==1" :rowspan="values.d">
-                  <button @click="subtractD" v-if="values.d>1">-</button>
-                  D
-                  <button @click="addD">+</button>
-                </th>
-                  <th>{{ "D"+row }}</th>
-                  <td v-for="col in values.o" :key="col">
-                      <input type="number" style="width:30px;">
-                  </td>
-                  <td v-for="col in values.a" :key="col">
-                      <input type="number" style="width:30px;">
-                  </td>
-                  <td></td>
-              </tr>
-              <tr>
-                  <th colspan="2">Total</th>
-                  <td v-for="col in values.o" :key="col"></td>
-                  <td v-for="col in values.a" :key="col"></td>
-                  <td></td>
-              </tr>
-          </table>
+      <div class="foda">
+          <div class="table">
+              <table>
+                  <tr>
+                      <td></td>
+                      <td></td>
+                      <th :colspan="values.o"> 
+                        <button @click="subtractO" v-if="values.o>1">-</button>
+                        O 
+                        <button @click="addO">+</button>
+                      </th>
+                      <th :colspan="values.a"> 
+                        <button @click="subtractA" v-if="values.a>1">-</button>
+                        A 
+                        <button @click="addA">+</button>
+                      </th>
+                      <th rowspan="2">Total</th>
+                  </tr>
+                  <tr>
+                      <td></td>
+                      <td></td>
+                      <th v-for="col in values.o" :key="col">{{ "O"+col }}</th>
+                      <th v-for="col in values.a" :key="col">{{ "A"+col }}</th>
+                  </tr>
+                  <tr v-for="row in values.f" :key="row">
+                      <th v-if="row==1" :rowspan="values.f">
+                        <button @click="subtractF" v-if="values.f>1">-</button>
+                        F
+                        <button @click="addF">+</button>
+                      </th>
+                      <th>{{ "F"+row }}</th>
+                      <td v-for="col in values.o" :key="col">
+                          <input type="number" style="width:30px;">
+                      </td>
+                      <td v-for="col in values.a" :key="col">
+                          <input type="number" style="width:30px;">
+                      </td>
+                      <td></td>
+                  </tr>
+                  <tr v-for="row in values.d" :key="row">
+                    <th v-if="row==1" :rowspan="values.d">
+                      <button @click="subtractD" v-if="values.d>1">-</button>
+                      D
+                      <button @click="addD">+</button>
+                    </th>
+                      <th>{{ "D"+row }}</th>
+                      <td v-for="col in values.o" :key="col">
+                          <input type="number" style="width:30px;">
+                      </td>
+                      <td v-for="col in values.a" :key="col">
+                          <input type="number" style="width:30px;">
+                      </td>
+                      <td></td>
+                  </tr>
+                  <tr>
+                      <th colspan="2">Total</th>
+                      <td v-for="col in values.o" :key="col"></td>
+                      <td v-for="col in values.a" :key="col"></td>
+                      <td></td>
+                  </tr>
+              </table>
+          </div>
       </div>
-  </div>
     </div>
   </div>
+    <div v-if="showModal">
+      <transition name="modal">
+        <div class="modal-mask">
+          <div class="modal-wrapper">
+            <div class="modal-container">
+
+              <div class="modal-header">
+                <slot name="header">
+                  ¿Está seguro de eliminar el área {{ this.delArea }}?
+                </slot>
+              </div>
+
+              
+
+              <div class="modal-footer">
+                <slot name="footer">
+                  <button class="modal-default-button" @click="confirmDelete">
+                    Si
+                  </button>
+                  <button class="modal-default-button" @click="closeModal">
+                    No
+                  </button>
+                </slot>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
+    </div>
+</div>
     
 </template>
   
 <script>
-
   export default {
     name: "AreaManager",
     watch: {
@@ -104,6 +134,8 @@
             d: 1,
             a: 1
         },
+        showModal: false,
+        delArea: 0
       };
     },
     methods: {
@@ -119,16 +151,26 @@
         localStorage.setItem("FODA", JSON.stringify(this.foda))
       },
       remove(area) {
-        if (this.selected===area && area>=1) this.selected=area-1
-        if (this.selected===area && area===1) this.selected=area+1
-        this.foda.areas.splice(area-1,1)
+        this.showModal = true
+        this.delArea = area
+      },
+      show(area){
+        this.selected=area
+      },
+      confirmDelete(){
+        this.showModal = false
+        if (this.selected===this.delArea && this.delArea>=1) this.selected=this.delArea-1
+        if (this.selected===this.delArea && this.delArea===1) this.selected=this.delArea+1
+        this.foda.areas.splice(this.delArea-1,1)
         this.count = this.foda.areas.length
         console.log(this.foda);
         localStorage.setItem("FODA", JSON.stringify(this.foda))
         this.foda = JSON.parse(localStorage.getItem("FODA"))
+        
       },
-      show(area){
-        this.selected=area
+      closeModal(){
+        this.showModal=false
+        this.delArea=0
       },
       addF() {
         this.values.f++;
@@ -273,5 +315,68 @@
     font-weight: 800;
     margin: 0;
     color: rgb(var(--blue-accent));
+  }
+  .modal-mask {
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: table;
+    transition: opacity 0.3s ease;
+  }
+  
+  .modal-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  
+  .modal-container {
+    width: 300px;
+    margin: 0px auto;
+    padding: 20px 30px;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+    transition: all 0.3s ease;
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  
+  .modal-header h3 {
+    margin-top: 0;
+    color: #42b983;
+  }
+  
+  .modal-body {
+    margin: 20px 0;
+  }
+  
+  .modal-default-button {
+    float: right;
+  }
+  
+  /*
+   * The following styles are auto-applied to elements with
+   * transition="modal" when their visibility is toggled
+   * by Vue.js.
+   *
+   * You can easily play with the modal transition by editing
+   * these styles.
+   */
+  
+  .modal-enter {
+    opacity: 0;
+  }
+  
+  .modal-leave-active {
+    opacity: 0;
+  }
+  
+  .modal-enter .modal-container,
+  .modal-leave-active .modal-container {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
   }
 </style>

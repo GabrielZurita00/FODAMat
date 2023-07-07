@@ -3,7 +3,7 @@
       <div class="modal">
         <p>¿Está seguro de quere eliminar esta área?</p>
         <button>Si</button>
-        <button>Si</button>
+        <button>No</button>
       </div>
       <div class="close">
         <img class="close-img" src="~/assets/close-icon.svg" alt="" />

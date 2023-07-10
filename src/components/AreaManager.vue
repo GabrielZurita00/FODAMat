@@ -44,10 +44,15 @@
                       </th>
                       <th>{{ "F"+row }}</th>
                       <td v-for="col in values.o" :key="col">
-                          <input type="number" style="width:30px;">
+
+                          <select id="myDropdown" v-model="selectedOption">
+                            <option v-for="option in options" :value="option" :key="option"> {{ option }} </option>
+                          </select>
                       </td>
                       <td v-for="col in values.a" :key="col">
-                          <input type="number" style="width:30px;">
+                          <select id="myDropdown" v-model="selectedOption">
+                            <option v-for="option in options" :value="option" :key="option"> {{ option }} </option>
+                          </select>
                       </td>
                       <td></td>
                   </tr>
@@ -59,10 +64,14 @@
                     </th>
                       <th>{{ "D"+row }}</th>
                       <td v-for="col in values.o" :key="col">
-                          <input type="number" style="width:30px;">
+                          <select id="myDropdown" v-model="selectedOption">
+                            <option v-for="option in options" :value="option" :key="option"> {{ option }} </option>
+                          </select>
                       </td>
                       <td v-for="col in values.a" :key="col">
-                          <input type="number" style="width:30px;">
+                          <select id="myDropdown" v-model="selectedOption">
+                            <option v-for="option in options" :value="option" :key="option"> {{ option }} </option>
+                          </select>
                       </td>
                       <td></td>
                   </tr>
@@ -111,11 +120,13 @@
 </template>
   
 <script>
+//import Dropdown from './Dropdown.vue';
   export default {
+  //  components: { Dropdown },
     name: "AreaManager",
     watch: {
         selected: function(newValue){
-            this.values = JSON.parse(localStorage.getItem("FODA")).areas[newValue-1]
+            this.values = this.foda.areas[newValue-1]
         }
     },
     data() {
@@ -135,7 +146,12 @@
             a: 1
         },
         showModal: false,
-        delArea: 0
+        delArea: 0,
+        selectedOption: 0,
+        options: [0, 2, 4, 6, 8, 10],
+        //dropdownOptions: [0, 2, 4, 6, 8, 10],
+        tableData: [[0,0],
+                    [0,0]]
       };
     },
     methods: {
@@ -158,15 +174,23 @@
         this.selected=area
       },
       confirmDelete(){
-        this.showModal = false
-        if (this.selected===this.delArea && this.delArea>=1) this.selected=this.delArea-1
-        if (this.selected===this.delArea && this.delArea===1) this.selected=this.delArea+1
+        let c=0
+        if (this.selected===this.delArea && this.delArea>1){ 
+          this.selected=this.delArea-1
+        }
+        if (this.selected===this.delArea && this.delArea===1) {
+          c=1
+          this.selected=this.delArea+1
+        }
         this.foda.areas.splice(this.delArea-1,1)
         this.count = this.foda.areas.length
         console.log(this.foda);
         localStorage.setItem("FODA", JSON.stringify(this.foda))
-        this.foda = JSON.parse(localStorage.getItem("FODA"))
-        
+        if (c===1) {
+          this.selected=1
+          this.values=this.foda.areas[c-1]
+        }
+        this.closeModal()
       },
       closeModal(){
         this.showModal=false
@@ -176,49 +200,61 @@
         this.values.f++;
         this.foda = JSON.parse(localStorage.getItem("FODA"))
         this.foda.areas[this.selected-1] = this.values
-        localStorage.setItem("FODA", JSON.stringify(foda))
+        localStorage.setItem("FODA", JSON.stringify(this.foda))
+        this.tableData.splice(this.values.f-1,0,new Array(this.values.o+this.values.a).fill(0))
       },
       subtractF() {
         this.values.f--;
         this.foda = JSON.parse(localStorage.getItem("FODA"))
         this.foda.areas[this.selected-1] = this.values
-        localStorage.setItem("FODA", JSON.stringify(foda))
+        localStorage.setItem("FODA", JSON.stringify(this.foda))
+        this.tableData.splice(this.values.f,1)
       },
       addO() {
         this.values.o++;
         this.foda = JSON.parse(localStorage.getItem("FODA"))
         this.foda.areas[this.selected-1] = this.values
-        localStorage.setItem("FODA", JSON.stringify(foda))
+        localStorage.setItem("FODA", JSON.stringify(this.foda))
+        for(i=0;i<this.tableData.length;i++) this.tableData[i].splice(this.values.o-1,0,0)
       },
       subtractO() {
         this.values.o--;
         this.foda = JSON.parse(localStorage.getItem("FODA"))
         this.foda.areas[this.selected-1] = this.values
-        localStorage.setItem("FODA", JSON.stringify(foda))
+        localStorage.setItem("FODA", JSON.stringify(this.foda))
+        for(i=0;this.tableData.length;i++) this.tableData[i].splice(this.values.o,1)
       },
       addD() {
         this.values.d++;
         this.foda = JSON.parse(localStorage.getItem("FODA"))
         this.foda.areas[this.selected-1] = this.values
-        localStorage.setItem("FODA", JSON.stringify(foda))
+        localStorage.setItem("FODA", JSON.stringify(this.foda))
+        this.tableData.push(new Array(this.values.o+this.values.a).fill(0))
       },
       subtractD() {
         this.values.d--;
         this.foda = JSON.parse(localStorage.getItem("FODA"))
         this.foda.areas[this.selected-1] = this.values
-        localStorage.setItem("FODA", JSON.stringify(foda))
+        localStorage.setItem("FODA", JSON.stringify(this.foda))
+        this.tableData.pop()
       },
       addA() {
         this.values.a++;
         this.foda = JSON.parse(localStorage.getItem("FODA"))
         this.foda.areas[this.selected-1] = this.values
-        localStorage.setItem("FODA", JSON.stringify(foda))
+        localStorage.setItem("FODA", JSON.stringify(this.foda))
+        for(i=0;i<this.tableData.length;i++){
+          this.tableData[i].push(0)
+        }
       },
       subtractA() {
         this.values.a--;
         this.foda = JSON.parse(localStorage.getItem("FODA"))
         this.foda.areas[this.selected-1] = this.values
-        localStorage.setItem("FODA", JSON.stringify(foda))
+        localStorage.setItem("FODA", JSON.stringify(this.foda))
+        for(i=0;i<this.tableData.length;i++){
+          this.tableData[i].pop()
+        }
       },
     },
     mounted() {
@@ -228,6 +264,7 @@
       this.count = this.foda.areas.length
       this.selected = 1
       this.values = this.foda.areas[this.selected-1]
+
     }
   };
   </script>

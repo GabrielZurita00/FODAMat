@@ -1,6 +1,6 @@
 <template>
     <div>
-        <select v-model="selectedOption">
+        <select v-model="selectedOption" @change="emitSelectedOption">
             <option v-for="option in options" :value="option" :key="option"> {{ option }} </option>
         </select>
     </div>
@@ -17,6 +17,11 @@ export default {
     data() {
         return{
             selectedOption: 0
+        }
+    },
+    methods: {
+        emitSelectedOption(){
+            this.$emit('option-selected',this.selectedOption)
         }
     }
 }

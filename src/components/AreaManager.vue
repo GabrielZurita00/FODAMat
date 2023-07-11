@@ -36,42 +36,33 @@
                       <th v-for="col in values.o" :key="col">{{ "O"+col }}</th>
                       <th v-for="col in values.a" :key="col">{{ "A"+col }}</th>
                   </tr>
-                  <tr v-for="row in values.f" :key="row">
+                  <tr v-for="(row, rowIndex) in values.f" :key="rowIndex">
                       <th v-if="row==1" :rowspan="values.f">
                         <button @click="subtractF" v-if="values.f>1">-</button>
                         F
                         <button @click="addF">+</button>
                       </th>
                       <th>{{ "F"+row }}</th>
-                      <td v-for="col in values.o" :key="col">
-
-                          <select id="myDropdown" v-model="selectedOption">
-                            <option v-for="option in options" :value="option" :key="option"> {{ option }} </option>
-                          </select>
+                      <td v-for="(col, colIndex) in values.o" :key="colIndex">
+                          <dropdown :options="dropdownOptions" @option-selected="onOptionSelected(rowIndex, colIndex, $event)" />
                       </td>
-                      <td v-for="col in values.a" :key="col">
-                          <select id="myDropdown" v-model="selectedOption">
-                            <option v-for="option in options" :value="option" :key="option"> {{ option }} </option>
-                          </select>
+                      <td v-for="(col, colIndex) in values.a" :key="colIndex">
+                          <dropdown :options="dropdownOptions" @option-selected="onOptionSelected(rowIndex, colIndex+values.o, $event)" />
                       </td>
                       <td></td>
                   </tr>
-                  <tr v-for="row in values.d" :key="row">
+                  <tr v-for="(row, rowIndex) in values.d" :key="rowIndex">
                     <th v-if="row==1" :rowspan="values.d">
                       <button @click="subtractD" v-if="values.d>1">-</button>
                       D
                       <button @click="addD">+</button>
                     </th>
                       <th>{{ "D"+row }}</th>
-                      <td v-for="col in values.o" :key="col">
-                          <select id="myDropdown" v-model="selectedOption">
-                            <option v-for="option in options" :value="option" :key="option"> {{ option }} </option>
-                          </select>
+                      <td v-for="(col, colIndex) in values.o" :key="colIndex">
+                          <dropdown :options="dropdownOptions" @option-selected="onOptionSelected(rowIndex+values.f, colIndex, $event)" />
                       </td>
-                      <td v-for="col in values.a" :key="col">
-                          <select id="myDropdown" v-model="selectedOption">
-                            <option v-for="option in options" :value="option" :key="option"> {{ option }} </option>
-                          </select>
+                      <td v-for="(col, colIndex) in values.a" :key="colIndex">
+                          <dropdown :options="dropdownOptions" @option-selected="onOptionSelected(rowIndex+values.f, colIndex+values.o, $event)" />
                       </td>
                       <td></td>
                   </tr>
@@ -120,9 +111,9 @@
 </template>
   
 <script>
-//import Dropdown from './Dropdown.vue';
+import Dropdown from './Dropdown.vue';
   export default {
-  //  components: { Dropdown },
+    components: { Dropdown },
     name: "AreaManager",
     watch: {
         selected: function(newValue){
@@ -137,19 +128,23 @@
           f: 1,
           o: 1,
           d: 1,
-          a: 1
+          a: 1,
+          matriz: [[0, 0],
+                   [0, 0]]
         }] },
         values: {
             f: 1,
             o: 1,
             d: 1,
-            a: 1
+            a: 1,
+            matriz: [[0, 0],
+                     [0, 0]]
         },
         showModal: false,
         delArea: 0,
         selectedOption: 0,
-        options: [0, 2, 4, 6, 8, 10],
-        //dropdownOptions: [0, 2, 4, 6, 8, 10],
+        //options: [0, 2, 4, 6, 8, 10],
+        dropdownOptions: [0, 2, 4, 6, 8, 10],
         tableData: [[0,0],
                     [0,0]]
       };
@@ -160,7 +155,9 @@
           f:1,
           o:1,
           d:1,
-          a:1
+          a:1,
+          matriz: [[0, 0],
+                   [0, 0]]                                                                                                                                       
         })
         this.count = this.foda.areas.length
         console.log(this.foda);
@@ -198,64 +195,70 @@
       },
       addF() {
         this.values.f++;
+        this.values.matriz.splice(this.values.f-1,0,new Array(this.values.o+this.values.a).fill(0))
         this.foda = JSON.parse(localStorage.getItem("FODA"))
         this.foda.areas[this.selected-1] = this.values
         localStorage.setItem("FODA", JSON.stringify(this.foda))
-        this.tableData.splice(this.values.f-1,0,new Array(this.values.o+this.values.a).fill(0))
       },
       subtractF() {
         this.values.f--;
+        this.values.matriz.splice(this.values.f,1)
         this.foda = JSON.parse(localStorage.getItem("FODA"))
         this.foda.areas[this.selected-1] = this.values
         localStorage.setItem("FODA", JSON.stringify(this.foda))
-        this.tableData.splice(this.values.f,1)
       },
       addO() {
         this.values.o++;
+        for(let i=0;i<this.values.matriz.length;i++) this.values.matriz[i].splice(this.values.o-1,0,0)
         this.foda = JSON.parse(localStorage.getItem("FODA"))
         this.foda.areas[this.selected-1] = this.values
         localStorage.setItem("FODA", JSON.stringify(this.foda))
-        for(i=0;i<this.tableData.length;i++) this.tableData[i].splice(this.values.o-1,0,0)
       },
       subtractO() {
         this.values.o--;
+        for(let i=0;i<this.values.matriz.length;i++) this.values.matriz[i].splice(this.values.o,1)
         this.foda = JSON.parse(localStorage.getItem("FODA"))
         this.foda.areas[this.selected-1] = this.values
         localStorage.setItem("FODA", JSON.stringify(this.foda))
-        for(i=0;this.tableData.length;i++) this.tableData[i].splice(this.values.o,1)
       },
       addD() {
         this.values.d++;
+        this.values.matriz.push(new Array(this.values.o+this.values.a).fill(0))
         this.foda = JSON.parse(localStorage.getItem("FODA"))
         this.foda.areas[this.selected-1] = this.values
         localStorage.setItem("FODA", JSON.stringify(this.foda))
-        this.tableData.push(new Array(this.values.o+this.values.a).fill(0))
       },
       subtractD() {
         this.values.d--;
+        this.values.matriz.pop()
         this.foda = JSON.parse(localStorage.getItem("FODA"))
         this.foda.areas[this.selected-1] = this.values
         localStorage.setItem("FODA", JSON.stringify(this.foda))
-        this.tableData.pop()
       },
       addA() {
         this.values.a++;
+        for(let i=0;i<this.values.matriz.length;i++){
+          this.values.matriz[i].push(0)
+        }
         this.foda = JSON.parse(localStorage.getItem("FODA"))
         this.foda.areas[this.selected-1] = this.values
         localStorage.setItem("FODA", JSON.stringify(this.foda))
-        for(i=0;i<this.tableData.length;i++){
-          this.tableData[i].push(0)
-        }
       },
       subtractA() {
         this.values.a--;
+        for(let i=0;i<this.values.matriz.length;i++){
+          this.values.matriz[i].pop()
+        }
         this.foda = JSON.parse(localStorage.getItem("FODA"))
         this.foda.areas[this.selected-1] = this.values
         localStorage.setItem("FODA", JSON.stringify(this.foda))
-        for(i=0;i<this.tableData.length;i++){
-          this.tableData[i].pop()
-        }
       },
+      onOptionSelected(row,col,option){
+        this.values.matriz[row][col] = option;
+        this.foda = JSON.parse(localStorage.getItem("FODA"))
+        this.foda.areas[this.selected-1] = this.values
+        localStorage.setItem("FODA", JSON.stringify(this.foda))
+      }
     },
     mounted() {
       if (localStorage.getItem("FODA")!==null){

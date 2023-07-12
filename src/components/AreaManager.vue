@@ -44,15 +44,10 @@
                       </th>
                       <th>{{ "F"+row }}</th>
                       <td v-for="col in values.o" :key="col">
-
-                          <select id="myDropdown" v-model="selectedOption">
-                            <option v-for="option in options" :value="option" :key="option"> {{ option }} </option>
-                          </select>
+                          <dropdown :options="dropdownOptions"/>
                       </td>
                       <td v-for="col in values.a" :key="col">
-                          <select id="myDropdown" v-model="selectedOption">
-                            <option v-for="option in options" :value="option" :key="option"> {{ option }} </option>
-                          </select>
+                          <dropdown :options="dropdownOptions"/>
                       </td>
                       <td></td>
                   </tr>
@@ -64,14 +59,10 @@
                     </th>
                       <th>{{ "D"+row }}</th>
                       <td v-for="col in values.o" :key="col">
-                          <select id="myDropdown" v-model="selectedOption">
-                            <option v-for="option in options" :value="option" :key="option"> {{ option }} </option>
-                          </select>
+                          <dropdown :options="dropdownOptions"/>
                       </td>
                       <td v-for="col in values.a" :key="col">
-                          <select id="myDropdown" v-model="selectedOption">
-                            <option v-for="option in options" :value="option" :key="option"> {{ option }} </option>
-                          </select>
+                          <dropdown :options="dropdownOptions"/>
                       </td>
                       <td></td>
                   </tr>
@@ -120,9 +111,9 @@
 </template>
   
 <script>
-//import Dropdown from './Dropdown.vue';
+import Dropdown from './Dropdown.vue';
   export default {
-  //  components: { Dropdown },
+    components: { Dropdown },
     name: "AreaManager",
     watch: {
         selected: function(newValue){
@@ -147,9 +138,9 @@
         },
         showModal: false,
         delArea: 0,
-        selectedOption: 0,
-        options: [0, 2, 4, 6, 8, 10],
-        //dropdownOptions: [0, 2, 4, 6, 8, 10],
+        //selectedOption: 0,
+        //options: [0, 2, 4, 6, 8, 10],
+        dropdownOptions: [0, 2, 4, 6, 8, 10],
         tableData: [[0,0],
                     [0,0]]
       };

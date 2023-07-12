@@ -49,7 +49,7 @@
                       <td v-for="(col, colIndex) in values.a" :key="colIndex">
                           <dropdown :options="dropdownOptions" :matrixValue="values.matriz[rowIndex][colIndex+values.o]" @option-selected="onOptionSelected(rowIndex, colIndex+values.o, $event)" />
                       </td>
-                      <td></td>
+                      <td>{{ rowTotal(rowIndex) }}</td>
                   </tr>
                   <tr v-for="(row, rowIndex) in values.d" :key="rowIndex">
                     <th v-if="row==1" :rowspan="values.d">
@@ -64,13 +64,13 @@
                       <td v-for="(col, colIndex) in values.a" :key="colIndex">
                           <dropdown :options="dropdownOptions" :matrixValue="values.matriz[rowIndex+values.o][colIndex+values.o]" @option-selected="onOptionSelected(rowIndex+values.f, colIndex+values.o, $event)" />
                       </td>
-                      <td></td>
+                      <td>{{ rowTotal(rowIndex+values.f) }}</td>
                   </tr>
                   <tr>
                       <th colspan="2">Total</th>
-                      <td v-for="col in values.o" :key="col"></td>
-                      <td v-for="col in values.a" :key="col"></td>
-                      <td></td>
+                      <td v-for="(col, colIndex) in values.o" :key="colIndex">{{ colTotal(colIndex) }}</td>
+                      <td v-for="(col, colIndex) in values.a" :key="colIndex">{{ colTotal(colIndex+values.o) }}</td>
+                      <td>{{ total }}</td>
                   </tr>
               </table>
           </div>
@@ -149,7 +149,32 @@ import Dropdown from './Dropdown.vue';
                     [0,0]]
       };
     },
+    computed: {
+      
+      total(){
+        let sum = 0;
+        const rows = this.values.matriz.length
+        const cols = this.values.matriz[0].length
+        for (let i=0;i<cols;i++){
+            for(let j=0;j<rows;j++){
+                sum+=this.values.matriz[j][i]
+            }
+        }
+        return sum
+      }
+    },
     methods: {
+      rowTotal(index){
+        return this.values.matriz[index].reduce((acc, cell) => acc+cell, 0)
+      },
+      colTotal(index){
+        const rows = this.values.matriz.length
+        let sum = 0;
+        for (let j=0;j<rows;j++){
+          sum+=this.values.matriz[j][index]
+        }
+        return sum
+      },
       add() {
         this.foda.areas.push({
           f:1,

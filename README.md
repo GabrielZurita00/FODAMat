@@ -11,20 +11,24 @@ La estructura es de la siguiente manera:
 ├── src/
 │   ├── components/
 │   │   ├── Card.astro
-│   │   ├── CounterReact.jsx
-│   │   └── CounterVue.vue
+│   │   ├── Dropdown.vue
+│   │   └── AreaManager.vue
 │   ├── layouts/
 │   │   └── Layout.astro
 │   └── pages/
 │       ├── counter.astro
+│       ├── crear.astro
 │       ├── ejemplo.astro
 │       └── index.astro
 ├── src-tauri/
 │   ├── icons/
 │   ├── src/
 │   │   └── main.rs
-│   ├── tauri-conf.json/
-├── FODAMat_0.0.0_x64_en-US.msi
+│   ├── build.rs
+│   ├── Cargo.lock
+│   ├── Cargo.toml
+│   └── tauri-conf.json/
+├── FODAMat_0.1.4_x64_en-US.msi
 ├── FODAMat.exe
 └── package.json
 ```
@@ -37,7 +41,7 @@ Cualquier imagen, docuento o archivo estático puede estar en la carpeta `public
 
 Las configuraciones de Tauri estan en `src-tauri/`.
 
-Se presentan el instalador y ejecutable de la versión 0.1.2 en la raíz.
+Se presentan el instalador y ejecutable de la versión 0.1.4 en la raíz.
 
 ## 🧞 Comandos
 

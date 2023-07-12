@@ -23,6 +23,11 @@ export default {
             selectedOption: 0
         }
     },
+    watch:{
+        matrixValue(newValue){
+            this.selectedOption=newValue
+        }
+    },
     methods: {
         emitSelectedOption(){
             this.$emit('option-selected',this.selectedOption)

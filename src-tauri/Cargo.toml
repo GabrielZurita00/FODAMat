@@ -1,6 +1,6 @@
 [package]
 name = "FODAMat"
-version = "0.1.2"
+version = "0.1.4"
 description = "FODAMat"
 authors = ["gbrlzrt"]
 license = ""

@@ -1,17 +1,29 @@
 <template>
 <div>
-  <div class="parent-area">
-    <div class="div1-area">
+  <div class="main-div">
+    <div class="logo">
+      <img src="/512.png" alt="Logo DUEA" width="120" height="120">
+      <p class="logo-text">FODA Matemático</p>
+    </div>
+    <div class="area-manager">
       <div class="vertical-menu" v-if="count>=0">
-        <a href="#" class="active"><h3>Áreas:</h3></a>
-        <a href="#" v-for="area in count" :key="area" @click="show(area)">Área {{ area }}
+        <div class="area-name">
+          <h2>Áreas</h2>
+        </div>
+        <div class="area-name" v-for="area in count" :key="area" @click="show(area)" v-bind:class="(area!=selected)?'selected-area':''" >
+          <h2>Área {{ area }}</h2>
           <button v-if="count>1"  @click="remove(area)">-</button>
-        </a>
+        </div>
       </div>
       <button @click="add">Agregar Area +</button>
     </div>
-    <div class="div2-area">
-      <h1 v-if="selected>0">{{ "Área "+selected }}</h1>
+    <div class="area-info">
+      <h1>Tabla FODA</h1>
+      <div class="area-name">
+        <h2 v-if="selected>0">{{ "Área "+selected }}</h2>
+      </div>
+    </div>
+    <div class="foda-manager">
       <div class="foda">
           <div class="table">
               <table>
@@ -111,6 +123,7 @@
 </template>
   
 <script>
+import '@fontsource/poppins';
 import Dropdown from './Dropdown.vue';
   export default {
     components: { Dropdown },
@@ -299,38 +312,94 @@ import Dropdown from './Dropdown.vue';
   </script>
   
 <style scoped>
-  .vertical-menu {
+.main-div {
+  display: grid;
+  grid-template-columns: 1fr 15fr;
+  grid-template-rows: 1fr 15fr;
+  grid-column-gap: 20px;
+}
+
+.logo{
+  grid-area: 1 / 1 / 2 / 2;
+  place-self: center;
+}
+.logo-text{
+  font-family: 'Poppins', sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+  font-size: 22px;
+  color: #FFFFFF;
+}
+.area-manager{
+  grid-area: 2 / 1 / 3 / 2;
+  min-width: auto;
+  max-width: fit-content;
+  height: 90vh;
+  margin: 2%;
+}
+.vertical-menu {
   width: 200px; 
   align-content: left;
-  }
+}
 
-  .vertical-menu a {
+.vertical-menu a {
   background-color: #eee; 
   color: rgb(varvar(--blue-accent)); 
   display: block; 
   padding: 12px; 
   text-decoration: none; 
-  }
+}
 
-  .vertical-menu a:hover {
+.vertical-menu a:hover {
   background-color: #ccc; 
-  }
+}
 
-  .vertical-menu a.active {
+.vertical-menu a.active {
   background-color: rgb(var(--blue-accent)); 
   color: white;
-  }
+}
 
-  .parent-area {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 1fr);
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-  }
+  
+.area-info{
+  grid-area: 1 / 2 / 2 / 3;
+  background-color: #FFFFFF;
+  padding: 2%;
+}
+h1{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 3000;
+  font-size: 40px;
+  color: #324855;
+}
+h2{
+  font-family: 'Poppins', sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+  font-size: 20px;
+  text-align: center;
+}
+.area-name{
+  margin-top:5px;
+  border-style: solid;
+  border-width: medium;
+  border-color: #000000;
+  border-radius: 15px;
+  background-color: #F2E4AB;
+  padding: 0 50px 0 50px;
+  width: fit-content;
+}
+.selected-area{
+  background-color: #DF4E4E;
+}
+.foda-manager{
+  grid-area: 2 / 2 / 3 / 3;
+  background: #FFFFFF;
+  padding: 3%;
+}
+  
 
-  .div1-area { grid-area: 1 / 1 / 6 / 3; }
-  .div2-area { grid-area: 1 / 3 / 6 / 6; }
   .parent {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -375,12 +444,6 @@ import Dropdown from './Dropdown.vue';
   }
   table, th, td {
     border:1px solid black;
-  }
-  h1 {
-    font-size: 3rem;
-    font-weight: 800;
-    margin: 0;
-    color: rgb(var(--blue-accent));
   }
   .modal-mask {
     position: fixed;

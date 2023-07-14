@@ -37,41 +37,57 @@
     <div class="foda-manager">
         <table>
             <tr>
-                <td></td>
-                <td></td>
-                <th :colspan="values.o" class="o-head"> 
-                  <button class="remove-button" @click="subtractO" v-if="values.o>1">
-                    <img src="/rmbtn.png" alt="removearea" height="15" width="15">
-                  </button>
-                  O
-                  <button class="add-button" @click="addO">
-                    <img src="/addbtn.png" alt="addarea" width="15" height="15">
-                  </button>
+                <td style="border:0"></td>
+                <td style="border:0; border-right: 1px solid"></td>
+                <th :colspan="values.o" style="background-color: #9DBFE5;"> 
+                  <div class="table-head">
+                    <button class="remove-button" @click="subtractO" v-if="values.o>1">
+                      <img src="/rmbtn.png" alt="removearea" height="15" width="15">
+                    </button>
+                    <h3 v-if="values.o<=2">O</h3>
+                    <h3 v-else-if="values.o<=4">Opo.</h3>
+                    <h3 v-else>Oportunidades</h3>
+                    <button class="add-button" @click="addO">
+                      <img src="/addbtn.png" alt="addarea" width="15" height="15">
+                    </button>
+                  </div>
                 </th>
-                <th :colspan="values.a" class="a-head"> 
-                  <button class="remove-button" @click="subtractA" v-if="values.a>1">
-                    <img src="/rmbtn.png" alt="removearea" height="15" width="15">
-                  </button>
-                  A 
-                  <button class="add-button" @click="addA">
-                    <img src="/addbtn.png" alt="addarea" width="15" height="15">
-                  </button>
+                <th :colspan="values.a" style="background-color: #E46F6C;"> 
+                  <div class="table-head">
+                    <button class="remove-button" @click="subtractA" v-if="values.a>1">
+                      <img src="/rmbtn.png" alt="removearea" height="15" width="15">
+                    </button>
+                    <h3 v-if="values.a<=2">A</h3>
+                    <h3 v-else-if="values.a<=4">Ame.</h3>
+                    <h3 v-else>Amenazas</h3>
+                    <button class="add-button" @click="addA">
+                      <img src="/addbtn.png" alt="addarea" width="15" height="15">
+                    </button>
+                  </div>
                 </th>
-                <th rowspan="2">Total</th>
+                <th rowspan="2" style="background-color: #867A7A;">Total</th>
             </tr>
             <tr>
-                <td></td>
-                <td></td>
-                <th v-for="col in values.o" :key="col">{{ "O"+col }}</th>
-                <th v-for="col in values.a" :key="col">{{ "A"+col }}</th>
+                <td style="border:0; border-bottom: 1px solid"></td>
+                <td style="border:0; border-right: 1px solid; border-bottom: 1px solid"></td>
+                <th v-for="col in values.o" :key="col" style="background-color:#D9D9D9">{{ "O"+col }}</th>
+                <th v-for="col in values.a" :key="col" style="background-color:#D9D9D9">{{ "A"+col }}</th>
             </tr>
             <tr v-for="(row, rowIndex) in values.f" :key="rowIndex">
-                <th v-if="row==1" :rowspan="values.f">
-                  <button @click="subtractF" v-if="values.f>1">-</button>
-                  F
-                  <button @click="addF">+</button>
+                <th v-if="row==1" :rowspan="values.f" style="background-color: #C6E5B1;">
+                  <div class="table-side" style="transform: rotate(-90deg);">
+                    <button class="add-button" @click="addF">
+                      <img src="/addbtn.png" alt="addarea" width="15" height="15" style="transform: rotate(90deg);">
+                    </button>
+                    <h3 v-if="values.f<=2">F</h3>
+                    <h3 v-else-if="values.f<=4">For.</h3>
+                    <h3 v-else>Fortalezas</h3>
+                    <button class="remove-button" @click="subtractF" v-if="values.f>1">
+                      <img src="/rmbtn.png" alt="removearea" height="15" width="15" style="transform: rotate(90deg);">
+                    </button>
+                  </div>
                 </th>
-                <th>{{ "F"+row }}</th>
+                <th style="background-color:#D9D9D9">{{ "F"+row }}</th>
                 <td v-for="(col, colIndex) in values.o" :key="colIndex">
                     <dropdown :options="dropdownOptions" :matrixValue="values.matriz[rowIndex][colIndex]" @option-selected="onOptionSelected(rowIndex, colIndex, $event)" />
                 </td>
@@ -81,12 +97,20 @@
                 <td>{{ rowTotal(rowIndex) }}</td>
             </tr>
             <tr v-for="(row, rowIndex) in values.d" :key="rowIndex">
-              <th v-if="row==1" :rowspan="values.d">
-                <button @click="subtractD" v-if="values.d>1">-</button>
-                D
-                <button @click="addD">+</button>
+              <th v-if="row==1" :rowspan="values.d" style="background-color: #F9F9B1;">
+                <div class="table-side" style="transform: rotate(-90deg);">
+                  <button class="add-button" @click="addD">
+                    <img src="/addbtn.png" alt="addarea" width="15" height="15" style="transform: rotate(90deg);">
+                  </button>
+                  <h3 v-if="values.d<=2">D</h3>
+                  <h3 v-else-if="values.d<=4">Deb.</h3>
+                  <h3 v-else>Debilidades</h3>
+                  <button class="remove-button" @click="subtractD" v-if="values.d>1">
+                    <img src="/rmbtn.png" alt="removearea" height="15" width="15" style="transform: rotate(90deg);">
+                  </button>
+                </div>
               </th>
-                <th>{{ "D"+row }}</th>
+                <th style="background-color:#D9D9D9">{{ "D"+row }}</th>
                 <td v-for="(col, colIndex) in values.o" :key="colIndex">
                     <dropdown :options="dropdownOptions" :matrixValue="values.matriz[rowIndex+values.f][colIndex]" @option-selected="onOptionSelected(rowIndex+values.f, colIndex, $event)" />
                 </td>
@@ -96,7 +120,7 @@
                 <td>{{ rowTotal(rowIndex+values.f) }}</td>
             </tr>
             <tr>
-                <th colspan="2">Total</th>
+                <th colspan="2" style="background-color:#867A7A">Total</th>
                 <td v-for="(col, colIndex) in values.o" :key="colIndex">{{ colTotal(colIndex) }}</td>
                 <td v-for="(col, colIndex) in values.a" :key="colIndex">{{ colTotal(colIndex+values.o) }}</td>
                 <td>{{ total }}</td>
@@ -109,21 +133,17 @@
         <div class="modal-mask">
           <div class="modal-wrapper">
             <div class="modal-container">
-
               <div class="modal-header">
                 <slot name="header">
-                  ¿Está seguro de eliminar el área {{ this.delArea }}?
+                  ¿Está seguro de eliminar el Área {{ this.delArea }}?
                 </slot>
               </div>
-
-              
-
               <div class="modal-footer">
                 <slot name="footer">
-                  <button class="modal-default-button" @click="confirmDelete">
+                  <button class="modal-confirm-button" @click="confirmDelete">
                     Si
                   </button>
-                  <button class="modal-default-button" @click="closeModal">
+                  <button class="modal-cancel-button" @click="closeModal">
                     No
                   </button>
                 </slot>
@@ -438,24 +458,33 @@ h2{
 }
   table, th, td {
     border:1px solid black;
+    border-spacing: 0;
     font-family: 'Poppins', sans-serif;
     font-weight: normal;
     font-style: normal;
     font-display: swap;
     font-size: 20px;
     text-align: center;
+    padding: 10px;
+    margin: 0;
   }
-  .o-head{
-    background-color: #9DBFE5;
+  table {
+    border:0;
+  }
+  .table-head{
     align-items: center;
     height: 30px;
     font-weight: bold;
+    display: flex;
+    justify-content: space-between;
   }
-  .a-head{
-    background-color: #E46F6C;
+  .table-side{
     align-items: center;
-    height: 30px;
     font-weight: bold;
+    display: flex;
+    justify-content: space-around;
+    width: 30px;
+    align-content: center;
   }
   .modal-mask {
     position: fixed;
@@ -477,12 +506,14 @@ h2{
   .modal-container {
     width: 300px;
     margin: 0px auto;
-    padding: 20px 30px;
+    border: 4px solid;
+    padding: 7%;
     background-color: #fff;
-    border-radius: 2px;
+    border-radius: 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all 0.3s ease;
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
+    font-size: 25px;
   }
   
   .modal-header h3 {
@@ -497,15 +528,26 @@ h2{
   .modal-default-button {
     float: right;
   }
-  
-  /*
-   * The following styles are auto-applied to elements with
-   * transition="modal" when their visibility is toggled
-   * by Vue.js.
-   *
-   * You can easily play with the modal transition by editing
-   * these styles.
-   */
+  .modal-confirm-button{
+    float: left;
+    border: 3px solid;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    padding: 2% 11% 2% 11%;
+    font-size: 20px;   
+    margin-top: 2%;
+    background-color:#DF4E4E;
+  }
+  .modal-cancel-button{
+    float: right;
+    border: 3px solid;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    padding: 2% 11% 2% 11%;
+    font-size: 20px;   
+    margin-top: 2%;
+    background-color: #F2E4AB;
+  }
   
   .modal-enter {
     opacity: 0;

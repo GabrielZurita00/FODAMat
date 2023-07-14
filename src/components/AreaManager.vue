@@ -1,80 +1,131 @@
 <template>
 <div>
-  <div class="parent-area">
-    <div class="div1-area">
-      <div class="vertical-menu" v-if="count>=0">
-        <a href="#" class="active"><h3>Áreas:</h3></a>
-        <a href="#" v-for="area in count" :key="area" @click="show(area)">Área {{ area }}
-          <button v-if="count>1"  @click="remove(area)">-</button>
-        </a>
-      </div>
-      <button @click="add">Agregar Area +</button>
+  <div class="main-div">
+    <div class="logo">
+      <a href="/">
+        <img src="/512.png" alt="Logo DUEA" width="120" height="120">
+      </a>
+      <p class="logo-text">FODA Matemático</p>
     </div>
-    <div class="div2-area">
-      <h1 v-if="selected>0">{{ "Área "+selected }}</h1>
-      <div class="foda">
-          <div class="table">
-              <table>
-                  <tr>
-                      <td></td>
-                      <td></td>
-                      <th :colspan="values.o"> 
-                        <button @click="subtractO" v-if="values.o>1">-</button>
-                        O 
-                        <button @click="addO">+</button>
-                      </th>
-                      <th :colspan="values.a"> 
-                        <button @click="subtractA" v-if="values.a>1">-</button>
-                        A 
-                        <button @click="addA">+</button>
-                      </th>
-                      <th rowspan="2">Total</th>
-                  </tr>
-                  <tr>
-                      <td></td>
-                      <td></td>
-                      <th v-for="col in values.o" :key="col">{{ "O"+col }}</th>
-                      <th v-for="col in values.a" :key="col">{{ "A"+col }}</th>
-                  </tr>
-                  <tr v-for="(row, rowIndex) in values.f" :key="rowIndex">
-                      <th v-if="row==1" :rowspan="values.f">
-                        <button @click="subtractF" v-if="values.f>1">-</button>
-                        F
-                        <button @click="addF">+</button>
-                      </th>
-                      <th>{{ "F"+row }}</th>
-                      <td v-for="(col, colIndex) in values.o" :key="colIndex">
-                          <dropdown :options="dropdownOptions" :matrixValue="values.matriz[rowIndex][colIndex]" @option-selected="onOptionSelected(rowIndex, colIndex, $event)" />
-                      </td>
-                      <td v-for="(col, colIndex) in values.a" :key="colIndex">
-                          <dropdown :options="dropdownOptions" :matrixValue="values.matriz[rowIndex][colIndex+values.o]" @option-selected="onOptionSelected(rowIndex, colIndex+values.o, $event)" />
-                      </td>
-                      <td>{{ rowTotal(rowIndex) }}</td>
-                  </tr>
-                  <tr v-for="(row, rowIndex) in values.d" :key="rowIndex">
-                    <th v-if="row==1" :rowspan="values.d">
-                      <button @click="subtractD" v-if="values.d>1">-</button>
-                      D
-                      <button @click="addD">+</button>
-                    </th>
-                      <th>{{ "D"+row }}</th>
-                      <td v-for="(col, colIndex) in values.o" :key="colIndex">
-                          <dropdown :options="dropdownOptions" :matrixValue="values.matriz[rowIndex+values.f][colIndex]" @option-selected="onOptionSelected(rowIndex+values.f, colIndex, $event)" />
-                      </td>
-                      <td v-for="(col, colIndex) in values.a" :key="colIndex">
-                          <dropdown :options="dropdownOptions" :matrixValue="values.matriz[rowIndex+values.o][colIndex+values.o]" @option-selected="onOptionSelected(rowIndex+values.f, colIndex+values.o, $event)" />
-                      </td>
-                      <td>{{ rowTotal(rowIndex+values.f) }}</td>
-                  </tr>
-                  <tr>
-                      <th colspan="2">Total</th>
-                      <td v-for="(col, colIndex) in values.o" :key="colIndex">{{ colTotal(colIndex) }}</td>
-                      <td v-for="(col, colIndex) in values.a" :key="colIndex">{{ colTotal(colIndex+values.o) }}</td>
-                      <td>{{ total }}</td>
-                  </tr>
-              </table>
+    <div class="area-manager">
+      <div class="vertical-menu" v-if="count>=0">
+        <div class="area-name">
+          <h2>Áreas</h2>
+        </div>
+        <div class="area-name area-selection" v-for="area in count" :key="area" @click="show(area)" v-bind:class="(area!=selected)?'selected-area':''" >
+          <h2>Área {{ area }}</h2>
+          <div class="remove-area">
+            <button class="remove-button" v-if="count>1"  @click="remove(area)">
+              <img src="/rmbtn.png" alt="removearea" height="25" width="25">
+            </button>
           </div>
+        </div>
       </div>
+      <div class="area-name add-area" @click="add">
+        <button class="add-button">
+          <img src="/addbtn.png" alt="addarea" width="25" height="25">
+        </button>
+        <h2>Agregar Área</h2>
+      </div>
+    </div>
+    <div class="area-info">
+      <h1>Tabla FODA</h1>
+      <div class="area-name">
+        <h2 v-if="selected>0">{{ "Área "+selected }}</h2>
+      </div>
+    </div>
+    <div class="foda-manager">
+        <table>
+            <tr>
+                <td style="border:0"></td>
+                <td style="border:0; border-right: 1px solid"></td>
+                <th :colspan="values.o" style="background-color: #9DBFE5;"> 
+                  <div class="table-head">
+                    <button class="remove-button" @click="subtractO" v-if="values.o>1">
+                      <img src="/rmbtn.png" alt="removearea" height="15" width="15">
+                    </button>
+                    <h3 v-if="values.o<=2">O</h3>
+                    <h3 v-else-if="values.o<=4">Opo.</h3>
+                    <h3 v-else>Oportunidades</h3>
+                    <button class="add-button" @click="addO">
+                      <img src="/addbtn.png" alt="addarea" width="15" height="15">
+                    </button>
+                  </div>
+                </th>
+                <th :colspan="values.a" style="background-color: #E46F6C;"> 
+                  <div class="table-head">
+                    <button class="remove-button" @click="subtractA" v-if="values.a>1">
+                      <img src="/rmbtn.png" alt="removearea" height="15" width="15">
+                    </button>
+                    <h3 v-if="values.a<=2">A</h3>
+                    <h3 v-else-if="values.a<=4">Ame.</h3>
+                    <h3 v-else>Amenazas</h3>
+                    <button class="add-button" @click="addA">
+                      <img src="/addbtn.png" alt="addarea" width="15" height="15">
+                    </button>
+                  </div>
+                </th>
+                <th rowspan="2" style="background-color: #867A7A;">Total</th>
+            </tr>
+            <tr>
+                <td style="border:0; border-bottom: 1px solid"></td>
+                <td style="border:0; border-right: 1px solid; border-bottom: 1px solid"></td>
+                <th v-for="col in values.o" :key="col" style="background-color:#D9D9D9">{{ "O"+col }}</th>
+                <th v-for="col in values.a" :key="col" style="background-color:#D9D9D9">{{ "A"+col }}</th>
+            </tr>
+            <tr v-for="(row, rowIndex) in values.f" :key="rowIndex">
+                <th v-if="row==1" :rowspan="values.f" style="background-color: #C6E5B1;">
+                  <div class="table-side" style="transform: rotate(-90deg);">
+                    <button class="add-button" @click="addF">
+                      <img src="/addbtn.png" alt="addarea" width="15" height="15" style="transform: rotate(90deg);">
+                    </button>
+                    <h3 v-if="values.f<=2">F</h3>
+                    <h3 v-else-if="values.f<=4">For.</h3>
+                    <h3 v-else>Fortalezas</h3>
+                    <button class="remove-button" @click="subtractF" v-if="values.f>1">
+                      <img src="/rmbtn.png" alt="removearea" height="15" width="15" style="transform: rotate(90deg);">
+                    </button>
+                  </div>
+                </th>
+                <th style="background-color:#D9D9D9">{{ "F"+row }}</th>
+                <td v-for="(col, colIndex) in values.o" :key="colIndex">
+                    <dropdown :options="dropdownOptions" :matrixValue="values.matriz[rowIndex][colIndex]" @option-selected="onOptionSelected(rowIndex, colIndex, $event)" />
+                </td>
+                <td v-for="(col, colIndex) in values.a" :key="colIndex">
+                    <dropdown :options="dropdownOptions" :matrixValue="values.matriz[rowIndex][colIndex+values.o]" @option-selected="onOptionSelected(rowIndex, colIndex+values.o, $event)" />
+                </td>
+                <td>{{ rowTotal(rowIndex) }}</td>
+            </tr>
+            <tr v-for="(row, rowIndex) in values.d" :key="rowIndex">
+              <th v-if="row==1" :rowspan="values.d" style="background-color: #F9F9B1;">
+                <div class="table-side" style="transform: rotate(-90deg);">
+                  <button class="add-button" @click="addD">
+                    <img src="/addbtn.png" alt="addarea" width="15" height="15" style="transform: rotate(90deg);">
+                  </button>
+                  <h3 v-if="values.d<=2">D</h3>
+                  <h3 v-else-if="values.d<=4">Deb.</h3>
+                  <h3 v-else>Debilidades</h3>
+                  <button class="remove-button" @click="subtractD" v-if="values.d>1">
+                    <img src="/rmbtn.png" alt="removearea" height="15" width="15" style="transform: rotate(90deg);">
+                  </button>
+                </div>
+              </th>
+                <th style="background-color:#D9D9D9">{{ "D"+row }}</th>
+                <td v-for="(col, colIndex) in values.o" :key="colIndex">
+                    <dropdown :options="dropdownOptions" :matrixValue="values.matriz[rowIndex+values.f][colIndex]" @option-selected="onOptionSelected(rowIndex+values.f, colIndex, $event)" />
+                </td>
+                <td v-for="(col, colIndex) in values.a" :key="colIndex">
+                    <dropdown :options="dropdownOptions" :matrixValue="values.matriz[rowIndex+values.f][colIndex+values.o]" @option-selected="onOptionSelected(rowIndex+values.f, colIndex+values.o, $event)" />
+                </td>
+                <td>{{ rowTotal(rowIndex+values.f) }}</td>
+            </tr>
+            <tr>
+                <th colspan="2" style="background-color:#867A7A">Total</th>
+                <td v-for="(col, colIndex) in values.o" :key="colIndex">{{ colTotal(colIndex) }}</td>
+                <td v-for="(col, colIndex) in values.a" :key="colIndex">{{ colTotal(colIndex+values.o) }}</td>
+                <td>{{ total }}</td>
+            </tr>
+        </table>
     </div>
   </div>
     <div v-if="showModal">
@@ -82,21 +133,17 @@
         <div class="modal-mask">
           <div class="modal-wrapper">
             <div class="modal-container">
-
               <div class="modal-header">
                 <slot name="header">
-                  ¿Está seguro de eliminar el área {{ this.delArea }}?
+                  ¿Está seguro de eliminar el Área {{ this.delArea }}?
                 </slot>
               </div>
-
-              
-
               <div class="modal-footer">
                 <slot name="footer">
-                  <button class="modal-default-button" @click="confirmDelete">
+                  <button class="modal-confirm-button" @click="confirmDelete">
                     Si
                   </button>
-                  <button class="modal-default-button" @click="closeModal">
+                  <button class="modal-cancel-button" @click="closeModal">
                     No
                   </button>
                 </slot>
@@ -111,6 +158,7 @@
 </template>
   
 <script>
+import '@fontsource/poppins';
 import Dropdown from './Dropdown.vue';
   export default {
     components: { Dropdown },
@@ -293,94 +341,150 @@ import Dropdown from './Dropdown.vue';
       this.count = this.foda.areas.length
       this.selected = 1
       this.values = this.foda.areas[this.selected-1]
-
+      localStorage.setItem("FODA", JSON.stringify(this.foda))
     }
   };
   </script>
   
 <style scoped>
-  .vertical-menu {
+.main-div {
+  display: grid;
+  grid-template-columns: 1fr 15fr;
+  grid-template-rows: 1fr 15fr;
+  grid-column-gap: 20px;
+}
+
+.logo{
+  grid-area: 1 / 1 / 2 / 2;
+  place-self: center;
+}
+.logo-text{
+  font-family: 'Poppins', sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+  font-size: 22px;
+  color: #FFFFFF;
+}
+.area-manager{
+  grid-area: 2 / 1 / 3 / 2;
+  min-width: auto;
+  max-width: fit-content;
+  height: 90vh;
+  margin: 2%;
+}
+.vertical-menu {
   width: 200px; 
   align-content: left;
-  }
+}
 
-  .vertical-menu a {
+.vertical-menu a {
   background-color: #eee; 
   color: rgb(varvar(--blue-accent)); 
   display: block; 
   padding: 12px; 
   text-decoration: none; 
-  }
+}
 
-  .vertical-menu a:hover {
+.vertical-menu a:hover {
   background-color: #ccc; 
-  }
+}
 
-  .vertical-menu a.active {
+.vertical-menu a.active {
   background-color: rgb(var(--blue-accent)); 
   color: white;
-  }
+}
 
-  .parent-area {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 1fr);
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-  }
-
-  .div1-area { grid-area: 1 / 1 / 6 / 3; }
-  .div2-area { grid-area: 1 / 3 / 6 / 6; }
-  .parent {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
-  }
-
-  .div1 { 
-    grid-area: 1 / 1 / 2 / 4; 
-    display: flex;
-    height: 30px;
-    justify-content: space-evenly;
-  }
-  .div2 { 
-    grid-area: 2 / 1 / 3 / 4; 
-    display: flex;
-    height: 30px;
-    justify-content: space-evenly;
-  }
-  .div3 { 
-    grid-area: 3 / 1 / 4 / 4; 
-    display: flex;
-    height: 30px;
-    justify-content: space-evenly;
-  }
-  .div4 { 
-    grid-area: 4 / 1 / 5 / 4; 
-    display: flex;
-    height: 30px;
-    justify-content: space-evenly;
-  }
-  .foda{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
-  }
-  .table{
-    grid-area: 1 / 1 / 5 / 5;
-  }
+  
+.area-info{
+  grid-area: 1 / 2 / 2 / 3;
+  background-color: #FFFFFF;
+  padding: 2%;
+}
+h1{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 3000;
+  font-size: 40px;
+  color: #324855;
+}
+h2{
+  font-family: 'Poppins', sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+  font-size: 20px;
+  text-align: left;
+}
+.area-name{
+  margin-top:5px;
+  border-style: solid;
+  border-width: medium;
+  border-color: #000000;
+  border-radius: 15px;
+  background-color: #F2E4AB;
+  padding: 0 50px 0 50px;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.area-selection{
+  padding: 0 5px 0 50px;
+}
+.selected-area{
+  background-color: #DF4E4E;
+}
+.remove-area{
+  justify-self: end;
+  margin-left: 20px;
+}
+.remove-button{
+  border:none;
+  background-color:transparent;
+  outline:none;
+}
+.add-area{
+  padding: 0 5px 0 5px;
+}
+.add-button{
+  border:none;
+  background-color:transparent;
+  outline:none;
+}
+.foda-manager{
+  grid-area: 2 / 2 / 3 / 3;
+  background: #FFFFFF;
+  padding: 3%;
+}
   table, th, td {
     border:1px solid black;
-  }
-  h1 {
-    font-size: 3rem;
-    font-weight: 800;
+    border-spacing: 0;
+    font-family: 'Poppins', sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+    font-size: 20px;
+    text-align: center;
+    padding: 10px;
     margin: 0;
-    color: rgb(var(--blue-accent));
+  }
+  table {
+    border:0;
+  }
+  .table-head{
+    align-items: center;
+    height: 30px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+  }
+  .table-side{
+    align-items: center;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-around;
+    width: 30px;
+    align-content: center;
   }
   .modal-mask {
     position: fixed;
@@ -402,12 +506,14 @@ import Dropdown from './Dropdown.vue';
   .modal-container {
     width: 300px;
     margin: 0px auto;
-    padding: 20px 30px;
+    border: 4px solid;
+    padding: 7%;
     background-color: #fff;
-    border-radius: 2px;
+    border-radius: 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all 0.3s ease;
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
+    font-size: 25px;
   }
   
   .modal-header h3 {
@@ -422,15 +528,26 @@ import Dropdown from './Dropdown.vue';
   .modal-default-button {
     float: right;
   }
-  
-  /*
-   * The following styles are auto-applied to elements with
-   * transition="modal" when their visibility is toggled
-   * by Vue.js.
-   *
-   * You can easily play with the modal transition by editing
-   * these styles.
-   */
+  .modal-confirm-button{
+    float: left;
+    border: 3px solid;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    padding: 2% 11% 2% 11%;
+    font-size: 20px;   
+    margin-top: 2%;
+    background-color:#DF4E4E;
+  }
+  .modal-cancel-button{
+    float: right;
+    border: 3px solid;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    padding: 2% 11% 2% 11%;
+    font-size: 20px;   
+    margin-top: 2%;
+    background-color: #F2E4AB;
+  }
   
   .modal-enter {
     opacity: 0;

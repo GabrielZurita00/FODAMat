@@ -6,43 +6,19 @@ import AreaManager from '../components/AreaManager.vue';
 
 <Layout title="Nuevo FODA">
     <main class="parent">
-		<div class="div1">
-			<h1><span class="text-gradient">FODA</span></h1>
-		</div>
-        <div class="left-menu div2">
+        <div>
             <AreaManager client:visible/>
         </div>
     </main>
 </Layout>
 
-<style>
-    main {
+<style is:global>
+	html{
+		background-color: #022C55;
+	}
+    .parent {
 		margin: auto;
 		padding: 1.5rem;
+		
 	}
-	h1 {
-		font-size: 3rem;
-		font-weight: 800;
-		margin: 0;
-		color: rgb(var(--blue-accent));
-	}
-	.parent {
-		display: grid;
-		grid-template-columns: repeat(5, 1fr);
-		grid-template-rows: repeat(5, 1fr);
-		grid-column-gap: 0px;
-		grid-row-gap: 0px;
-	}
-	.text-gradient {
-		background-image: linear-gradient(45deg, rgb(var(--red-accent)), rgb(255, 0, 0) 30%, rgb(255, 82, 83) 60%);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 500%;
-		background-position: 0%;
-	}
-    .left-menu{
-        float: left;
-    }
-	.div1 { grid-area: 1 / 1 / 2 / 6; }
-	.div2 { grid-area: 2 / 1 / 6 / 6; }
 </style>

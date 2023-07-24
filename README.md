@@ -41,7 +41,7 @@ Cualquier imagen, docuento o archivo estático puede estar en la carpeta `public
 
 Las configuraciones de Tauri estan en `src-tauri/`.
 
-Se presentan el instalador y ejecutable de la versión 0.1.4 en la raíz.
+Se presentan el instalador y ejecutable de la versión 0.2.0 en la raíz.
 
 ## 🧞 Comandos
 

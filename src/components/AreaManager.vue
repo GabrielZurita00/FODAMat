@@ -12,16 +12,16 @@
         <div class="area-name">
           <h2>Áreas</h2>
         </div>
-        <div class="area-name area-selection" v-for="area in count" :key="area" @click="show(area)" v-bind:class="(area!=selected)?'selected-area':''" >
+        <div class="area-name area-selection" v-for="area in count" :key="area" @click="showArea(area)" v-bind:class="(area!=selected)?'selected-area':''" >
           <h2>Área {{ area }}</h2>
           <div class="remove-area">
-            <button class="remove-button" v-if="count>1"  @click="remove(area)">
+            <button class="remove-button" v-if="count>1"  @click="removeArea(area)">
               <img src="/rmbtn.png" alt="removearea" height="25" width="25">
             </button>
           </div>
         </div>
       </div>
-      <div class="area-name add-area" @click="add">
+      <div class="area-name add-area" @click="addArea">
         <button class="add-button">
           <img src="/addbtn.png" alt="addarea" width="25" height="25">
         </button>
@@ -126,6 +126,12 @@
                 <td>{{ total }}</td>
             </tr>
         </table>
+        <p>
+          Total Fuerzas: {{ values.totalf }} <br>
+          Total Debilidades: {{ values.totald }} <br>
+          Total Oportunidades: {{ values.totalo }} <br>
+          Total Amenazas: {{ values.totala }} <br> 
+        </p>
     </div>
   </div>
     <div v-if="showModal">
@@ -178,7 +184,11 @@ import Dropdown from './Dropdown.vue';
           d: 1,
           a: 1,
           matriz: [[0, 0],
-                   [0, 0]]
+                   [0, 0]],
+          totalf: 0,
+          totalo: 0,
+          totald: 0,
+          totala: 0
         }] },
         values: {
             f: 1,
@@ -186,15 +196,16 @@ import Dropdown from './Dropdown.vue';
             d: 1,
             a: 1,
             matriz: [[0, 0],
-                     [0, 0]]
+                     [0, 0]],
+            totalf: 0,
+            totalo: 0,
+            totald: 0,
+            totala: 0
         },
         showModal: false,
         delArea: 0,
         selectedOption: 0,
-        //options: [0, 2, 4, 6, 8, 10],
-        dropdownOptions: [0, 2, 4, 6, 8, 10],
-        tableData: [[0,0],
-                    [0,0]]
+        dropdownOptions: [0, 2, 4, 6, 8, 10]
       };
     },
     computed: {
@@ -223,24 +234,57 @@ import Dropdown from './Dropdown.vue';
         }
         return sum
       },
-      add() {
+      fTotal(){
+        this.values.totalf=0
+        for (let i=0;i<this.values.f;i++){
+          this.values.totalf+=this.rowTotal(i)
+        }
+      },
+      dTotal(){
+        this.values.totald=0
+        for (let i=this.values.f;i<(this.values.f+this.values.d);i++){
+          this.values.totald+=this.rowTotal(i)
+        }
+      },
+      oTotal(){
+        this.values.totalo=0
+        for (let i=0;i<this.values.o;i++){
+          this.values.totalo+=this.colTotal(i)
+        }
+      },
+      aTotal(){
+        this.values.totala=0
+        for (let i=this.values.o;i<(this.values.o+this.values.a);i++){
+          this.values.totala+=this.colTotal(i)
+        }
+      },
+      updateTotals(){
+        this.fTotal()
+        this.oTotal()
+        this.dTotal()
+        this.aTotal()
+      },
+      addArea() {
         this.foda.areas.push({
           f:1,
           o:1,
           d:1,
           a:1,
           matriz: [[0, 0],
-                   [0, 0]]                                                                                                                                       
+                   [0, 0]],
+          totalf: 0,
+          totalo: 0,
+          totald: 0,
+          totala: 0                                                                                                                                       
         })
         this.count = this.foda.areas.length
-        console.log(this.foda);
         localStorage.setItem("FODA", JSON.stringify(this.foda))
       },
-      remove(area) {
+      removeArea(area) {
         this.showModal = true
         this.delArea = area
       },
-      show(area){
+      showArea(area){
         this.selected=area
         this.values = this.foda.areas[this.selected-1]
       },
@@ -255,7 +299,6 @@ import Dropdown from './Dropdown.vue';
         }
         this.foda.areas.splice(this.delArea-1,1)
         this.count = this.foda.areas.length
-        console.log(this.foda);
         localStorage.setItem("FODA", JSON.stringify(this.foda))
         if (c===1) {
           this.selected=1
@@ -267,71 +310,63 @@ import Dropdown from './Dropdown.vue';
         this.showModal=false
         this.delArea=0
       },
-      addF() {
-        this.values.f++;
-        this.values.matriz.splice(this.values.f-1,0,new Array(this.values.o+this.values.a).fill(0))
+      updateFoda(){
         this.foda = JSON.parse(localStorage.getItem("FODA"))
         this.foda.areas[this.selected-1] = this.values
         localStorage.setItem("FODA", JSON.stringify(this.foda))
+      },
+      addF() {
+        this.values.f++;
+        this.values.matriz.splice(this.values.f-1,0,new Array(this.values.o+this.values.a).fill(0))
+        this.updateFoda()
       },
       subtractF() {
         this.values.f--;
         this.values.matriz.splice(this.values.f,1)
-        this.foda = JSON.parse(localStorage.getItem("FODA"))
-        this.foda.areas[this.selected-1] = this.values
-        localStorage.setItem("FODA", JSON.stringify(this.foda))
+        this.updateTotals()
+        this.updateFoda()
       },
       addO() {
         this.values.o++;
         for(let i=0;i<this.values.matriz.length;i++) this.values.matriz[i].splice(this.values.o-1,0,0)
-        this.foda = JSON.parse(localStorage.getItem("FODA"))
-        this.foda.areas[this.selected-1] = this.values
-        localStorage.setItem("FODA", JSON.stringify(this.foda))
+        this.updateFoda()
       },
       subtractO() {
         this.values.o--;
         for(let i=0;i<this.values.matriz.length;i++) this.values.matriz[i].splice(this.values.o,1)
-        this.foda = JSON.parse(localStorage.getItem("FODA"))
-        this.foda.areas[this.selected-1] = this.values
-        localStorage.setItem("FODA", JSON.stringify(this.foda))
+        this.updateTotals()
+        this.updateFoda()
       },
       addD() {
         this.values.d++;
         this.values.matriz.push(new Array(this.values.o+this.values.a).fill(0))
-        this.foda = JSON.parse(localStorage.getItem("FODA"))
-        this.foda.areas[this.selected-1] = this.values
-        localStorage.setItem("FODA", JSON.stringify(this.foda))
+        this.updateFoda()
       },
       subtractD() {
         this.values.d--;
         this.values.matriz.pop()
-        this.foda = JSON.parse(localStorage.getItem("FODA"))
-        this.foda.areas[this.selected-1] = this.values
-        localStorage.setItem("FODA", JSON.stringify(this.foda))
+        this.updateTotals()
+        this.updateFoda()
       },
       addA() {
         this.values.a++;
         for(let i=0;i<this.values.matriz.length;i++){
           this.values.matriz[i].push(0)
         }
-        this.foda = JSON.parse(localStorage.getItem("FODA"))
-        this.foda.areas[this.selected-1] = this.values
-        localStorage.setItem("FODA", JSON.stringify(this.foda))
+        this.updateFoda()
       },
       subtractA() {
         this.values.a--;
         for(let i=0;i<this.values.matriz.length;i++){
           this.values.matriz[i].pop()
         }
-        this.foda = JSON.parse(localStorage.getItem("FODA"))
-        this.foda.areas[this.selected-1] = this.values
-        localStorage.setItem("FODA", JSON.stringify(this.foda))
+        this.updateTotals()
+        this.updateFoda()
       },
       onOptionSelected(row,col,option){
-        this.values.matriz[row][col] = option;
-        this.foda = JSON.parse(localStorage.getItem("FODA"))
-        this.foda.areas[this.selected-1] = this.values
-        localStorage.setItem("FODA", JSON.stringify(this.foda))
+        this.values.matriz[row][col] = option
+        this.updateTotals()
+        this.updateFoda()
       }
     },
     mounted() {

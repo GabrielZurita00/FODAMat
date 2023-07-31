@@ -132,6 +132,8 @@
           Total Oportunidades: {{ values.totalo }} <br>
           Total Amenazas: {{ values.totala }} <br> 
         </p>
+        <bar-graph />
+        <area-graph :totalf="values.totalf" :totalo="values.totalo" :totald="values.totald" :totala="values.totala"/>
     </div>
   </div>
     <div v-if="showModal">
@@ -166,8 +168,10 @@
 <script>
 import '@fontsource/poppins';
 import Dropdown from './Dropdown.vue';
+import BarGraph from './BarGraph.vue'
+import AreaGraph from './AreaGraph.vue'
   export default {
-    components: { Dropdown },
+    components: { Dropdown, BarGraph, AreaGraph },
     name: "AreaManager",
     watch: {
         selected: function(newValue){
@@ -370,6 +374,18 @@ import Dropdown from './Dropdown.vue';
       }
     },
     mounted() {
+      this.foda= { areas: [{
+          f: 1,
+          o: 1,
+          d: 1,
+          a: 1,
+          matriz: [[0, 0],
+                   [0, 0]],
+          totalf: 0,
+          totalo: 0,
+          totald: 0,
+          totala: 0
+        }] }
       if (localStorage.getItem("FODA")!==null){
         this.foda = JSON.parse(localStorage.getItem("FODA"))
       }

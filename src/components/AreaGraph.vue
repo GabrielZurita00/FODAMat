@@ -31,19 +31,19 @@
   export default {
     props: {
         totalf: {
-            type: Number,
+            type: Array,
             required: true
         },
         totalo: {
-            type: Number,
+            type: Array,
             required: true
         },
         totald: {
-            type: Number,
+            type: Array,
             required: true
         },
         totala: {
-            type: Number,
+            type: Array,
             required: true
         }
     },
@@ -82,32 +82,104 @@
         width: 400,
         height: 400,
         chartData: {
-          labels: ["Fortaleza", "Debilidad", "Amenaza", "Oportunidad"],
+          labels: [],
           datasets: [
             {
-              label: 'test data',
+              label: 'Total',
               data: [],
             },
           ],
         },
+        values:[]
       };
     },
     watch:{
         totalf(newValue) {
-            this.chartData.datasets[0].data=[newValue, this.totald, this.totala, this.totalo]
+          this.values=newValue.concat(this.totald,this.totalo,this.totala)
+          this.chartData.labels=[]
+          for (let i=0;i<newValue.length;i++){
+            this.chartData.labels.push(`F${i+1}`)
+          }
+          for (let i=0;i<this.totald.length;i++){
+            this.chartData.labels.push(`D${i+1}`)
+          }
+          for (let i=0;i<this.totalo.length;i++){
+            this.chartData.labels.push(`O${i+1}`)
+          }
+          for (let i=0;i<this.totala.length;i++){
+            this.chartData.labels.push(`A${i+1}`)
+          }
+          this.chartData.datasets[0].data = this.values
         },
         totalo(newValue) {
-            this.chartData.datasets[0].data=[this.totalf, this.totald, this.totala, newValue]
+          this.values=this.totalf.concat(this.totald,newValue,this.totala)
+          this.chartData.labels=[]
+          for (let i=0;i<this.totalf.length;i++){
+            this.chartData.labels.push(`F${i+1}`)
+          }
+          for (let i=0;i<this.totald.length;i++){
+            this.chartData.labels.push(`D${i+1}`)
+          }
+          for (let i=0;i<newValue.length;i++){
+            this.chartData.labels.push(`O${i+1}`)
+          }
+          for (let i=0;i<this.totala.length;i++){
+            this.chartData.labels.push(`A${i+1}`)
+          }
+          this.chartData.datasets[0].data = this.values
         },
         totald(newValue) {
-            this.chartData.datasets[0].data=[this.totalf, newValue, this.totala, this.totalo]
+          this.values=this.totalf.concat(newValue,this.totalo,this.totala)
+          this.chartData.labels=[]
+          for (let i=0;i<this.totalf.length;i++){
+            this.chartData.labels.push(`F${i+1}`)
+          }
+          for (let i=0;i<newValue.length;i++){
+            this.chartData.labels.push(`D${i+1}`)
+          }
+          for (let i=0;i<this.totalo.length;i++){
+            this.chartData.labels.push(`O${i+1}`)
+          }
+          for (let i=0;i<this.totala.length;i++){
+            this.chartData.labels.push(`A${i+1}`)
+          }
+          this.chartData.datasets[0].data = this.values
         },
         totala(newValue) {
-            this.chartData.datasets[0].data=[this.totalf, this.totald, newValue, this.totalo]
-        }
+          this.values=this.totalf.concat(this.totald,this.totalo,newValue)
+          this.chartData.labels=[]
+          for (let i=0;i<this.totalf.length;i++){
+            this.chartData.labels.push(`F${i+1}`)
+          }
+          for (let i=0;i<this.totald.length;i++){
+            this.chartData.labels.push(`D${i+1}`)
+          }
+          for (let i=0;i<this.totalo.length;i++){
+            this.chartData.labels.push(`O${i+1}`)
+          }
+          for (let i=0;i<newValue.length;i++){
+            this.chartData.labels.push(`A${i+1}`)
+          }
+          this.chartData.datasets[0].data = this.values
+        },
     },
     mounted(){
-        this.chartData.datasets[0].data=[this.totalf, this.totald, this.totala, this.totalo]
+        //this.chartData.datasets[0].data=[this.totals]
+        this.values=this.totalf.concat(this.totald,this.totalo,this.totala)
+        this.chartData.labels=[]
+          for (let i=0;i<this.totalf.length;i++){
+            this.chartData.labels.push(`F${i+1}`)
+          }
+          for (let i=0;i<this.totald.length;i++){
+            this.chartData.labels.push(`D${i+1}`)
+          }
+          for (let i=0;i<this.totalo.length;i++){
+            this.chartData.labels.push(`O${i+1}`)
+          }
+          for (let i=0;i<this.totala.length;i++){
+            this.chartData.labels.push(`A${i+1}`)
+          }
+          this.chartData.datasets[0].data = this.values
     }
   };
   </script>

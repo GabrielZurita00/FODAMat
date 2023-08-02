@@ -27,14 +27,38 @@
         </button>
         <h2>Agregar Área</h2>
       </div>
-    </div>
-    <div class="area-info">
-      <h1>Tabla FODA</h1>
-      <div class="area-name">
-        <h2 v-if="selected>0">{{ "Área "+selected }}</h2>
+      <!--añadir funcion @click que muestre datos totales-->
+      <div class="total-area">
+        <h2>TOTAL</h2>
       </div>
     </div>
-    <div class="foda-manager">
+    <div class="area-info">
+      <h1>{{ this.showGraph ? 'Gráficos FODA' : 'Tabla FODA' }}</h1>
+      <div class="area-name" @click="showGraph=!showGraph">
+        <h2 v-if="selected>0">
+          {{ "Área "+selected }}
+          <svg v-if="!showGraph" width="28" height="28" viewBox="0 0 52 53" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <rect width="52" height="53" fill="url(#pattern0)"/>
+            <defs>
+            <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+            <use xlink:href="#image0_86_343" transform="matrix(0.00471866 0 0 0.00462963 -0.00961538 0)"/>
+            </pattern>
+            <image id="image0_86_343" width="216" height="216" xlink:href="data:image/png;base64,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"/>
+            </defs>
+          </svg>   
+          <svg v-if="showGraph" width="30" height="30" viewBox="0 0 53 53" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <rect width="53" height="53" fill="url(#pattern0)"/>
+            <defs>
+            <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+            <use xlink:href="#image0_97_142" transform="scale(0.0119048)"/>
+            </pattern>
+            <image id="image0_97_142" width="84" height="84" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFQAAABUCAYAAAAcaxDBAAACtklEQVR4nO3cPWsUURjF8b+SwkUCIqiJaBrfIkEQFGNnCrXwU0jUSgsFsbEMfgEtFOwk+Q4WFtYWySoLvoIgGDSFmCKEBCUWibDcHXSeu2cys3B+cIu5yTz77MnMZHaYHTAzMzMzMzOr1I4Kao4DIxXUrcI34F3dTRS5CzwHloGNARvLW73flqeSYQLoUH8oqtEGTkgTCrhWosFBHVeFOZUyDqwJGm/qWANO5gST+09pATidzH0GHgMfgZ//Wf8+cLFr+QXwILOXfuwBjgM3gbHkZ/PAme1o4gq9f9FnQCtQYzZZf1bcY1SL3p42gMvRQjszXnwqWe4A14HVQI0qTtf6sQpMA++T+QvRQjmBpi/yCFjPqNM068DDZK7yQHcBZ5O5TvRFG+xNsjzJ5nsuLRro4YJ1loI1mux7sjwEHIoUyNnl7R8cqJgDFXOgYg5UzIGKOVCxoeDvbxTMzRH72Am9V3IuAS+DNaoQuR5RKBpo0Wfwc/02AezfGgMvussXbaHWJRpo064SNY7iGPqKvGNo9y6+BLwN1qhCC80hrLRj9F6EPZpRZ45mXWD+q+/359MmMQcq5kDFHKiYAxVzoGIOVMyBijlQMQcq5kDFHKiYAxVzoGIOVMyBijlQMQcq5kDFHKiYAxVzoGIOVMyBijlQMQcq5kDFHKhYNNDFgrlRRSMNcbBg7mukQDTQFeBTMpd+97OMpt64O5ksfyB4q2bOLp9+wfQeMBys0cQbd4eBO8lcO1okJ9CFZHkEeELshv+mbaEt4Cm9j0eajxbK2VJGgdfAvmR+EB+RsRc4Atyi9xEZi8Ap4Md2NDIF/Kb+h61UNX4B52VplXRD0HhTx7Qwp5AJNg/cdQegGu2t91S7GeoPo98xowhCffoyBhwAdovrVmWFzcdifKm7ETMzMzMzM7OS/gBhx/vb3xaUFQAAAABJRU5ErkJggg=="/>
+            </defs>
+          </svg>                     
+        </h2>
+      </div>
+    </div>
+    <div class="foda-manager" v-if="!showGraph">
         <table>
             <tr>
                 <td style="border:0"></td>
@@ -126,14 +150,17 @@
                 <td>{{ total }}</td>
             </tr>
         </table>
-        <p>
-          Total Fuerzas: {{ values.totalf }} <br>
-          Total Debilidades: {{ values.totald }} <br>
-          Total Oportunidades: {{ values.totalo }} <br>
-          Total Amenazas: {{ values.totala }} <br> 
-        </p>
-        <bar-graph />
-        <area-graph :totalf="values.totalf" :totalo="values.totalo" :totald="values.totald" :totala="values.totala"/>
+    </div>
+    <!--Este es el div de los gráficos-->
+    <div class="foda-manager" v-if="showGraph">
+      <p>
+        Total Fuerzas: {{ values.totalf }} <br>
+        Total Debilidades: {{ values.totald }} <br>
+        Total Oportunidades: {{ values.totalo }} <br>
+        Total Amenazas: {{ values.totala }} <br> 
+      </p>
+      <!--aca deben ir los graficos de torta-->
+      <area-graph :totalf="totals.f" :totalo="totals.o" :totald="totals.d" :totala="totals.a"/>
     </div>
   </div>
     <div v-if="showModal">
@@ -176,6 +203,26 @@ import AreaGraph from './AreaGraph.vue'
     watch: {
         selected: function(newValue){
             this.values = this.foda.areas[newValue-1]
+        },
+        total: function(){
+          this.totals={
+            f:[],
+            o:[],
+            d:[],
+            a:[]
+          }
+          for (let i=0; i<this.values.f; i++){
+            this.totals.f.push(this.rowTotal(i))
+          }
+          for (let i=this.values.f; i<(this.values.f+this.values.d); i++){
+            this.totals.d.push(this.rowTotal(i))
+          }
+          for (let j=0; j<this.values.o; j++){
+            this.totals.o.push(this.colTotal(j))
+          }
+          for (let j=this.values.o; j<(this.values.o+this.values.a); j++){
+            this.totals.a.push(this.colTotal(j))
+          }
         }
     },
     data() {
@@ -209,11 +256,17 @@ import AreaGraph from './AreaGraph.vue'
         showModal: false,
         delArea: 0,
         selectedOption: 0,
-        dropdownOptions: [0, 2, 4, 6, 8, 10]
+        dropdownOptions: [0, 2, 4, 6, 8, 10],
+        showGraph: false,
+        totals:{
+          f:[],
+          o:[],
+          d:[],
+          a:[]
+        }
       };
     },
     computed: {
-      
       total(){
         let sum = 0;
         const rows = this.values.matriz.length
@@ -224,7 +277,8 @@ import AreaGraph from './AreaGraph.vue'
             }
         }
         return sum
-      }
+      },
+
     },
     methods: {
       rowTotal(index){
@@ -466,6 +520,9 @@ h2{
   font-size: 20px;
   text-align: left;
 }
+svg{
+  vertical-align: middle;
+}
 .area-name{
   margin-top:5px;
   border-style: solid;
@@ -481,6 +538,18 @@ h2{
 }
 .area-selection{
   padding: 0 5px 0 50px;
+}
+.total-area{
+  margin-top:5px;
+  border-style: solid;
+  border-width: medium;
+  border-color: #000000;
+  border-radius: 15px;
+  padding: 0 50px 0 50px;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #867A7A;
+  width: max-content;
 }
 .selected-area{
   background-color: #DF4E4E;

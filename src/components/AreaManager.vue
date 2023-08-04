@@ -148,7 +148,7 @@
             Total Oportunidades: {{ values.totalo }} <br>
             Total Amenazas: {{ values.totala }} <br> 
           </p>
-          <area-graph :totalf="values.totalf" :totalo="values.totalo" :totald="values.totald" :totala="values.totala"/>
+          <bar-graph :totalf="totals.f" :totalo="totals.o" :totald="totals.d" :totala="totals.a"/>
         
   
         </div>
@@ -179,7 +179,6 @@
         </tbody>
       </table>
   
-  <bar-chart/>
       
     </div>
     </div>
@@ -220,15 +219,38 @@
   <script>
   import '@fontsource/poppins';
   import Dropdown from './Dropdown.vue';
-  import AreaGraph from './AreaGraph.vue';
+  import BarGraph from './BarGraph.vue';
   import  AreaTotalGraphVue from './AreaTotalGraph.vue';
     export default {
-      components: { Dropdown, AreaGraph,AreaTotalGraphVue },
+      components: { Dropdown, BarGraph,AreaTotalGraphVue },
       name: "AreaManager",
       watch: {
           selected: function(newValue){
               this.values = this.foda.areas[newValue-1]
-          }
+          },
+          values: {
+            handler(){
+              this.totals={
+                f:[],
+                o:[],
+                d:[],
+                a:[]
+              }
+              for (let i=0; i<this.values.f; i++){
+                this.totals.f.push(this.rowTotal(i))
+              }
+              for (let i=this.values.f; i<(this.values.f+this.values.d); i++){
+                this.totals.d.push(this.rowTotal(i))
+              }
+              for (let j=0; j<this.values.o; j++){
+                this.totals.o.push(this.colTotal(j))
+              }
+              for (let j=this.values.o; j<(this.values.o+this.values.a); j++){
+                this.totals.a.push(this.colTotal(j))
+              }
+            },
+            deep: true
+          } 
       },
       data() {
         return {
@@ -264,6 +286,12 @@
           selectedOption: 0,
           dropdownOptions: [0, 2, 4, 6, 8, 10],
           totalArea: false,
+          totals:{
+          f:[],
+          o:[],
+          d:[],
+          a:[]
+        }
         };
       },
       computed: {
@@ -545,6 +573,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    user-select: none
   }
   .area-selection{
     padding: 0 5px 0 50px;

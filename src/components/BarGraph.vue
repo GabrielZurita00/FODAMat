@@ -30,6 +30,7 @@ const {
 Chart.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 Chart.defaults.font.size = 16;
 Chart.defaults.font.family = "Poppins"
+
 export default {
   props: {
       totalf: {
@@ -57,7 +58,6 @@ export default {
       
       chartOptions: {
         responsive: true,
-        //barThickness: 20,
         scales: {
           yAxes: [
             {
@@ -76,10 +76,26 @@ export default {
             },
           ],
         },
+        plugins:{
+          legend: {
+            display: false
+          },
+        },
+        tooltips:{
+          callbacks:{
+            label: function(tooltipItem) {
+              return tooltipItem.yLabel;
+            }
+          }
+        }
       },
       chartId: 'bar-chart',
       datasetIdKey: 'label',
-      plugins: [],
+      plugins: {
+        legend: {
+          display: false
+        },
+      },
       cssClasses: '',
       styles: {},
       width: 400,
@@ -88,36 +104,11 @@ export default {
         labels: [],
         datasets: [
           {
-            label: 'Fortalezas',
             data: [],
             backgroundColor: [],
-            borderColor: [],
-            barThickness: 15,
-            barPercentage: 1
+            borderColor: []
           },
-          {
-            label: 'Debilidades',
-            data: [null],
-            backgroundColor: ['rgba(249,249,177,1.000)'],
-            barThickness: 0,
-            barPercentage: 0
-          },
-          {
-            label: 'Oportunidades',
-            data: [null],
-            backgroundColor: ['rgba(157,191,229,1.000)'],
-            barThickness: 0,
-            barPercentage: 0
-          },
-          {
-            label: 'Amenazas',
-            data: [null],
-            backgroundColor: ['rgba(228,111,108,1.000)'],
-            barThickness: 0,
-            barPercentage: 0
-          },
-        ],
-        
+        ]
       },
       values:[]
     };
@@ -131,7 +122,7 @@ export default {
         for (let i=0;i<newValue.length;i++){
           this.chartData.labels.push(`F${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(198,229,177,1.000)')
-          this.chartData.datasets[0].borderColor.push('rgb(157,191,229)')
+          this.chartData.datasets[0].borderColor.push('rgb(198,229,177)')
         }
         for (let i=0;i<this.totald.length;i++){
           this.chartData.labels.push(`D${i+1}`)
@@ -141,12 +132,12 @@ export default {
         for (let i=0;i<this.totalo.length;i++){
           this.chartData.labels.push(`O${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(157,191,229,1.000)')
-          this.chartData.datasets[0].borderColor.push('rgb(228,111,108)')
+          this.chartData.datasets[0].borderColor.push('rgb(157,191,229)')
         }
         for (let i=0;i<this.totala.length;i++){
           this.chartData.labels.push(`A${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(228,111,108,1.000)')
-          this.chartData.datasets[0].borderColor.push('rgb(198,229,177)')
+          this.chartData.datasets[0].borderColor.push('rgb(228,111,108)')
         }
         this.chartData.datasets[0].data = this.values
       },
@@ -158,7 +149,7 @@ export default {
         for (let i=0;i<this.totalf.length;i++){
           this.chartData.labels.push(`F${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(198,229,177,1.000)')
-          this.chartData.datasets[0].borderColor.push('rgb(157,191,229)')
+          this.chartData.datasets[0].borderColor.push('rgb(198,229,177)')
         }
         for (let i=0;i<this.totald.length;i++){
           this.chartData.labels.push(`D${i+1}`)
@@ -168,12 +159,12 @@ export default {
         for (let i=0;i<newValue.length;i++){
           this.chartData.labels.push(`O${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(157,191,229,1.000)')
-          this.chartData.datasets[0].borderColor.push('rgb(228,111,108)')
+          this.chartData.datasets[0].borderColor.push('rgb(157,191,229)')
         }
         for (let i=0;i<this.totala.length;i++){
           this.chartData.labels.push(`A${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(228,111,108,1.000)')
-          this.chartData.datasets[0].borderColor.push('rgb(198,229,177)')
+          this.chartData.datasets[0].borderColor.push('rgb(228,111,108)')
         }
         this.chartData.datasets[0].data = this.values
       },
@@ -185,7 +176,7 @@ export default {
         for (let i=0;i<this.totalf.length;i++){
           this.chartData.labels.push(`F${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(198,229,177,1.000)')
-          this.chartData.datasets[0].borderColor.push('rgb(157,191,229)')
+          this.chartData.datasets[0].borderColor.push('rgb(198,229,177)')
         }
         for (let i=0;i<newValue.length;i++){
           this.chartData.labels.push(`D${i+1}`)
@@ -195,12 +186,12 @@ export default {
         for (let i=0;i<this.totalo.length;i++){
           this.chartData.labels.push(`O${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(157,191,229,1.000)')
-          this.chartData.datasets[0].borderColor.push('rgb(228,111,108)')
+          this.chartData.datasets[0].borderColor.push('rgb(157,191,229)')
         }
         for (let i=0;i<this.totala.length;i++){
           this.chartData.labels.push(`A${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(228,111,108,1.000)')
-          this.chartData.datasets[0].borderColor.push('rgb(198,229,177)')
+          this.chartData.datasets[0].borderColor.push('rgb(228,111,108)')
         }
         this.chartData.datasets[0].data = this.values
       },
@@ -212,7 +203,7 @@ export default {
         for (let i=0;i<this.totalf.length;i++){
           this.chartData.labels.push(`F${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(198,229,177,1.000)')
-          this.chartData.datasets[0].borderColor.push('rgb(157,191,229)')
+          this.chartData.datasets[0].borderColor.push('rgb(198,229,177)')
         }
         for (let i=0;i<this.totald.length;i++){
           this.chartData.labels.push(`D${i+1}`)
@@ -222,18 +213,17 @@ export default {
         for (let i=0;i<this.totalo.length;i++){
           this.chartData.labels.push(`O${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(157,191,229,1.000)')
-          this.chartData.datasets[0].borderColor.push('rgb(228,111,108)')
+          this.chartData.datasets[0].borderColor.push('rgb(157,191,229)')
         }
         for (let i=0;i<newValue.length;i++){
           this.chartData.labels.push(`A${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(228,111,108,1.000)')
-          this.chartData.datasets[0].borderColor.push('rgb(198,229,177)')
+          this.chartData.datasets[0].borderColor.push('rgb(228,111,108)')
         }
         this.chartData.datasets[0].data = this.values
       },
   },
   mounted(){
-      //this.chartData.datasets[0].data=[this.totals]
       this.values=this.totalf.concat(this.totald,this.totalo,this.totala)
       this.chartData.labels=[]
       this.chartData.datasets[0].backgroundColor=[]
@@ -241,7 +231,7 @@ export default {
         for (let i=0;i<this.totalf.length;i++){
           this.chartData.labels.push(`F${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(198,229,177,1.000)')
-          this.chartData.datasets[0].borderColor.push('rgb(157,191,229)')
+          this.chartData.datasets[0].borderColor.push('rgb(198,229,177)')
         }
         for (let i=0;i<this.totald.length;i++){
           this.chartData.labels.push(`D${i+1}`)
@@ -251,12 +241,12 @@ export default {
         for (let i=0;i<this.totalo.length;i++){
           this.chartData.labels.push(`O${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(157,191,229,1.000)')
-          this.chartData.datasets[0].borderColor.push('rgb(228,111,108)')
+          this.chartData.datasets[0].borderColor.push('rgb(157,191,229)')
         }
         for (let i=0;i<this.totala.length;i++){
           this.chartData.labels.push(`A${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(228,111,108,1.000)')
-          this.chartData.datasets[0].borderColor.push('rgb(198,229,177)')
+          this.chartData.datasets[0].borderColor.push('rgb(228,111,108)')
         }
         this.chartData.datasets[0].data = this.values
   }

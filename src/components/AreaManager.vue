@@ -185,7 +185,7 @@
       </table>
   
       <div class="area-graph">
-            
+            <radar-chart :areas="foda.areas"/>
       </div>
     </div>
     </div>
@@ -228,8 +228,9 @@
   import Dropdown from './Dropdown.vue';
   import BarGraph from './BarGraph.vue';
   import  AreaTotalGraphVue from './AreaTotalGraph.vue';
+  import RadarChart from './RadarChart.vue'
     export default {
-      components: { Dropdown, BarGraph,AreaTotalGraphVue },
+      components: { Dropdown, BarGraph,AreaTotalGraphVue, RadarChart },
       name: "AreaManager",
       watch: {
           selected: function(newValue){
@@ -288,7 +289,6 @@
               totala: 0
           },
           showModal: false,
-          
           delArea: 0,
           selectedOption: 0,
           dropdownOptions: [0, 2, 4, 6, 8, 10],

@@ -24,7 +24,7 @@ const {
   BarElement,
   CategoryScale,
   LinearScale,
-} = ChartImport;
+} = ChartImport.default ? ChartImport.default : ChartImport;
 
 // Register the required plugins globally for all chart instances.
 Chart.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);

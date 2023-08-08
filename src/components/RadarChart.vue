@@ -27,7 +27,7 @@ const {
   Filler,
   Tooltip,
   Legend
-} = ChartImport;
+} = ChartImport.default ? ChartImport.default : ChartImport;
 Chart.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 Chart.defaults.font.size = 16;
 Chart.defaults.font.family = "Poppins"  

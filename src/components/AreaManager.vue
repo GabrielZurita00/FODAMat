@@ -145,12 +145,8 @@
                   <td>{{ total }}</td>
               </tr>
           </table>
-          <p>
-            Total Fuerzas: {{ values.totalf }} <br>
-            Total Debilidades: {{ values.totald }} <br>
-            Total Oportunidades: {{ values.totalo }} <br>
-            Total Amenazas: {{ values.totala }} <br> 
-          </p>
+
+          <h1 class="graph-title">Gráfico FODA</h1>
           <div class="area-graph">
             <bar-graph :totalf="totals.f" :totalo="totals.o" :totald="totals.d" :totala="totals.a"/>
           </div>
@@ -183,7 +179,7 @@
           </tr>
         </tbody>
       </table>
-  
+      <h1 class="graph-title">Gráfico FODA</h1>
       <div class="area-graph">
             <radar-chart :areas="foda.areas"/>
       </div>
@@ -227,10 +223,9 @@
   import '@fontsource/poppins';
   import Dropdown from './Dropdown.vue';
   import BarGraph from './BarGraph.vue';
-  import  AreaTotalGraphVue from './AreaTotalGraph.vue';
   import RadarChart from './RadarChart.vue'
     export default {
-      components: { Dropdown, BarGraph,AreaTotalGraphVue, RadarChart },
+      components: { Dropdown, BarGraph, RadarChart },
       name: "AreaManager",
       watch: {
           selected: function(newValue){
@@ -543,7 +538,9 @@
     align-content: left;
   }
   
-  
+  .graph-title{
+    text-align: center;
+  }
   
     
   .area-info{

@@ -15,6 +15,7 @@
 <script>
 import { Bar } from 'vue-chartjs';
 import * as ChartImport from 'chart.js';
+import '@fontsource/poppins';
 const {
   Chart,
   Title,
@@ -27,7 +28,8 @@ const {
 
 // Register the required plugins globally for all chart instances.
 Chart.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
-
+Chart.defaults.font.size = 16;
+Chart.defaults.font.family = "Poppins"
 export default {
   props: {
       totalf: {
@@ -54,7 +56,8 @@ export default {
     return {
       
       chartOptions: {
-        responsive: false,
+        responsive: true,
+        //barThickness: 20,
         scales: {
           yAxes: [
             {
@@ -85,12 +88,36 @@ export default {
         labels: [],
         datasets: [
           {
-            label: 'Total',
+            label: 'Fortalezas',
             data: [],
             backgroundColor: [],
-            borderColor: []
+            borderColor: [],
+            barThickness: 15,
+            barPercentage: 1
+          },
+          {
+            label: 'Debilidades',
+            data: [null],
+            backgroundColor: ['rgba(249,249,177,1.000)'],
+            barThickness: 0,
+            barPercentage: 0
+          },
+          {
+            label: 'Oportunidades',
+            data: [null],
+            backgroundColor: ['rgba(157,191,229,1.000)'],
+            barThickness: 0,
+            barPercentage: 0
+          },
+          {
+            label: 'Amenazas',
+            data: [null],
+            backgroundColor: ['rgba(228,111,108,1.000)'],
+            barThickness: 0,
+            barPercentage: 0
           },
         ],
+        
       },
       values:[]
     };

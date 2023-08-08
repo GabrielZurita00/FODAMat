@@ -41,8 +41,11 @@
       </div>
       <div class="area-info">
         <h1>Tabla FODA</h1>
-        <div class="area-name">
+        <div v-if="!totalArea" class="area-name">
           <h2 v-if="selected>0">{{ "Área "+selected }}</h2>
+        </div>
+        <div v-else class="totalArea">
+          <h2>{{ "TOTAL" }}</h2>
         </div>
       </div>
   
@@ -148,7 +151,9 @@
             Total Oportunidades: {{ values.totalo }} <br>
             Total Amenazas: {{ values.totala }} <br> 
           </p>
-          <bar-graph :totalf="totals.f" :totalo="totals.o" :totald="totals.d" :totala="totals.a"/>
+          <div class="area-graph">
+            <bar-graph :totalf="totals.f" :totalo="totals.o" :totald="totals.d" :totala="totals.a"/>
+          </div>
         
   
         </div>
@@ -164,22 +169,24 @@
             <th class="area-header area-1">Area</th>
             <th class="totalf-header">Total F</th>
             <th class="totald-header">Total D</th>
-            <th class="totala-header">Total A</th>
-            <th class="totalo-header">Total O</th>
+            <th class="totala-header">Total O</th>
+            <th class="totalo-header">Total A</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(area, index) in foda.areas" :key="index">
             <td>Area {{ index + 1 }}</td>
-            <td>{{ area.totalf }}</td>
-            <td>{{ area.totald }}</td>
-            <td>{{ area.totala }}</td>
-            <td>{{ area.totalo }}</td>
+            <td>{{ FPercent(area) }}%</td>
+            <td>{{ DPercent(area) }}%</td>
+            <td>{{ OPercent(area) }}%</td>
+            <td>{{ APercent(area) }}%</td>
           </tr>
         </tbody>
       </table>
   
-      
+      <div class="area-graph">
+            
+      </div>
     </div>
     </div>
     <div>
@@ -295,7 +302,6 @@
         };
       },
       computed: {
-        
         total(){
           let sum = 0;
           const rows = this.values.matriz.length
@@ -371,6 +377,7 @@
           this.delArea = area
         },
         showArea(area){
+          this.totalArea=false
           this.selected=area
           this.values = this.foda.areas[this.selected-1]
         },
@@ -453,6 +460,18 @@
           this.values.matriz[row][col] = option
           this.updateTotals()
           this.updateFoda()
+        },
+        FPercent(area){
+          return (area.totalf+area.totald+area.totalo+area.totala)!=0 ? Math.round((((area.totalf*100)/(area.totalf+area.totald+area.totalo+area.totala))+Number.EPSILON)*100)/100 : 0
+        },
+        DPercent(area){
+          return (area.totalf+area.totald+area.totalo+area.totala)!=0 ? Math.round((((area.totald*100)/(area.totalf+area.totald+area.totalo+area.totala))+Number.EPSILON)*100)/100 : 0
+        },
+        OPercent(area){
+          return (area.totalf+area.totald+area.totalo+area.totala)!=0 ? Math.round((((area.totalo*100)/(area.totalf+area.totald+area.totalo+area.totala))+Number.EPSILON)*100)/100 : 0
+        },
+        APercent(area){
+          return (area.totalf+area.totald+area.totalo+area.totala)!=0 ? Math.round((((area.totala*100)/(area.totalf+area.totald+area.totalo+area.totala))+Number.EPSILON)*100)/100 : 0
         }
       },
       mounted() {
@@ -524,28 +543,14 @@
     align-content: left;
   }
   
-  .vertical-menu a {
-    background-color: #eee; 
-    color: rgb(varvar(--blue-accent)); 
-    display: block; 
-    padding: 12px; 
-    text-decoration: none; 
-  }
   
-  .vertical-menu a:hover {
-    background-color: #ccc; 
-  }
-  
-  .vertical-menu a.active {
-    background-color: rgb(var(--blue-accent)); 
-    color: white;
-  }
   
     
   .area-info{
     grid-area: 1 / 2 / 2 / 3;
     background-color: #FFFFFF;
     padding: 2%;
+    border: 20px;
   }
   h1{
     font-family: 'Poppins', sans-serif;
@@ -573,7 +578,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    user-select: none
+    user-select: none;
   }
   .area-selection{
     padding: 0 5px 0 50px;
@@ -601,7 +606,7 @@
   .foda-manager{
     grid-area: 2 / 2 / 3 / 3;
     background: #FFFFFF;
-    padding: 3%;
+    padding: 0%;
   }
     table, th, td {
       border:1px solid black;
@@ -746,5 +751,11 @@
   
   .totalo-header {
     background-color: #9DBFE5; /* Red */
+  }
+
+  .area-graph{
+    width: 50vw;
+    margin: auto;
+    max-height: 300px;
   }
   </style>

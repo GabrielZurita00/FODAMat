@@ -146,9 +146,14 @@
               </tr>
           </table>
 
-          <h1 class="graph-title">Gráfico FODA</h1>
+          <h1 class="graph-title">Gráficos FODA</h1>
           <div class="area-graph">
-            <bar-graph :totalf="totals.f" :totalo="totals.o" :totald="totals.d" :totala="totals.a"/>
+            <div class="pie-graph">
+              <pie-graph :fTotal="values.totalf" :oTotal="values.totalo" :dTotal="values.totald" :aTotal="values.totala"/>
+            </div>
+            <div class="bar-graph">
+              <bar-graph :totalf="totals.f" :totalo="totals.o" :totald="totals.d" :totala="totals.a"/>
+            </div>
           </div>
         
   
@@ -162,7 +167,7 @@
       <table>
         <thead>
           <tr>
-            <th class="area-header area-1">Area</th>
+            <th class="area-header area-1">Área</th>
             <th class="totalf-header">Total F</th>
             <th class="totald-header">Total D</th>
             <th class="totala-header">Total O</th>
@@ -171,7 +176,7 @@
         </thead>
         <tbody>
           <tr v-for="(area, index) in foda.areas" :key="index">
-            <td>Area {{ index + 1 }}</td>
+            <td>Área {{ index + 1 }}</td>
             <td>{{ FPercent(area) }}%</td>
             <td>{{ DPercent(area) }}%</td>
             <td>{{ OPercent(area) }}%</td>
@@ -180,7 +185,7 @@
         </tbody>
       </table>
       <h1 class="graph-title">Gráfico FODA</h1>
-      <div class="area-graph">
+      <div class="bar-graph">
             <radar-chart :areas="foda.areas"/>
       </div>
     </div>
@@ -188,9 +193,6 @@
     <div>
     </div>
   </div>
-  
-  
-  
       <div v-if="showModal">
         <transition name="modal">
           <div class="modal-mask">
@@ -222,10 +224,11 @@
   <script>
   import '@fontsource/poppins';
   import Dropdown from './Dropdown.vue';
+  import PieGraph from './PieGraph.vue';
   import BarGraph from './BarGraph.vue';
-  import RadarChart from './RadarChart.vue'
+  import RadarChart from './RadarChart.vue';
     export default {
-      components: { Dropdown, BarGraph, RadarChart },
+      components: { Dropdown, PieGraph, BarGraph, RadarChart },
       name: "AreaManager",
       watch: {
           selected: function(newValue){
@@ -750,9 +753,20 @@
     background-color: #9DBFE5; /* Red */
   }
 
-  .area-graph{
+  .bar-graph{
     width: 50vw;
     margin: auto;
     max-height: 300px;
+  }
+  .pie-graph{
+    width: 70vw;
+    margin: auto;
+    max-height: 300px;
+  }
+  .area-graph{
+    display: flex;
+    flex-direction: column;
+    flex-flow: space-between;
+    gap: 120px;
   }
   </style>

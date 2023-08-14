@@ -15,6 +15,7 @@
 <script>
 import { Bar } from 'vue-chartjs';
 import * as ChartImport from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import '@fontsource/poppins';
 const {
   Chart,
@@ -27,7 +28,7 @@ const {
 } = ChartImport.default ? ChartImport.default : ChartImport;
 
 // Register the required plugins globally for all chart instances.
-Chart.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
+Chart.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ChartDataLabels);
 Chart.defaults.font.size = 16;
 Chart.defaults.font.family = "Poppins"
 
@@ -80,6 +81,14 @@ export default {
           legend: {
             display: false
           },
+          datalabels: {
+        color: '#000',
+        font: {
+          weight: 'bold',
+          size: 22,
+          family: "Poppins"
+        }
+      }
         },
         tooltips:{
           callbacks:{
@@ -91,11 +100,12 @@ export default {
       },
       chartId: 'bar-chart',
       datasetIdKey: 'label',
-      plugins: {
-        legend: {
+      plugins: [
+        {legend: {
           display: false
-        },
-      },
+        }
+      }
+      ],
       cssClasses: '',
       styles: {},
       width: 400,

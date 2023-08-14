@@ -15,6 +15,7 @@
   <script>
   import { Pie } from 'vue-chartjs'
   import '@fontsource/poppins';
+  import ChartDataLabels from 'chartjs-plugin-datalabels';
   import * as ChartImport from 'chart.js';
   
   
@@ -27,7 +28,7 @@
   CategoryScale,
 } = ChartImport.default ? ChartImport.default : ChartImport;
 
-  Chart.register(Title, Tooltip, Legend, ArcElement, CategoryScale)
+  Chart.register(Title, Tooltip, Legend, ArcElement, CategoryScale, ChartDataLabels)
   Chart.defaults.font.size = 16;
 Chart.defaults.font.family = "Poppins"
   export default {
@@ -87,8 +88,23 @@ Chart.defaults.font.family = "Poppins"
                   }
                   return label
                 }
-              }
-            }
+              },
+              
+            },
+            datalabels: {
+        color: '#000',
+        formatter: function (value, context) {
+          let sum=0
+          for (let i=0; i<context.dataset.data.length;i++){
+            sum += context.dataset.data[i]
+          }
+          return (sum!=0 ? Math.round((((value*100)/sum)+Number.EPSILON)*100)/100 : 0) + '%' 
+        },
+        font: {
+          weight: 'bold',
+          size: 22,
+        }
+      }
           }
         },
         chartId:  'pie-chart',

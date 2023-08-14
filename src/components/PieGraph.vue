@@ -110,7 +110,7 @@ Chart.defaults.font.family = "Poppins"
         chartId:  'pie-chart',
         datasetIdKey: 'label',
         width: 400,
-        height: 400,
+        height: 300,
         cssClasses: '',
         styles: {},
         plugins: []

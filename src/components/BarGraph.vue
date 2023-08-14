@@ -109,7 +109,7 @@ export default {
       cssClasses: '',
       styles: {},
       width: 400,
-      height: 400,
+      height: 250,
       chartData: {
         labels: [],
         datasets: [

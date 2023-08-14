@@ -533,7 +533,6 @@
     grid-area: 2 / 1 / 3 / 2;
     min-width: auto;
     max-width: fit-content;
-    height: 90vh;
     margin: 2%;
   }
   .vertical-menu {
@@ -756,17 +755,15 @@
   .bar-graph{
     width: 50vw;
     margin: auto;
-    max-height: 300px;
   }
   .pie-graph{
     width: 70vw;
     margin: auto;
-    max-height: 300px;
   }
   .area-graph{
     display: flex;
     flex-direction: column;
     flex-flow: space-between;
-    gap: 120px;
+    gap: 10px;
   }
   </style>

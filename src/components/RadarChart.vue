@@ -19,6 +19,7 @@
 import { Radar } from 'vue-chartjs'
 import '@fontsource/poppins';
 import * as ChartImport from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 const {
   Chart,
   RadialLinearScale,
@@ -28,7 +29,7 @@ const {
   Tooltip,
   Legend
 } = ChartImport.default ? ChartImport.default : ChartImport;
-Chart.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
+Chart.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend, ChartDataLabels);
 Chart.defaults.font.size = 16;
 Chart.defaults.font.family = "Poppins"  
 export default {
@@ -49,6 +50,11 @@ export default {
             r: {
               beginAtZero: true
             }
+          },
+          plugins: {
+            datalabels: {
+        display: false,
+    },
           }
         },
       chartId: 'radar-chart',

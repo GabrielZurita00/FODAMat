@@ -130,22 +130,22 @@ export default {
         this.chartData.datasets[0].backgroundColor=[]
         this.chartData.datasets[0].borderColor=[]
         for (let i=0;i<newValue.length;i++){
-          this.chartData.labels.push(`F${i+1}`)
+          this.chartData.labels.push(`Total F${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(198,229,177,1.000)')
           this.chartData.datasets[0].borderColor.push('rgb(198,229,177)')
         }
         for (let i=0;i<this.totald.length;i++){
-          this.chartData.labels.push(`D${i+1}`)
+          this.chartData.labels.push(`Total D${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(249,249,177,1.000)')
           this.chartData.datasets[0].borderColor.push('rgb(249,249,177)')
         }
         for (let i=0;i<this.totalo.length;i++){
-          this.chartData.labels.push(`O${i+1}`)
+          this.chartData.labels.push(`Total O${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(157,191,229,1.000)')
           this.chartData.datasets[0].borderColor.push('rgb(157,191,229)')
         }
         for (let i=0;i<this.totala.length;i++){
-          this.chartData.labels.push(`A${i+1}`)
+          this.chartData.labels.push(`Total A${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(228,111,108,1.000)')
           this.chartData.datasets[0].borderColor.push('rgb(228,111,108)')
         }
@@ -157,22 +157,22 @@ export default {
         this.chartData.datasets[0].backgroundColor=[]
         this.chartData.datasets[0].borderColor=[]
         for (let i=0;i<this.totalf.length;i++){
-          this.chartData.labels.push(`F${i+1}`)
+          this.chartData.labels.push(`Total F${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(198,229,177,1.000)')
           this.chartData.datasets[0].borderColor.push('rgb(198,229,177)')
         }
         for (let i=0;i<this.totald.length;i++){
-          this.chartData.labels.push(`D${i+1}`)
+          this.chartData.labels.push(`Total D${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(249,249,177,1.000)')
           this.chartData.datasets[0].borderColor.push('rgb(249,249,177)')
         }
         for (let i=0;i<newValue.length;i++){
-          this.chartData.labels.push(`O${i+1}`)
+          this.chartData.labels.push(`Total O${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(157,191,229,1.000)')
           this.chartData.datasets[0].borderColor.push('rgb(157,191,229)')
         }
         for (let i=0;i<this.totala.length;i++){
-          this.chartData.labels.push(`A${i+1}`)
+          this.chartData.labels.push(`Total A${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(228,111,108,1.000)')
           this.chartData.datasets[0].borderColor.push('rgb(228,111,108)')
         }
@@ -184,22 +184,22 @@ export default {
         this.chartData.datasets[0].backgroundColor=[]
         this.chartData.datasets[0].borderColor=[]
         for (let i=0;i<this.totalf.length;i++){
-          this.chartData.labels.push(`F${i+1}`)
+          this.chartData.labels.push(`Total F${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(198,229,177,1.000)')
           this.chartData.datasets[0].borderColor.push('rgb(198,229,177)')
         }
         for (let i=0;i<newValue.length;i++){
-          this.chartData.labels.push(`D${i+1}`)
+          this.chartData.labels.push(`Total D${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(249,249,177,1.000)')
           this.chartData.datasets[0].borderColor.push('rgb(249,249,177)')
         }
         for (let i=0;i<this.totalo.length;i++){
-          this.chartData.labels.push(`O${i+1}`)
+          this.chartData.labels.push(`Total O${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(157,191,229,1.000)')
           this.chartData.datasets[0].borderColor.push('rgb(157,191,229)')
         }
         for (let i=0;i<this.totala.length;i++){
-          this.chartData.labels.push(`A${i+1}`)
+          this.chartData.labels.push(`Total A${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(228,111,108,1.000)')
           this.chartData.datasets[0].borderColor.push('rgb(228,111,108)')
         }
@@ -211,22 +211,22 @@ export default {
         this.chartData.datasets[0].backgroundColor=[]
         this.chartData.datasets[0].borderColor=[]
         for (let i=0;i<this.totalf.length;i++){
-          this.chartData.labels.push(`F${i+1}`)
+          this.chartData.labels.push(`Total F${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(198,229,177,1.000)')
           this.chartData.datasets[0].borderColor.push('rgb(198,229,177)')
         }
         for (let i=0;i<this.totald.length;i++){
-          this.chartData.labels.push(`D${i+1}`)
+          this.chartData.labels.push(`Total D${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(249,249,177,1.000)')
           this.chartData.datasets[0].borderColor.push('rgb(249,249,177)')
         }
         for (let i=0;i<this.totalo.length;i++){
-          this.chartData.labels.push(`O${i+1}`)
+          this.chartData.labels.push(`Total O${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(157,191,229,1.000)')
           this.chartData.datasets[0].borderColor.push('rgb(157,191,229)')
         }
         for (let i=0;i<newValue.length;i++){
-          this.chartData.labels.push(`A${i+1}`)
+          this.chartData.labels.push(`Total A${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(228,111,108,1.000)')
           this.chartData.datasets[0].borderColor.push('rgb(228,111,108)')
         }
@@ -239,22 +239,22 @@ export default {
       this.chartData.datasets[0].backgroundColor=[]
       this.chartData.datasets[0].borderColor=[]
         for (let i=0;i<this.totalf.length;i++){
-          this.chartData.labels.push(`F${i+1}`)
+          this.chartData.labels.push(`Total F${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(198,229,177,1.000)')
           this.chartData.datasets[0].borderColor.push('rgb(198,229,177)')
         }
         for (let i=0;i<this.totald.length;i++){
-          this.chartData.labels.push(`D${i+1}`)
+          this.chartData.labels.push(`Total D${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(249,249,177,1.000)')
           this.chartData.datasets[0].borderColor.push('rgb(249,249,177)')
         }
         for (let i=0;i<this.totalo.length;i++){
-          this.chartData.labels.push(`O${i+1}`)
+          this.chartData.labels.push(`Total O${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(157,191,229,1.000)')
           this.chartData.datasets[0].borderColor.push('rgb(157,191,229)')
         }
         for (let i=0;i<this.totala.length;i++){
-          this.chartData.labels.push(`A${i+1}`)
+          this.chartData.labels.push(`Total A${i+1}`)
           this.chartData.datasets[0].backgroundColor.push('rgba(228,111,108,1.000)')
           this.chartData.datasets[0].borderColor.push('rgb(228,111,108)')
         }

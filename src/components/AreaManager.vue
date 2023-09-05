@@ -35,7 +35,7 @@
   
         <div class="totalArea" @click="totalArea=!totalArea">
           <button class="add-button">
-          <h2>TOTAL</h2>
+          <h2>RESULTADO <br> COMPARATIVO</h2>
         </button>
         </div>
   
@@ -48,7 +48,7 @@
           <h2 v-if="selected>0">{{ "Área "+selected }}</h2>
         </div>
         <div v-else class="totalArea">
-          <h2>{{ "TOTAL" }}</h2>
+          <h2>{{ "RESULTADO COMPARATIVO" }}</h2>
         </div>
       </div>
   
@@ -58,6 +58,11 @@
   
         <div class="foda-manager" v-if="!totalArea">
           <table>
+            <tr>
+              <td style="border:0"></td>
+                  <td style="border:0; border-right: 1px solid"></td>
+                  <th :colspan="values.o+values.a+1"> <h3>ÁMBITO EXTERNO</h3></th>
+            </tr>
               <tr>
                   <td style="border:0"></td>
                   <td style="border:0; border-right: 1px solid"></td>
@@ -95,7 +100,11 @@
                   <th v-for="col in values.o" :key="col" style="background-color:#D9D9D9">{{ "O"+col }}</th>
                   <th v-for="col in values.a" :key="col" style="background-color:#D9D9D9">{{ "A"+col }}</th>
               </tr>
+              <tr>
+                <th :rowspan="values.f+values.d+1" width="15"><h3 style="transform: rotate(-90deg); text-wrap: wrap;">ÁMBITO INTERNO</h3></th>
+              </tr>
               <tr v-for="(row, rowIndex) in values.f" :key="rowIndex">
+                
                   <th v-if="row==1" :rowspan="values.f" style="background-color: #C6E5B1;">
                     <div class="table-side" style="transform: rotate(-90deg);">
                       <button class="add-button" @click="addF">
@@ -728,7 +737,7 @@
       border-width: medium;
       border-color: #000000;
       border-radius: 15px;
-      padding: 0 50px 0 50px;
+      padding: 0 20px 0 20px;
       align-items: center;
       justify-content: space-between;
       background-color: #867A7A;

@@ -1,7 +1,7 @@
 <template>
     <div class="dropdown">
         <select v-model="selectedOption" @change="emitSelectedOption">
-            <option v-for="option in options" :value="option" :key="option"> {{ option }} </option>
+            <option v-for="option in options" :value="option" :key="option" :title="hint[option]"> {{ option }} </option>
         </select>
     </div>
 </template>
@@ -21,7 +21,8 @@ export default {
     },
     data() {
         return{
-            selectedOption: 0
+            selectedOption: 0,
+            hint: ["Sin relación","1","Relación muy débil","3","Relación débil","5","Relación media","7","Relación fuerte","9","Relación muy fuerte"]
         }
     },
     watch:{

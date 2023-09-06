@@ -86,6 +86,7 @@ Chart.defaults.font.family = "Poppins"
                     label+=sum!=0 ? Math.round((((context.parsed*100)/sum)+Number.EPSILON)*100)/100 : 0
                     label+='%)'
                   }
+                  console.log(label);
                   return label
                 }
               },
@@ -148,11 +149,6 @@ Chart.defaults.font.family = "Poppins"
         this.chartData.datasets[0].data.push(this.dTotal)
         this.chartData.datasets[0].data.push(this.oTotal)
         this.chartData.datasets[0].data.push(newValue)
-      }
-    },
-    methods : {
-      percent(value){
-        return this.total!=0 ? Math.round((((value*100)/this.total)+Number.EPSILON)*100)/100 : 0
       }
     },
     mounted(){

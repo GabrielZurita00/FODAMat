@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Gallery from '../components/Gallery.vue';
+
+---
+
+<Layout title="Nuevo FODA">
+    <main class="parent">
+        <div>
+            <Gallery client:visible/>
+        </div>
+    </main>
+</Layout>
+
+<style is:global>
+	html{
+		background-color: #cccccc;
+	}
+    .parent {
+		margin: auto;
+		padding: 1.5rem;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+	}
+</style>

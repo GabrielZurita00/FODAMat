@@ -19,8 +19,8 @@
         <h1>{{ selectedAlbum.title }}</h1>
         <img :src="'/images/' + selectedAlbum.images[currentImageIndex]" alt="Album Image" class="slideshow-image">
         <br>
-        <button @click="prevImage" :disabled="currentImageIndex === 0" class="slideshow-button">Previous</button>
-        <button @click="nextImage" :disabled="currentImageIndex === selectedAlbum.images.length - 1" class="slideshow-button">Next</button>
+        <button @click="prevImage" :disabled="currentImageIndex === 0" class="slideshow-button">Anterior</button>
+        <button @click="nextImage" :disabled="currentImageIndex === selectedAlbum.images.length - 1" class="slideshow-button">Siguiente</button>
       </div>    
     </div>
 

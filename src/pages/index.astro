@@ -7,8 +7,9 @@ import Card from '../components/Card.astro';
 	<main>
 		<h1><span class="text-gradient">FODA</span>Mat</h1>
 		<p class="instructions">
-			Herramienta para la realización del <!--code>src/pages</code--> <strong>FODA Matemático</strong><br>
-			Gestione las áreas y asigne pesos entre las fortalezas, oportunidades, debilidades y amenazas de cada área
+			
+			Esta es una aplicación de apoyo para la elaboración del <strong>FODA Matemático</strong>.<br> Gestiona diferentes áreas, con tablas 
+			dinámicas y gráficos que se actualizan en tiempo real.
 		</p>
 		<ul role="list" class="link-card-grid">
 			<Card
@@ -19,12 +20,12 @@ import Card from '../components/Card.astro';
 			<Card
 				href="/nuevo/"
 				title="Nuevo FODA"
-				body="¿Desea comenzar? Cree un FODA"
+				body="Crea un nuevo FODA, los antiguos datos serán removidos."
 			/>
 			<Card
 				href="/crear/"
 				title="Continuar FODA"
-				body="¿Ya tenía un FODA en construcción? Continúe el trabajo donde lo haya dejado"
+				body="Continuar su anterior FODA con los datos de la sesión anterior."
 			/>
 		</ul>
 	</main>

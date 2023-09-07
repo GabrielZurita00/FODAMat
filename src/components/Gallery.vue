@@ -33,24 +33,24 @@
       return {
         albums: [
           {
-            title: "Introducciòn",
-            cover: "1.jpg",
-            images: ["1.jpg", "3.webp", "4.jpg"]
+            title: "Introducción",
+            cover: "intro.png",
+            images: ["1.jpg", "2.jpg", "iz1.jpg", "iz2.jpg", "iz3.jpg", "iz4.jpg",]
           },
           {
             title: "Sobre la Tabla",
-            cover: "2.jpg",
-            images: ["2.jpg", "5.jpg"]
+            cover: "table.jpg",
+            images: ["t1.jpg", "t2.jpg", "t3.jpg"]
           },
           {
-            title: "Graficos de àreas",
-            cover: "6.jpg",
-            images: ["6.jpg", "7.jpg"]
+            title: "Gráficos de áreas",
+            cover: "grap.avif",
+            images: ["g1.jpg", "g2.jpg"]
           },
           {
-            title: "Anàlisis Comparativo ",
-            cover: "8.jpg",
-            images: ["8.jpg", "9.jpg"]
+            title: "Análisis Comparativo ",
+            cover: "res.jpg",
+            images: ["res1.jpg", "res2.jpg"]
           },
         ],
         selectedAlbum: null,
@@ -120,8 +120,7 @@
   }
   
   .slideshow-image {
-    width: 400px;
-    height: 400px;
+   
     border: 2px solid #022C55;
     border-radius: 10px;
   }
@@ -130,7 +129,7 @@
     margin-top: 10px;
     padding: 5px 15px;
     font-size: 16px;
-    background-color: #022C55;
+    background-color: #DF4E4E;
     color: #fff;
     border: none;
     border-radius: 5px;

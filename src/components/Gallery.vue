@@ -119,6 +119,7 @@
   
   .slideshow-image {
    
+   
     border: 2px solid #022C55;
     border-radius: 10px;
   }
@@ -127,6 +128,7 @@
     margin-top: 10px;
     padding: 5px 15px;
     font-size: 16px;
+    background-color: #DF4E4E;
     background-color: #DF4E4E;
     color: #fff;
     border: none;

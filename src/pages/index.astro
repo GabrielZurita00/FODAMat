@@ -3,20 +3,34 @@ import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 ---
 
-<Layout title="FODAMat">
+<Layout title="FODAMat" >
+	<div class="bg">
 	<main>
-		<h1><span class="text-gradient">FODA</span>Mat</h1>
-		<p class="instructions">
-			
+
+		<h1 style="color: white; text-align: center">  		
+			<img src="/512.png" alt="Logo DUEA" width="80" height="80">
+			<span >FODA</span>Mat
+		</h1>
+			<div class="fondo-centro">
+	
+		<p class="instructions" style="size: 25px;">
 			Esta es una aplicación de apoyo para la elaboración del <strong>FODA Matemático</strong>.<br> Gestiona diferentes áreas, con tablas 
 			dinámicas y gráficos que se actualizan en tiempo real.
 		</p>
-		<ul role="list" class="link-card-grid">
-			<Card
+
+		<div style="text-align: center;">
+		<img src="/help.png" alt="Logo DUEA" width="40" height="40">
+		<u>
+		<a
 				href="/tut/"
 				title="Guía FODA"
-				body="¿Necesita ayuda? "
-			/>
+				style="color:ffff">
+				¿Necesitas Ayuda?
+			</a>
+		</u>
+			</div>
+		<ul role="list" class="link-card-grid">
+			
 			<Card
 				href="/nuevo/"
 				title="Nuevo FODA"
@@ -28,6 +42,8 @@ import Card from '../components/Card.astro';
 				body="Continuar su anterior FODA con los datos de la sesión anterior."
 			/>
 		</ul>
+		</div>		</div>
+
 	</main>
 </Layout>
 
@@ -42,6 +58,8 @@ import Card from '../components/Card.astro';
 		font-weight: 800;
 		margin: 0;
 		color: rgb(var(--blue-accent));
+		size: 45px;
+
 	}
 	.text-gradient {
 		background-image: linear-gradient(45deg, rgb(var(--red-accent)), rgb(255, 0, 0) 30%, rgb(255, 82, 83) 60%);
@@ -54,9 +72,11 @@ import Card from '../components/Card.astro';
 		line-height: 1.6;
 		margin: 1rem 0;
 		border: 1px solid rgba(var(--blue-accent), 25%);
-		background-color: white;
+		background-color: rgb(157, 191, 229);
 		padding: 1rem;
 		border-radius: 0.4rem;
+		text-align: center;
+		size: 45px;
 	}
 	.instructions code {
 		font-size: 0.875em;
@@ -65,14 +85,38 @@ import Card from '../components/Card.astro';
 		color: rgb(var(--blue-accent));
 		border-radius: 4px;
 		padding: 0.3em 0.45em;
+		size: 25px;
+
+
 	}
 	.instructions strong {
 		color: rgb(var(--red-accent));
+
 	}
 	.link-card-grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
 		gap: 1rem;
 		padding: 0;
+	}
+	.bg {
+		background-color: rgb(2, 44, 82);
+		background-size: cover;
+		align-items: center;
+		align-content: center;
+		align-self: center;
+		margin-left: 1px ;
+		margin-right: 300px;
+	}
+	.fondo-centro {
+		background-color: rgb(255, 255, 255);
+		padding: 2rem;
+		text-align: center;
+		align-items: center;
+		margin-left: auto ;
+		margin-right: auto;
+		border-radius: 5px;
+		height: fit-content;
+		width:800px ;
 	}
 </style>

@@ -100,7 +100,10 @@
 </template>
 
 <script>
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 export default {
+  components: { jsPDF, html2canvas },
     data(){
         return{
             count: 1,
@@ -120,16 +123,44 @@ export default {
     },
     methods: {
         rowTotal(index){
-          return this.values.matriz[index].reduce((acc, cell) => acc+cell, 0)
+          //return this.values.matriz[index].reduce((acc, cell) => acc+cell, 0)
         },
         colTotal(index){
-          const rows = this.values.matriz.length
+         /* const rows = this.values.matriz.length
           let sum = 0;
           for (let j=0;j<rows;j++){
             sum+=this.values.matriz[j][index]
           }
-          return sum
-        },
+          return sum */
+        }, 
+        print(){
+          const chartCanvas = document.getElementById('radarchart');
+          html2canvas(chartCanvas).then(canvas => {
+            const chartImageBase64 = canvas.toDataURL('image/png')
+
+            const img = document.createElement('img');
+            img.src = chartImageBase64
+
+            document.getElementById('imgchart').appendChild(img);
+          })
+          
+
+          const element = document.getElementById('fulltable'); // Replace 'divToExport' with the ID of the <div> you want to export.
+
+          const pdf = new jsPDF();
+
+          // Use html2canvas to capture the <div> as an image
+          html2canvas(element).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+
+            // Add the image to the PDF
+            pdf.addImage(imgData, 'PNG', 0, 0);
+
+            // Save or download the PDF
+            pdf.save('exported.pdf');
+          });
+
+        }
     },
     mounted() {
         this.foda= { areas: [{
@@ -210,4 +241,39 @@ export default {
     color: #fff;
     font-weight: bold;
   }
+  .foda-manager{
+    grid-area: 2 / 2 / 3 / 3;
+    background: #FFFFFF;
+    padding: 0%;
+  }
+    table, th, td {
+      border:1px solid black;
+      border-spacing: 0;
+      font-family: 'Poppins', sans-serif;
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+      font-size: 20px;
+      text-align: center;
+      padding: 10px;
+      margin: 0;
+    }
+    table {
+      border:0;
+    }
+    .table-head{
+      align-items: center;
+      height: 30px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+    }
+    .table-side{
+      align-items: center;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-around;
+      width: 30px;
+      align-content: center;
+    }
 </style>

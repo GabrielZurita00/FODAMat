@@ -46,7 +46,7 @@
       <div class="area-info">
         <h1>Tabla FODA</h1>
         <div v-if="!totalArea" class="area-title">
-          <h2 v-if="selected>0">{{ "Área "+selected }}</h2>
+          <h2 v-if="selected>0">{{ "Área "+selected }}</h2>          
         </div>
         <div v-else class="totalArea">
           <h2>{{ "RESULTADO COMPARATIVO" }}</h2>
@@ -56,8 +56,10 @@
   
      
   
-  
+
         <div class="foda-manager" v-if="!totalArea">
+          <span contenteditable="true" style="margin-left: 40px;  text-decoration: underline;">Etiqueta del área </span>
+
           <table>
             <tr>
               <td style="border:0"></td>
@@ -102,8 +104,16 @@
                   <td style="border:0; border-bottom: 1px solid"></td>
                   
                   <td style="border:0; border-right: 1px solid; border-bottom: 1px solid"></td>
-                  <th v-for="col in values.o" :key="col" style="background-color:#D9D9D9">{{ "O"+col }}</th>
-                  <th v-for="col in values.a" :key="col" style="background-color:#D9D9D9">{{ "A"+col }}</th>
+                  <th v-for="col in values.o" :key="col" style="background-color:#D9D9D9">{{ "O"+col }}
+                    <div>
+                      <span contenteditable="true">Nombre del atributo</span>
+                    </div>
+                  </th>
+                  <th v-for="col in values.a" :key="col" style="background-color:#D9D9D9">{{ "A"+col }}
+                    <div>
+                      <span contenteditable="true">Nombre del atributo</span>
+                    </div>
+                  </th>
               </tr>
               <tr>
                 <th :rowspan="values.f+values.d+2" width="15"><h3 style="transform: rotate(-90deg); text-wrap: wrap;">ÁMBITO INTERNO</h3></th>
@@ -123,7 +133,11 @@
                       </button>
                     </div>
                   </th>
-                  <th style="background-color:#D9D9D9">{{ "F"+row }}</th>
+                  <th style="background-color:#D9D9D9">{{ "F"+row }}
+                    <div>
+                      <span contenteditable="true">Nombre del atributo</span>
+                    </div>
+                  </th>
                   <td v-for="(col, colIndex) in values.o" :key="colIndex">
                       <dropdown :options="dropdownOptions" :matrixValue="values.matriz[rowIndex][colIndex]" @option-selected="onOptionSelected(rowIndex, colIndex, $event)" />
                   </td>
@@ -146,7 +160,11 @@
                     </button>
                   </div>
                 </th>
-                  <th style="background-color:#D9D9D9">{{ "D"+row }}</th>
+                  <th style="background-color:#D9D9D9">{{ "D"+row }}
+                    <div>
+                      <span contenteditable="true">Nombre del atributo</span>
+                    </div>
+                  </th>
                   <td v-for="(col, colIndex) in values.o" :key="colIndex">
                       <dropdown :options="dropdownOptions" :matrixValue="values.matriz[rowIndex+values.f][colIndex]" @option-selected="onOptionSelected(rowIndex+values.f, colIndex, $event)" />
                   </td>
@@ -835,4 +853,8 @@
     flex-flow: space-between;
     gap: 10px;
   }
+  span 
+{
+    size: 14px;
+}
   </style>

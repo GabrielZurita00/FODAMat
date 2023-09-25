@@ -53,7 +53,7 @@
           {
             title: "Análisis Comparativo ",
             cover: "radar.jpg",
-            images: ["r1.png", "r2.png", "r3.png"]
+            images: ["r1.png", "r2.png", "r3.png", "r4.png", "r5.png"]
           },
         ],
         selectedAlbum: null,

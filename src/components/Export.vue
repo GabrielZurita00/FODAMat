@@ -89,7 +89,13 @@
                   <div class="bar-graph" :id="'bar-'+(index+1)" v-show="showGraphElement">
                     <bar-graph :totalf="totals[index].f" :totalo="totals[index].o" :totald="totals[index].d" :totala="totals[index].a"/>
                   </div>
-                    <div id="tabla-total" v-show="showGraphElement">
+                    
+                  
+            
+                  </div>
+                  
+            </div>
+            <div id="tabla-total" v-show="showGraphElement">
                       <table>
                         <thead>
                           <tr>
@@ -115,10 +121,6 @@
                     <div class="bar-graph" id="graph-total" v-show="showGraphElement">
                             <radar-total :areas="foda.areas"/>
                       </div>
-                  
-            
-                  </div>
-            </div>
         </div>
         <div v-if="showModal">
         <transition name="modal">
@@ -193,12 +195,11 @@
 <script>
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import mammoth from 'mammoth';
 import PieGraph from './PieGraph.vue';
 import BarGraph from './BarGraph.vue';
 import RadarTotal from './RadarTotal.vue';
 export default {
-  components: { jsPDF, html2canvas, mammoth, PieGraph, BarGraph, RadarTotal },
+  components: { jsPDF, html2canvas, PieGraph, BarGraph, RadarTotal },
     data(){
         return{
             count: 1,
@@ -287,6 +288,8 @@ export default {
 
             document.getElementById('total-img').appendChild(img);
           })
+        },
+        radar2img(){
           const radarCanvas = document.getElementById('graph-total');
           html2canvas(radarCanvas).then(canvas => {
             const chartImageBase64 = canvas.toDataURL('image/png')
@@ -377,6 +380,22 @@ export default {
         }
     },
     mounted() {
+        
+        setTimeout(()=>{
+          for (let i=0;i<this.count;i++){
+            this.chart2img(i+1)
+          }
+          this.total2img()
+        },2222)
+        setTimeout(()=>{
+          this.radar2img()
+        },2555)
+        setTimeout(()=>{
+          this.showGraphElement=false
+          this.loading=false
+        },3333)
+      },
+      created() {
         this.foda= { areas: [{
             f: 1,
             o: 1,
@@ -415,26 +434,6 @@ export default {
               }
               
         }
-        setTimeout(()=>{
-          for (let i=1;i<=this.count;i++){
-            this.chart2img(i)
-          }
-          this.total2img()
-        },2222)
-        setTimeout(()=>{
-          this.showGraphElement=false
-        },2525)
-        setTimeout(()=>{
-          this.loading=false
-        },3333)
-      },
-      created() {
-      const storedData = localStorage.getItem('yourKey');
-      if (storedData) {
-        const parsedData = JSON.parse(storedData);
-        this.foda = parsedData.foda;
-        this.values = parsedData.values;
-      }
     }
 }
 </script>

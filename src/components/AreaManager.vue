@@ -17,7 +17,9 @@
             <h2>Áreas</h2>
           </div>
           <div class="area-name area-selection" v-for="area in count" :key="area" @click="showArea(area)" v-bind:class="((area!=selected)&&(!totalArea))?'unselected-area':'selected-area'" >
-            <h2>Área {{ area }}</h2>
+            <h2>Área {{ area }}
+
+            </h2>
             <div class="remove-area">
               <button class="remove-button" v-if="count>1"  @click="removeArea(area)">
                 <img src="/rmbtn.png" alt="removearea" height="25" width="25">
@@ -46,18 +48,29 @@
       <div class="area-info">
         <h1>Tabla FODA</h1>
         <div v-if="!totalArea" class="area-title">
-          <h2 v-if="selected>0">{{ "Área "+selected }}</h2>
+          <h2 v-if="selected>0">{{ "Área "+selected }}</h2>          
         </div>
         <div v-else class="totalArea">
           <h2>{{ "RESULTADO COMPARATIVO" }}</h2>
+        </div>
+        <div v-if="totalArea">
+          <a href="/pdf">
+              <h5 style="color:#000000;" href="/crear">
+              <div class="selected-area area-name add-area">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17 17H17.01M17.4 14H18C18.9319 14 19.3978 14 19.7654 14.1522C20.2554 14.3552 20.6448 14.7446 20.8478 15.2346C21 15.6022 21 16.0681 21 17C21 17.9319 21 18.3978 20.8478 18.7654C20.6448 19.2554 20.2554 19.6448 19.7654 19.8478C19.3978 20 18.9319 20 18 20H6C5.06812 20 4.60218 20 4.23463 19.8478C3.74458 19.6448 3.35523 19.2554 3.15224 18.7654C3 18.3978 3 17.9319 3 17C3 16.0681 3 15.6022 3.15224 15.2346C3.35523 14.7446 3.74458 14.3552 4.23463 14.1522C4.60218 14 5.06812 14 6 14H6.6M12 15V4M12 15L9 12M12 15L15 12" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                Guardar FODA
+              </div>
+            </h5>
+          </a>
         </div>
       </div>
   
   
      
   
-  
+
         <div class="foda-manager" v-if="!totalArea">
+
           <table>
             <tr>
               <td style="border:0"></td>
@@ -102,8 +115,9 @@
                   <td style="border:0; border-bottom: 1px solid"></td>
                   
                   <td style="border:0; border-right: 1px solid; border-bottom: 1px solid"></td>
-                  <th v-for="col in values.o" :key="col" style="background-color:#D9D9D9">{{ "O"+col }}</th>
-                  <th v-for="col in values.a" :key="col" style="background-color:#D9D9D9">{{ "A"+col }}</th>
+                 
+                  <th v-for="col in values.o" :key="col" style="background-color:#D9D9D9">{{ "O"+col }}<span contenteditable="true"/></th>
+                  <th v-for="col in values.a" :key="col" style="background-color:#D9D9D9">{{ "A"+col }}<span contenteditable="true"/></th>
               </tr>
               <tr>
                 <th :rowspan="values.f+values.d+2" width="15"><h3 style="transform: rotate(-90deg); text-wrap: wrap;">ÁMBITO INTERNO</h3></th>
@@ -123,7 +137,10 @@
                       </button>
                     </div>
                   </th>
-                  <th style="background-color:#D9D9D9">{{ "F"+row }}</th>
+                  <th style="background-color:#D9D9D9">{{ "F"+row }}
+                    <div>
+                    </div>
+                  </th>
                   <td v-for="(col, colIndex) in values.o" :key="colIndex">
                       <dropdown :options="dropdownOptions" :matrixValue="values.matriz[rowIndex][colIndex]" @option-selected="onOptionSelected(rowIndex, colIndex, $event)" />
                   </td>
@@ -146,7 +163,10 @@
                     </button>
                   </div>
                 </th>
-                  <th style="background-color:#D9D9D9">{{ "D"+row }}</th>
+                  <th style="background-color:#D9D9D9">{{ "D"+row }}
+                    <div>
+                    </div>
+                  </th>
                   <td v-for="(col, colIndex) in values.o" :key="colIndex">
                       <dropdown :options="dropdownOptions" :matrixValue="values.matriz[rowIndex+values.f][colIndex]" @option-selected="onOptionSelected(rowIndex+values.f, colIndex, $event)" />
                   </td>
@@ -166,7 +186,7 @@
           <h1 class="graph-title">Análisis FODA</h1>
           <div class="area-graph">
             <div class="pie-graph">
-              <pie-graph :fTotal="values.totalf" :oTotal="values.totalo" :dTotal="values.totald" :aTotal="values.totala"/>
+              <pie-graph :fTotal="values.totalf" :oTotal="values.totalo" :dTotal="values.totald" :aTotal="values.totala" :graphW="400" :graphH="300"/>
             </div>
             <div class="bar-graph">
               <bar-graph :totalf="totals.f" :totalo="totals.o" :totald="totals.d" :totala="totals.a"/>
@@ -835,4 +855,8 @@
     flex-flow: space-between;
     gap: 10px;
   }
+  span 
+{
+    size: 14px;
+}
   </style>

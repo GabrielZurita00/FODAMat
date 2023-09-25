@@ -49,7 +49,15 @@ Chart.defaults.font.family = "Poppins"
       aTotal: {
         type: Number,
         required: true
-      }
+      },
+      graphW: {
+        type: Number,
+        required: true
+      },
+      graphH: {
+        type: Number,
+        required: true
+      },
     },
     components: {
       Pie
@@ -110,8 +118,8 @@ Chart.defaults.font.family = "Poppins"
         },
         chartId:  'pie-chart',
         datasetIdKey: 'label',
-        width: 400,
-        height: 300,
+        width: this.graphW,
+        height: this.graphH,
         cssClasses: '',
         styles: {},
         plugins: []

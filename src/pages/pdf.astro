@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Export from '../components/Export.vue';
+
+---
+
+<Layout title="PDF">
+    <main class="parent">
+        <div>
+            <Export client:visible/>
+        </div>
+    </main>
+</Layout>
+
+<style is:global>
+	html{
+		background-color: #022C55;
+	}
+    .parent {
+		margin: auto;
+		padding: 1.5rem;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+	}
+</style>

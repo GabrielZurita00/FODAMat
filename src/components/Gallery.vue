@@ -38,22 +38,22 @@
           {
             title: "Introducción",
             cover: "intro.png",
-            images: ["1.jpg", "2.jpg", "iz1.jpg", "iz2.jpg", "iz3.jpg", "iz4.jpg",]
+            images: ["tut.png","b1.png","i1.png","i2.png","i3.png","i4.png"]
           },
           {
             title: "Sobre la Tabla",
             cover: "tabla.png",
-            images: ["t1.jpg", "t2.jpg", "t3.jpg"]
+            images: ["t1.png", "t2.png", "t3.png"]
           },
           {
             title: "Gráficos de áreas",
             cover: "graph.png",
-            images: ["g1.jpg", "g2.jpg"]
+            images: ["g1.png", "g2.png"]
           },
           {
             title: "Análisis Comparativo ",
             cover: "radar.jpg",
-            images: ["res1.jpg", "res2.jpg"]
+            images: ["r1.png", "r2.png", "r3.png"]
           },
         ],
         selectedAlbum: null,
@@ -174,6 +174,7 @@
 	}.container .box {
     width:200px;
     display:table;
+    align-items: center;
 }
 .container .box .box-row {
     display:table-row;

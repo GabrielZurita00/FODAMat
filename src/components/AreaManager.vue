@@ -18,7 +18,6 @@
           </div>
           <div class="area-name area-selection" v-for="area in count" :key="area" @click="showArea(area)" v-bind:class="((area!=selected)&&(!totalArea))?'unselected-area':'selected-area'" >
             <h2>Área {{ area }}
-                <span contenteditable="true">aa</span>
 
             </h2>
             <div class="remove-area">
@@ -49,7 +48,7 @@
       <div class="area-info">
         <h1>Tabla FODA</h1>
         <div v-if="!totalArea" class="area-title">
-          <h2 v-if="selected>0">{{ "Área "+selected }}</h2>
+          <h2 v-if="selected>0">{{ "Área "+selected }}</h2>          
         </div>
         <div v-else class="totalArea">
           <h2>{{ "RESULTADO COMPARATIVO" }}</h2>
@@ -58,8 +57,8 @@
           <a href="/pdf">
               <h5 style="color:#000000;" href="/crear">
               <div class="selected-area area-name add-area">
-                <svg viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>pdf-document</title> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="add" fill="#000000" transform="translate(85.333333, 42.666667)"> <path d="M75.9466667,285.653333 C63.8764997,278.292415 49.6246897,275.351565 35.6266667,277.333333 L1.42108547e-14,277.333333 L1.42108547e-14,405.333333 L28.3733333,405.333333 L28.3733333,356.48 L40.5333333,356.48 C53.1304778,357.774244 65.7885986,354.68506 76.3733333,347.733333 C85.3576891,340.027178 90.3112817,328.626053 89.8133333,316.8 C90.4784904,304.790173 85.3164923,293.195531 75.9466667,285.653333 L75.9466667,285.653333 Z M53.12,332.373333 C47.7608867,334.732281 41.8687051,335.616108 36.0533333,334.933333 L27.7333333,334.933333 L27.7333333,298.666667 L36.0533333,298.666667 C42.094796,298.02451 48.1897668,299.213772 53.5466667,302.08 C58.5355805,305.554646 61.3626692,311.370371 61.0133333,317.44 C61.6596233,323.558965 58.5400493,329.460862 53.12,332.373333 L53.12,332.373333 Z M150.826667,277.333333 L115.413333,277.333333 L115.413333,405.333333 L149.333333,405.333333 C166.620091,407.02483 184.027709,403.691457 199.466667,395.733333 C216.454713,383.072462 225.530463,362.408923 223.36,341.333333 C224.631644,323.277677 218.198313,305.527884 205.653333,292.48 C190.157107,280.265923 170.395302,274.806436 150.826667,277.333333 L150.826667,277.333333 Z M178.986667,376.32 C170.098963,381.315719 159.922142,383.54422 149.76,382.72 L144.213333,382.72 L144.213333,299.946667 L149.333333,299.946667 C167.253333,299.946667 174.293333,301.653333 181.333333,308.053333 C189.877212,316.948755 194.28973,329.025119 193.493333,341.333333 C194.590843,354.653818 189.18793,367.684372 178.986667,376.32 L178.986667,376.32 Z M254.506667,405.333333 L283.306667,405.333333 L283.306667,351.786667 L341.333333,351.786667 L341.333333,329.173333 L283.306667,329.173333 L283.306667,299.946667 L341.333333,299.946667 L341.333333,277.333333 L254.506667,277.333333 L254.506667,405.333333 L254.506667,405.333333 Z M234.666667,7.10542736e-15 L9.52127266e-13,7.10542736e-15 L9.52127266e-13,234.666667 L42.6666667,234.666667 L42.6666667,192 L42.6666667,169.6 L42.6666667,42.6666667 L216.96,42.6666667 L298.666667,124.373333 L298.666667,169.6 L298.666667,192 L298.666667,234.666667 L341.333333,234.666667 L341.333333,106.666667 L234.666667,7.10542736e-15 L234.666667,7.10542736e-15 Z" id="document-pdf"> </path> </g> </g> </g></svg>
-                Guardar PDF
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17 17H17.01M17.4 14H18C18.9319 14 19.3978 14 19.7654 14.1522C20.2554 14.3552 20.6448 14.7446 20.8478 15.2346C21 15.6022 21 16.0681 21 17C21 17.9319 21 18.3978 20.8478 18.7654C20.6448 19.2554 20.2554 19.6448 19.7654 19.8478C19.3978 20 18.9319 20 18 20H6C5.06812 20 4.60218 20 4.23463 19.8478C3.74458 19.6448 3.35523 19.2554 3.15224 18.7654C3 18.3978 3 17.9319 3 17C3 16.0681 3 15.6022 3.15224 15.2346C3.35523 14.7446 3.74458 14.3552 4.23463 14.1522C4.60218 14 5.06812 14 6 14H6.6M12 15V4M12 15L9 12M12 15L15 12" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                Guardar FODA
               </div>
             </h5>
           </a>
@@ -69,8 +68,9 @@
   
      
   
-  
+
         <div class="foda-manager" v-if="!totalArea">
+
           <table>
             <tr>
               <td style="border:0"></td>
@@ -137,7 +137,10 @@
                       </button>
                     </div>
                   </th>
-                  <th style="background-color:#D9D9D9">{{ "F"+row }}</th>
+                  <th style="background-color:#D9D9D9">{{ "F"+row }}
+                    <div>
+                    </div>
+                  </th>
                   <td v-for="(col, colIndex) in values.o" :key="colIndex">
                       <dropdown :options="dropdownOptions" :matrixValue="values.matriz[rowIndex][colIndex]" @option-selected="onOptionSelected(rowIndex, colIndex, $event)" />
                   </td>
@@ -160,7 +163,10 @@
                     </button>
                   </div>
                 </th>
-                  <th style="background-color:#D9D9D9">{{ "D"+row }}</th>
+                  <th style="background-color:#D9D9D9">{{ "D"+row }}
+                    <div>
+                    </div>
+                  </th>
                   <td v-for="(col, colIndex) in values.o" :key="colIndex">
                       <dropdown :options="dropdownOptions" :matrixValue="values.matriz[rowIndex+values.f][colIndex]" @option-selected="onOptionSelected(rowIndex+values.f, colIndex, $event)" />
                   </td>
@@ -849,4 +855,8 @@
     flex-flow: space-between;
     gap: 10px;
   }
+  span 
+{
+    size: 14px;
+}
   </style>

@@ -89,7 +89,32 @@
                   <div class="bar-graph" :id="'bar-'+(index+1)" v-show="showGraphElement">
                     <bar-graph :totalf="totals[index].f" :totalo="totals[index].o" :totald="totals[index].d" :totala="totals[index].a"/>
                   </div>
-                    
+                    <div id="tabla-total" v-show="showGraphElement">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th class="area-header area-1">Área</th>
+                            <th class="totalf-header">Total F</th>
+                            <th class="totald-header">Total D</th>
+                            <th class="totala-header">Total O</th>
+                            <th class="totalo-header">Total A</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="(area, index) in foda.areas" :key="index">
+                            <td>Área {{ index + 1 }}</td>
+                            <td>{{ FPercent(area) }}%</td>
+                            <td>{{ DPercent(area) }}%</td>
+                            <td>{{ OPercent(area) }}%</td>
+                            <td>{{ APercent(area) }}%</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      
+                    </div>
+                    <div class="bar-graph" id="graph-total" v-show="showGraphElement">
+                            <radar-total :areas="foda.areas"/>
+                      </div>
                   
             
                   </div>
@@ -152,6 +177,15 @@
                       
                     </div>
                   </div>
+                  <div class="foda-manager" id="total-img">
+                    <div class="totalArea">
+                      <h2>{{ "RESULTADO COMPARATIVO" }}</h2>
+                    </div>
+                    <h1>Tabla FODA</h1>
+                  </div>
+                  <div class="bar-graph" id="radar-img">
+                    <h1 class="graph-title">Análisis FODA</h1>
+                  </div>
       </div>
     </div>
 </template>
@@ -162,9 +196,9 @@ import html2canvas from 'html2canvas';
 import mammoth from 'mammoth';
 import PieGraph from './PieGraph.vue';
 import BarGraph from './BarGraph.vue';
-import RadarChart from './RadarChart.vue';
+import RadarTotal from './RadarTotal.vue';
 export default {
-  components: { jsPDF, html2canvas, mammoth, PieGraph, BarGraph, RadarChart },
+  components: { jsPDF, html2canvas, mammoth, PieGraph, BarGraph, RadarTotal },
     data(){
         return{
             count: 1,
@@ -243,6 +277,26 @@ export default {
             document.getElementById('bar-img-'+index).appendChild(img);
           })
         },
+        total2img(){
+          const totalCanvas = document.getElementById('tabla-total');
+          html2canvas(totalCanvas).then(canvas => {
+            const chartImageBase64 = canvas.toDataURL('image/png')
+
+            const img = document.createElement('img');
+            img.src = chartImageBase64
+
+            document.getElementById('total-img').appendChild(img);
+          })
+          const radarCanvas = document.getElementById('graph-total');
+          html2canvas(radarCanvas).then(canvas => {
+            const chartImageBase64 = canvas.toDataURL('image/png')
+
+            const img = document.createElement('img');
+            img.src = chartImageBase64
+
+            document.getElementById('radar-img').appendChild(img);
+          })
+        },
         print(){
 
           const pdf = new jsPDF({ orientation: 'landscape' });
@@ -262,6 +316,8 @@ export default {
             sectionsToCapture.push(`pie-img-${i+1}`)
             sectionsToCapture.push(`bar-img-${i+1}`)
           }
+          sectionsToCapture.push('total-img')
+          sectionsToCapture.push('radar-img')
 
           const capturePromises = sectionsToCapture.map(sectionId => {
             const sectionElement = document.getElementById(sectionId);
@@ -306,6 +362,18 @@ export default {
     }
     
     document.body.removeChild(downloadLink);
+        },
+        FPercent(area){
+          return (area.totalf+area.totald+area.totalo+area.totala)!=0 ? Math.round((((area.totalf*100)/(area.totalf+area.totald+area.totalo+area.totala))+Number.EPSILON)*100)/100 : 0
+        },
+        DPercent(area){
+          return (area.totalf+area.totald+area.totalo+area.totala)!=0 ? Math.round((((area.totald*100)/(area.totalf+area.totald+area.totalo+area.totala))+Number.EPSILON)*100)/100 : 0
+        },
+        OPercent(area){
+          return (area.totalf+area.totald+area.totalo+area.totala)!=0 ? Math.round((((area.totalo*100)/(area.totalf+area.totald+area.totalo+area.totala))+Number.EPSILON)*100)/100 : 0
+        },
+        APercent(area){
+          return (area.totalf+area.totald+area.totalo+area.totala)!=0 ? Math.round((((area.totala*100)/(area.totalf+area.totald+area.totalo+area.totala))+Number.EPSILON)*100)/100 : 0
         }
     },
     mounted() {
@@ -351,7 +419,8 @@ export default {
           for (let i=1;i<=this.count;i++){
             this.chart2img(i)
           }
-        },1555)
+          this.total2img()
+        },2222)
         setTimeout(()=>{
           this.showGraphElement=false
         },2525)
@@ -359,6 +428,14 @@ export default {
           this.loading=false
         },3333)
       },
+      created() {
+      const storedData = localStorage.getItem('yourKey');
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        this.foda = parsedData.foda;
+        this.values = parsedData.values;
+      }
+    }
 }
 </script>
 
@@ -550,4 +627,56 @@ export default {
       justify-content: space-around;
       width: 100%;
     }
+    .totalArea{
+      margin-top:5px;
+      border-style: solid;
+      border-width: medium;
+      border-color: #000000;
+      border-radius: 15px;
+      padding: 0 20px 0 20px;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #867A7A;
+      width: max-content;
+    }
+   .total-selected{
+    margin-top:5px;
+      border-style: solid;
+      border-width: medium;
+      border-color: #000000;
+      border-radius: 15px;
+      padding: 0 20px 0 20px;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #474141;
+      width: max-content;
+   }
+   .total-selected h2{
+    font-weight: bold;
+    color:#fff;
+   }
+  
+  
+  
+  /* Colores de las celdas de la tabla de totales*/
+  .area-header {
+    background-color: #eee; /* Yellow */
+  }
+  
+  .totala-header {
+    background-color: #E46F6C; /* Green */
+  }
+  
+  .totald-header {
+    background-color: #F9F9B1; /* Blue */
+  }
+  
+  .totalf-header {
+    background-color: #C6E5B1; /* Orange */
+  }
+  
+  .totalo-header {
+    background-color: #9DBFE5; /* Red */
+  }
+
 </style>

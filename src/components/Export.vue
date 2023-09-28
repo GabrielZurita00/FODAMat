@@ -89,13 +89,7 @@
                   <div class="bar-graph" :id="'bar-'+(index+1)" v-show="showGraphElement">
                     <bar-graph :totalf="totals[index].f" :totalo="totals[index].o" :totald="totals[index].d" :totala="totals[index].a"/>
                   </div>
-                    
-                  
-            
-                  </div>
-                  
-            </div>
-            <div id="tabla-total" v-show="showGraphElement">
+                  <div :id='"tabla-total-"+(index+1)' v-show="showGraphElement">
                       <table>
                         <thead>
                           <tr>
@@ -118,16 +112,25 @@
                       </table>
                       
                     </div>
-                    <div class="bar-graph" id="graph-total" v-show="showGraphElement">
+                    <div class="bar-graph" :id='"graph-total-"+(index+1)' v-show="showGraphElement">
                             <radar-total :areas="foda.areas"/>
                       </div>
+                  
+            
+                  </div>
+                  
+            </div>
+            
         </div>
         <div v-if="showModal">
         <transition name="modal">
           <div class="modal-mask">
             <div class="modal-wrapper">
+              
               <div class="modal-container">
+                
                 <div class="modal-header">
+                  
                   <slot name="header" v-if="loading">
                     Cargando documento...
                   </slot>
@@ -145,14 +148,22 @@
                       <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M10 1C9.73478 1 9.48043 1.10536 9.29289 1.29289L3.29289 7.29289C3.10536 7.48043 3 7.73478 3 8V20C3 21.6569 4.34315 23 6 23H10C10.5523 23 11 22.5523 11 22C11 21.4477 10.5523 21 10 21H6C5.44772 21 5 20.5523 5 20V9H10C10.5523 9 11 8.55228 11 8V3H18C18.5523 3 19 3.44772 19 4V9C19 9.55228 19.4477 10 20 10C20.5523 10 21 9.55228 21 9V4C21 2.34315 19.6569 1 18 1H10ZM9 7H6.41421L9 4.41421V7ZM12.952 12.694C12.783 12.1682 12.2198 11.879 11.694 12.048C11.1682 12.217 10.879 12.7802 11.048 13.306L13.298 20.306C13.4309 20.7196 13.8156 21 14.25 21C14.6844 21 15.0691 20.7196 15.202 20.306L16.5 16.2679L17.798 20.306C17.9309 20.7196 18.3156 21 18.75 21C19.1844 21 19.5691 20.7196 19.702 20.306L21.952 13.306C22.121 12.7802 21.8318 12.217 21.306 12.048C20.7802 11.879 20.217 12.1682 20.048 12.694L18.75 16.7321L17.452 12.694C17.3191 12.2804 16.9344 12 16.5 12C16.0656 12 15.6809 12.2804 15.548 12.694L14.25 16.7321L12.952 12.694Z" fill="#000000"></path> </g></svg>
                       WORD
                     </button>
+                    
                   </slot>
+                  
                 </div>
+                <a style="color:#000000;" href="/">
+          <div class="area-name add-area">
+            <svg fill="#000000" height="20" width="20" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26.676 26.676" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M26.105,21.891c-0.229,0-0.439-0.131-0.529-0.346l0,0c-0.066-0.156-1.716-3.857-7.885-4.59 c-1.285-0.156-2.824-0.236-4.693-0.25v4.613c0,0.213-0.115,0.406-0.304,0.508c-0.188,0.098-0.413,0.084-0.588-0.033L0.254,13.815 C0.094,13.708,0,13.528,0,13.339c0-0.191,0.094-0.365,0.254-0.477l11.857-7.979c0.175-0.121,0.398-0.129,0.588-0.029 c0.19,0.102,0.303,0.295,0.303,0.502v4.293c2.578,0.336,13.674,2.33,13.674,11.674c0,0.271-0.191,0.508-0.459,0.562 C26.18,21.891,26.141,21.891,26.105,21.891z"></path> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </g> </g></svg>
+            Volver al inicio
+          </div>
+        </a>
               </div>
             </div>
           </div>
         </transition>
       </div>
-      <div id="fulltable">
+      <div id="fulltable" class="area-info">
         <div v-for="(area, index) in foda.areas" :key="index">
                     <div :id="'tabla-img-'+(index+1)">
                       <div class="area-title">
@@ -195,11 +206,12 @@
 <script>
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import mammoth from 'mammoth';
 import PieGraph from './PieGraph.vue';
 import BarGraph from './BarGraph.vue';
 import RadarTotal from './RadarTotal.vue';
 export default {
-  components: { jsPDF, html2canvas, PieGraph, BarGraph, RadarTotal },
+  components: { jsPDF, html2canvas, mammoth, PieGraph, BarGraph, RadarTotal },
     data(){
         return{
             count: 1,
@@ -279,7 +291,7 @@ export default {
           })
         },
         total2img(){
-          const totalCanvas = document.getElementById('tabla-total');
+          const totalCanvas = document.getElementById(`tabla-total-${this.count}`);
           html2canvas(totalCanvas).then(canvas => {
             const chartImageBase64 = canvas.toDataURL('image/png')
 
@@ -288,9 +300,7 @@ export default {
 
             document.getElementById('total-img').appendChild(img);
           })
-        },
-        radar2img(){
-          const radarCanvas = document.getElementById('graph-total');
+          const radarCanvas = document.getElementById(`graph-total-${this.count}`);
           html2canvas(radarCanvas).then(canvas => {
             const chartImageBase64 = canvas.toDataURL('image/png')
 
@@ -328,6 +338,7 @@ export default {
           });
 
           Promise.all(capturePromises).then(() => {
+            pdf.deletePage(1);
             pdf.save('foda.pdf');
           });
         },
@@ -380,22 +391,6 @@ export default {
         }
     },
     mounted() {
-        
-        setTimeout(()=>{
-          for (let i=0;i<this.count;i++){
-            this.chart2img(i+1)
-          }
-          this.total2img()
-        },2222)
-        setTimeout(()=>{
-          this.radar2img()
-        },2555)
-        setTimeout(()=>{
-          this.showGraphElement=false
-          this.loading=false
-        },3333)
-      },
-      created() {
         this.foda= { areas: [{
             f: 1,
             o: 1,
@@ -434,6 +429,26 @@ export default {
               }
               
         }
+        setTimeout(()=>{
+          for (let i=1;i<=this.count;i++){
+            this.chart2img(i)
+          }
+          this.total2img()
+        },2222)
+        setTimeout(()=>{
+          this.showGraphElement=false
+        },2555)
+        setTimeout(()=>{
+          this.loading=false
+        },3333)
+      },
+      created() {
+      const storedData = localStorage.getItem('yourKey');
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        this.foda = parsedData.foda;
+        this.values = parsedData.values;
+      }
     }
 }
 </script>

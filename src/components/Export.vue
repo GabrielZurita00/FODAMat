@@ -206,12 +206,11 @@
 <script>
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import mammoth from 'mammoth';
 import PieGraph from './PieGraph.vue';
 import BarGraph from './BarGraph.vue';
 import RadarTotal from './RadarTotal.vue';
 export default {
-  components: { jsPDF, html2canvas, mammoth, PieGraph, BarGraph, RadarTotal },
+  components: { jsPDF, html2canvas, PieGraph, BarGraph, RadarTotal },
     data(){
         return{
             count: 1,
@@ -268,6 +267,7 @@ export default {
 
             const img = document.createElement('img');
             img.src = chartImageBase64
+            img.height = 330;
 
             document.getElementById('tabla-img-'+index).appendChild(img);
           })
@@ -277,6 +277,7 @@ export default {
 
             const img = document.createElement('img');
             img.src = chartImageBase64
+            img.width = 700;
 
             document.getElementById('pie-img-'+index).appendChild(img);
           })
@@ -286,6 +287,7 @@ export default {
 
             const img = document.createElement('img');
             img.src = chartImageBase64
+            img.width = 700;
 
             document.getElementById('bar-img-'+index).appendChild(img);
           })
@@ -297,6 +299,7 @@ export default {
 
             const img = document.createElement('img');
             img.src = chartImageBase64
+            img.width = 2000;
 
             document.getElementById('total-img').appendChild(img);
           })
@@ -306,6 +309,7 @@ export default {
 
             const img = document.createElement('img');
             img.src = chartImageBase64
+            img.width = 700;
 
             document.getElementById('radar-img').appendChild(img);
           })
@@ -464,7 +468,7 @@ export default {
   h1{
     font-family: 'Poppins', sans-serif;
     font-weight: 3000;
-    font-size: 40px;
+    font-size: 20px;
     color: #324855;
   }
   h2{
@@ -506,6 +510,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     user-select: none;
+    height: 50px;
   }
   .area-title h2{
     color: #fff;

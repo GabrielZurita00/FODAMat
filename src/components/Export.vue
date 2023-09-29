@@ -287,7 +287,7 @@ export default {
 
             const img = document.createElement('img');
             img.src = chartImageBase64
-            img.width = 700;
+            img.width = 550;
 
             document.getElementById('bar-img-'+index).appendChild(img);
           })
@@ -299,7 +299,7 @@ export default {
 
             const img = document.createElement('img');
             img.src = chartImageBase64
-            img.width = 2000;
+            img.height = 350;
 
             document.getElementById('total-img').appendChild(img);
           })
@@ -309,7 +309,7 @@ export default {
 
             const img = document.createElement('img');
             img.src = chartImageBase64
-            img.width = 700;
+            img.height = 470;
 
             document.getElementById('radar-img').appendChild(img);
           })

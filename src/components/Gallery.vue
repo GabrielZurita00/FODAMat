@@ -55,6 +55,11 @@
             cover: "radar.jpg",
             images: ["r1.png", "r2.png", "r3.png", "r4.png", "r5.png"]
           },
+          {
+            title: "Guardar FODA ",
+            cover: "down.jpg",
+            images: ["p1.png", "p2.png", "p3.png", "p4.png", "p5.png"]
+          },
         ],
         selectedAlbum: null,
         currentImageIndex: 0
@@ -129,8 +134,8 @@
     border-radius: 10px;
     position: relative;
     vertical-align: top;
-    width: 700px;
-    height: 570px;
+    width: 900px;
+    height: 750px;
   }
   
   .slideshow-button {

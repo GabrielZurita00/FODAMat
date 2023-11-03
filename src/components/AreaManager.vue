@@ -115,9 +115,14 @@
                   <td style="border:0; border-bottom: 1px solid"></td>
                   
                   <td style="border:0; border-right: 1px solid; border-bottom: 1px solid"></td>
-                 
-                  <th v-for="col in values.o" :key="col" style="background-color:#D9D9D9">{{ "O"+col }}<span contenteditable="true"/></th>
-                  <th v-for="col in values.a" :key="col" style="background-color:#D9D9D9">{{ "A"+col }}<span contenteditable="true"/></th>
+                  <th v-for="col in values.o" :key="col" style="background-color:#D9D9D9">{{ "O"+col }}
+                    <div>
+                    </div>
+                  </th>
+                  <th v-for="col in values.a" :key="col" style="background-color:#D9D9D9">{{ "A"+col }}
+                    <div>
+                    </div>
+                  </th>
               </tr>
               <tr>
                 <th :rowspan="values.f+values.d+2" width="15"><h3 style="transform: rotate(-90deg); text-wrap: wrap;">ÁMBITO INTERNO</h3></th>

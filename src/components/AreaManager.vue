@@ -63,6 +63,22 @@
             </h5>
           </a>
         </div>
+        <div v-else>
+          <div @click="showAnal()">
+              <h5 v-if="!showGraphics" style="color:#000000;" href="/crear">
+              <div class="selected-area area-name add-area">
+                <svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#000000" d="M5 11h3v5h-3v-5z"></path> <path fill="#000000" d="M1 14h3v2h-3v-2z"></path> <path fill="#000000" d="M13 12h3v4h-3v-4z"></path> <path fill="#000000" d="M9 9h3v7h-3v-7z"></path> <path fill="#000000" d="M5 0c-2.761 0-5 2.239-5 5s2.239 5 5 5c2.761 0 5-2.239 5-5s-2.239-5-5-5zM5 9c-2.209 0-4-1.791-4-4s1.791-4 4-4v4h4c0 2.209-1.791 4-4 4z"></path> </g></svg>
+                Mostrar Análisis
+              </div>
+            </h5>
+            <h5 v-else style="color:#000000;" href="/crear">
+              <div class="selected-area area-name add-area">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 9L20 9M8 9V20M6.2 20H17.8C18.9201 20 19.4802 20 19.908 19.782C20.2843 19.5903 20.5903 19.2843 20.782 18.908C21 18.4802 21 17.9201 21 16.8V7.2C21 6.0799 21 5.51984 20.782 5.09202C20.5903 4.71569 20.2843 4.40973 19.908 4.21799C19.4802 4 18.9201 4 17.8 4H6.2C5.0799 4 4.51984 4 4.09202 4.21799C3.71569 4.40973 3.40973 4.71569 3.21799 5.09202C3 5.51984 3 6.07989 3 7.2V16.8C3 17.9201 3 18.4802 3.21799 18.908C3.40973 19.2843 3.71569 19.5903 4.09202 19.782C4.51984 20 5.07989 20 6.2 20Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                Editar Tabla
+              </div>
+            </h5>
+          </div>
+        </div>
       </div>
   
   
@@ -71,7 +87,7 @@
 
         <div class="foda-manager" v-if="!totalArea">
 
-          <table>
+          <table id="fodatable">
             <tr>
               <td style="border:0"></td>
               <td style="border:0"></td>
@@ -188,15 +204,19 @@
               </tr>
           </table>
 
-          <h1 class="graph-title">Análisis FODA</h1>
-          <div class="area-graph">
-            <div class="pie-graph">
-              <pie-graph :fTotal="values.totalf" :oTotal="values.totalo" :dTotal="values.totald" :aTotal="values.totala" :graphW="400" :graphH="300"/>
-            </div>
-            <div class="bar-graph">
-              <bar-graph :totalf="totals.f" :totalo="totals.o" :totald="totals.d" :totala="totals.a"/>
+
+          <div v-show="showGraphics">
+            <h1 class="graph-title">Análisis FODA</h1>
+            <div class="area-graph">
+              <div class="pie-graph">
+                <pie-graph :fTotal="values.totalf" :oTotal="values.totalo" :dTotal="values.totald" :aTotal="values.totala" :graphW="400" :graphH="300"/>
+              </div>
+              <div class="bar-graph">
+                <bar-graph :totalf="totals.f" :totalo="totals.o" :totald="totals.d" :totala="totals.a"/>
+              </div>
             </div>
           </div>
+          
         
   
         </div>
@@ -334,6 +354,7 @@
               totala: 0
           },
           showModal: false,
+          showGraphics: false,
           delArea: 0,
           selectedOption: 0,
           dropdownOptions: [0, 2, 4, 6, 8, 10],
@@ -425,6 +446,13 @@
           this.totalArea=false
           this.selected=area
           this.values = this.foda.areas[this.selected-1]
+          this.showGraphics = false
+          document.getElementById('fodatable').style.pointerEvents = "auto"
+        },
+        showAnal(){
+          this.showGraphics = !this.showGraphics
+          if (this.showGraphics) document.getElementById('fodatable').style.pointerEvents = "none"
+          else document.getElementById('fodatable').style.pointerEvents = "auto"
         },
         confirmDelete(){
           let c=0

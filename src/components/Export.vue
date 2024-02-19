@@ -192,7 +192,7 @@
     </div>
 </template>
 
-<script>
+<script defer>
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import PieGraph from './PieGraph.vue';
@@ -304,7 +304,6 @@ export default {
 
           const pdf = new jsPDF({ orientation: 'landscape' });
 
-
           const addPageToPdf = (element) => {
             return html2canvas(element).then(canvas => {
               const imgData = canvas.toDataURL('image/png');
@@ -386,14 +385,14 @@ export default {
             this.chart2img(i+1)
           }
           this.total2img()
-        },2222)
+        },5000)
         setTimeout(()=>{
           this.radar2img()
-        },2555)
+        },5000)
         setTimeout(()=>{
           this.showGraphElement=false
           this.loading=false
-        },3333)
+        },5000)
       },
       created() {
         this.foda= { areas: [{

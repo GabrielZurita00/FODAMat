@@ -54,29 +54,15 @@
           <h2>{{ "RESULTADO COMPARATIVO" }}</h2>
         </div>
         <div v-if="totalArea">
-          <a href="/pdf">
-              <h5 style="color:#000000;" href="/crear">
+          <div @click="saveRadar()">
+            <a href="/pdf">
+              <h5 style="color:#000000;">
               <div class="selected-area area-name add-area">
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17 17H17.01M17.4 14H18C18.9319 14 19.3978 14 19.7654 14.1522C20.2554 14.3552 20.6448 14.7446 20.8478 15.2346C21 15.6022 21 16.0681 21 17C21 17.9319 21 18.3978 20.8478 18.7654C20.6448 19.2554 20.2554 19.6448 19.7654 19.8478C19.3978 20 18.9319 20 18 20H6C5.06812 20 4.60218 20 4.23463 19.8478C3.74458 19.6448 3.35523 19.2554 3.15224 18.7654C3 18.3978 3 17.9319 3 17C3 16.0681 3 15.6022 3.15224 15.2346C3.35523 14.7446 3.74458 14.3552 4.23463 14.1522C4.60218 14 5.06812 14 6 14H6.6M12 15V4M12 15L9 12M12 15L15 12" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                 Guardar FODA
               </div>
             </h5>
           </a>
-        </div>
-        <div v-else>
-          <div @click="showAnal()">
-              <h5 v-if="!showGraphics" style="color:#000000;" href="/crear">
-              <div class="selected-area area-name add-area">
-                <svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#000000" d="M5 11h3v5h-3v-5z"></path> <path fill="#000000" d="M1 14h3v2h-3v-2z"></path> <path fill="#000000" d="M13 12h3v4h-3v-4z"></path> <path fill="#000000" d="M9 9h3v7h-3v-7z"></path> <path fill="#000000" d="M5 0c-2.761 0-5 2.239-5 5s2.239 5 5 5c2.761 0 5-2.239 5-5s-2.239-5-5-5zM5 9c-2.209 0-4-1.791-4-4s1.791-4 4-4v4h4c0 2.209-1.791 4-4 4z"></path> </g></svg>
-                Mostrar Análisis
-              </div>
-            </h5>
-            <h5 v-else style="color:#000000;" href="/crear">
-              <div class="selected-area area-name add-area">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 9L20 9M8 9V20M6.2 20H17.8C18.9201 20 19.4802 20 19.908 19.782C20.2843 19.5903 20.5903 19.2843 20.782 18.908C21 18.4802 21 17.9201 21 16.8V7.2C21 6.0799 21 5.51984 20.782 5.09202C20.5903 4.71569 20.2843 4.40973 19.908 4.21799C19.4802 4 18.9201 4 17.8 4H6.2C5.0799 4 4.51984 4 4.09202 4.21799C3.71569 4.40973 3.40973 4.71569 3.21799 5.09202C3 5.51984 3 6.07989 3 7.2V16.8C3 17.9201 3 18.4802 3.21799 18.908C3.40973 19.2843 3.71569 19.5903 4.09202 19.782C4.51984 20 5.07989 20 6.2 20Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                Editar Tabla
-              </div>
-            </h5>
           </div>
         </div>
       </div>
@@ -87,7 +73,7 @@
 
         <div class="foda-manager" v-if="!totalArea">
 
-          <table id="fodatable">
+          <table>
             <tr>
               <td style="border:0"></td>
               <td style="border:0"></td>
@@ -204,19 +190,15 @@
               </tr>
           </table>
 
-
-          <div v-show="showGraphics">
-            <h1 class="graph-title">Análisis FODA</h1>
-            <div class="area-graph">
-              <div class="pie-graph">
-                <pie-graph :fTotal="values.totalf" :oTotal="values.totalo" :dTotal="values.totald" :aTotal="values.totala" :graphW="400" :graphH="300"/>
-              </div>
-              <div class="bar-graph">
-                <bar-graph :totalf="totals.f" :totalo="totals.o" :totald="totals.d" :totala="totals.a"/>
-              </div>
+          <h1 class="graph-title">Análisis FODA</h1>
+          <div class="area-graph">
+            <div class="pie-graph">
+              <pie-graph :totalf="totals.f" :totalo="totals.o" :totald="totals.d" :totala="totals.a" :graphW="400" :graphH="300"/>
+            </div>
+            <div class="bar-graph">
+              <bar-graph :totalf="totals.f" :totalo="totals.o" :totald="totals.d" :totala="totals.a"/>
             </div>
           </div>
-          
         
   
         </div>
@@ -247,7 +229,7 @@
         </tbody>
       </table>
       <h1 class="graph-title">Análisis FODA</h1>
-      <div class="bar-graph">
+      <div class="bar-graph" id="graph-radar">
             <radar-chart :areas="foda.areas"/>
       </div>
     </div>
@@ -289,8 +271,9 @@
   import PieGraph from './PieGraph.vue';
   import BarGraph from './BarGraph.vue';
   import RadarChart from './RadarChart.vue';
+  import html2canvas from 'html2canvas';
     export default {
-      components: { Dropdown, PieGraph, BarGraph, RadarChart },
+      components: { Dropdown, PieGraph, BarGraph, RadarChart, html2canvas },
       name: "AreaManager",
       watch: {
           selected: function(newValue){
@@ -323,6 +306,15 @@
             if (newValue){
               this.selected=1
             }
+            try {
+              const radarCanvas = document.getElementById('graph-radar');
+              html2canvas(radarCanvas).then(canvas => {
+                const chartImageBase64 = canvas.toDataURL('image/png')
+                localStorage.setItem('radarChart', chartImageBase64)
+              })
+            } catch (error) {
+              
+            }
           }
       },
       data() {
@@ -354,7 +346,6 @@
               totala: 0
           },
           showModal: false,
-          showGraphics: false,
           delArea: 0,
           selectedOption: 0,
           dropdownOptions: [0, 2, 4, 6, 8, 10],
@@ -446,13 +437,6 @@
           this.totalArea=false
           this.selected=area
           this.values = this.foda.areas[this.selected-1]
-          this.showGraphics = false
-          document.getElementById('fodatable').style.pointerEvents = "auto"
-        },
-        showAnal(){
-          this.showGraphics = !this.showGraphics
-          if (this.showGraphics) document.getElementById('fodatable').style.pointerEvents = "none"
-          else document.getElementById('fodatable').style.pointerEvents = "auto"
         },
         confirmDelete(){
           let c=0
@@ -546,6 +530,13 @@
         },
         APercent(area){
           return (area.totalf+area.totald+area.totalo+area.totala)!=0 ? Math.round((((area.totala*100)/(area.totalf+area.totald+area.totalo+area.totala))+Number.EPSILON)*100)/100 : 0
+        },
+        saveRadar(){
+          const radarCanvas = document.getElementById('graph-radar');
+          html2canvas(radarCanvas).then(canvas => {
+            const chartImageBase64 = canvas.toDataURL('image/png')
+            localStorage.setItem('radarChart', chartImageBase64)
+          })
         }
       },
       mounted() {

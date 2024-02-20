@@ -64,7 +64,6 @@ export default {
             {
               scaleLabel: {
                 display: true,
-                labelString: 'Success frequency',
               },
             },
           ],
@@ -72,7 +71,6 @@ export default {
             {
               scaleLabel: {
                 display: true,
-                labelString: 'Attempt number',
               },
             },
           ],

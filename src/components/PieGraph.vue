@@ -1,5 +1,5 @@
 <template>
-    <Pie
+    <pie-chart
       :chart-options="chartOptions"
       :chart-data="chartData"
       :chart-id="chartId"
@@ -32,22 +32,21 @@
   Chart.defaults.font.size = 16;
 Chart.defaults.font.family = "Poppins"
   export default {
-    name: 'PieChart',
     props:{
-      fTotal: {
-        type: Number,
+      totalf: {
+        type: Array,
         required: true
       },
-      oTotal: {
-        type: Number,
+      totalo: {
+        type: Array,
         required: true
       },
-      dTotal: {
-        type: Number,
+      totald: {
+        type: Array,
         required: true
       },
-      aTotal: {
-        type: Number,
+      totala: {
+        type: Array,
         required: true
       },
       graphW: {
@@ -60,7 +59,7 @@ Chart.defaults.font.family = "Poppins"
       },
     },
     components: {
-      Pie
+      PieChart: Pie
     },
     data() {
       return {
@@ -72,7 +71,11 @@ Chart.defaults.font.family = "Poppins"
               backgroundColor: ['rgba(198,229,177,1.000)', 'rgba(249,249,177,1.000)', 'rgba(157,191,229,1.000)', 'rgba(228,111,108,1.000)'],
               data: []
             }
-          ]
+          ],
+          fTotal: 0,
+          oTotal: 0,
+          dTotal: 0,
+          aTotal: 0
         },
         chartOptions: {
           responsive: true,
@@ -84,8 +87,8 @@ Chart.defaults.font.family = "Poppins"
                 label: function(context) {
                   let label = context.label || '';
                   let sum=0
-                  for (let i=0; i<context.dataset.data.length;i++){
-                    sum += context.dataset.data[i]
+                  for (const element of context.dataset.data){
+                    sum += element
                   }
                   if (label){
                     label+=': '; 
@@ -104,8 +107,8 @@ Chart.defaults.font.family = "Poppins"
         color: '#000',
         formatter: function (value, context) {
           let sum=0
-          for (let i=0; i<context.dataset.data.length;i++){
-            sum += context.dataset.data[i]
+          for (const element of context.dataset.data){
+            sum += element
           }
           return (sum!=0 ? Math.round((((value*100)/sum)+Number.EPSILON)*100)/100 : 0) + '%' 
         },
@@ -126,40 +129,48 @@ Chart.defaults.font.family = "Poppins"
       }
     },
     watch: {
-      fTotal(newValue){
+      totalf(newValue){
+        this.fTotal = newValue.reduce((a, b) => a + b, 0);
         this.chartData.datasets[0].data=[]
-        this.total = newValue+this.oTotal+this.dTotal+this.aTotal
-        this.chartData.datasets[0].data.push(newValue)
+        this.total = this.fTotal+this.oTotal+this.dTotal+this.aTotal
+        this.chartData.datasets[0].data.push(this.fTotal)
         this.chartData.datasets[0].data.push(this.dTotal)
         this.chartData.datasets[0].data.push(this.oTotal)
         this.chartData.datasets[0].data.push(this.aTotal)
       },
-      dTotal(newValue){
+      totald(newValue){
+        this.dTotal = newValue.reduce((a, b) => a + b, 0);
         this.chartData.datasets[0].data=[]
-        this.total = this.fTotal+this.oTotal+newValue+this.aTotal
-        this.chartData.datasets[0].data.push(this.fTotal)
-        this.chartData.datasets[0].data.push(newValue)
-        this.chartData.datasets[0].data.push(this.oTotal)
-        this.chartData.datasets[0].data.push(this.aTotal)
-      },
-      oTotal(newValue){
-        this.chartData.datasets[0].data=[]
-        this.total = this.fTotal+newValue+this.dTotal+this.aTotal
-        this.chartData.datasets[0].data.push(this.fTotal)
-        this.chartData.datasets[0].data.push(this.dTotal)
-        this.chartData.datasets[0].data.push(this.newValue)
-        this.chartData.datasets[0].data.push(this.aTotal)
-      },
-      aTotal(newValue){
-        this.chartData.datasets[0].data=[]
-        this.total = this.fTotal+this.oTotal+this.dTotal+newValue
+        this.total = this.fTotal+this.oTotal+this.dTotal+this.aTotal
         this.chartData.datasets[0].data.push(this.fTotal)
         this.chartData.datasets[0].data.push(this.dTotal)
         this.chartData.datasets[0].data.push(this.oTotal)
-        this.chartData.datasets[0].data.push(newValue)
+        this.chartData.datasets[0].data.push(this.aTotal)
+      },
+      totalo(newValue){
+        this.oTotal = newValue.reduce((a, b) => a + b, 0);
+        this.chartData.datasets[0].data=[]
+        this.total = this.fTotal+this.oTotal+this.dTotal+this.aTotal
+        this.chartData.datasets[0].data.push(this.fTotal)
+        this.chartData.datasets[0].data.push(this.dTotal)
+        this.chartData.datasets[0].data.push(this.oTotal)
+        this.chartData.datasets[0].data.push(this.aTotal)
+      },
+      totala(newValue){
+        this.aTotal = newValue.reduce((a, b) => a + b, 0);
+        this.chartData.datasets[0].data=[]
+        this.total = this.fTotal+this.oTotal+this.dTotal+this.aTotal
+        this.chartData.datasets[0].data.push(this.fTotal)
+        this.chartData.datasets[0].data.push(this.dTotal)
+        this.chartData.datasets[0].data.push(this.oTotal)
+        this.chartData.datasets[0].data.push(this.aTotal)
       }
     },
     mounted(){
+      this.fTotal = this.totalf.reduce((a, b) => a + b, 0);
+      this.oTotal = this.totalo.reduce((a, b) => a + b, 0);
+      this.dTotal = this.totald.reduce((a, b) => a + b, 0);
+      this.aTotal = this.totala.reduce((a, b) => a + b, 0);
       this.chartData.datasets[0].data=[]
       this.total = this.fTotal+this.oTotal+this.dTotal+this.aTotal
       this.chartData.datasets[0].data.push(this.fTotal)

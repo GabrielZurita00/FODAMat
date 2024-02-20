@@ -4,7 +4,7 @@
             <div v-for="(area, index) in foda.areas" :key="index" :id="'area-'+(index+1)">
                 
                 <div class="foda-manager">
-                  <div :id="'tabla-'+(index+1)" v-show="showGraphElement">
+                  <div :id="'tabla-'+(index+1)" >
                     <table>
                       <tr>
                         <td style="border:0"></td>
@@ -83,10 +83,10 @@
                         </tr>
                     </table>
                   </div>
-                  <div class="pie-graph" :id="'pie-'+(index+1)" v-show="showGraphElement">
-                    <pie-graph :fTotal="area.totalf" :oTotal="area.totalo" :dTotal="area.totald" :aTotal="area.totala" :graphW="250" :graphH="250"/>
+                  <div class="pie-graph" :id="'pie-'+(index+1)" >
+                    <pie-graph :totalf="totals[index].f" :totalo="totals[index].o" :totald="totals[index].d" :totala="totals[index].a" :graphW="250" :graphH="250"/>
                   </div>
-                  <div class="bar-graph" :id="'bar-'+(index+1)" v-show="showGraphElement">
+                  <div class="bar-graph" :id="'bar-'+(index+1)" >
                     <bar-graph :totalf="totals[index].f" :totalo="totals[index].o" :totald="totals[index].d" :totala="totals[index].a"/>
                   </div>
                     
@@ -95,7 +95,7 @@
                   </div>
                   
             </div>
-            <div id="tabla-total" v-show="showGraphElement">
+            <div id="tabla-total" >
                       <table>
                         <thead>
                           <tr>
@@ -118,8 +118,8 @@
                       </table>
                       
                     </div>
-                    <div class="bar-graph" id="graph-total" v-show="showGraphElement">
-                            <radar-total :areas="foda.areas"/>
+                    <div class="bar-graph" id="graph-total">
+                            <radar-chart :areas="foda.areas"/>
                       </div>
         </div>
         <div v-if="showModal">
@@ -167,14 +167,14 @@
                         <div class="area-title">
                           <h2 >{{ "Área "+(index+1) }}</h2>
                         </div>
-                          <h1 class="graph-title">Análisis FODA</h1>
+                          <h1 class="graph-title">Análisis Pastel FODA</h1>
                       </div>
                       
                       <div class="bar-graph" :id="'bar-img-'+(index+1)">
                         <div class="area-title">
                           <h2 >{{ "Área "+(index+1) }}</h2>
                         </div>
-                        <h1 class="graph-title">Análisis FODA</h1>
+                        <h1 class="graph-title">Análisis Barras FODA</h1>
                       </div>
                       
                     </div>
@@ -197,9 +197,9 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import PieGraph from './PieGraph.vue';
 import BarGraph from './BarGraph.vue';
-import RadarTotal from './RadarTotal.vue';
+import RadarChart from './RadarChart.vue';
 export default {
-  components: { jsPDF, html2canvas, PieGraph, BarGraph, RadarTotal },
+  components: { jsPDF, html2canvas, PieGraph, BarGraph, RadarChart },
     data(){
         return{
             count: 1,
@@ -290,15 +290,12 @@ export default {
           })
         },
         radar2img(){
-          const radarCanvas = document.getElementById('graph-total');
-          html2canvas(radarCanvas).then(canvas => {
-            const chartImageBase64 = canvas.toDataURL('image/png')
+          const chartImageBase64 = localStorage.getItem('radarChart')
 
-            const img = document.createElement('img');
-            img.src = chartImageBase64
+          const img = document.createElement('img');
+          img.src = chartImageBase64
 
-            document.getElementById('radar-img').appendChild(img);
-          })
+          document.getElementById('radar-img').appendChild(img);
         },
         print(){
 
@@ -379,16 +376,14 @@ export default {
         }
     },
     mounted() {
-        
-        setTimeout(()=>{
+      
+      setTimeout(()=>{
           for (let i=0;i<this.count;i++){
             this.chart2img(i+1)
           }
           this.total2img()
-        },5000)
-        setTimeout(()=>{
+        },2000)
           this.radar2img()
-        },5000)
         setTimeout(()=>{
           this.showGraphElement=false
           this.loading=false
@@ -407,11 +402,13 @@ export default {
             totald: 0,
             totala: 0
           }] }
-        if (localStorage.getItem("FODA")!==null){
+          if (localStorage.getItem("FODA")!==null){
           this.foda = JSON.parse(localStorage.getItem("FODA"))
         }
         this.count = this.foda.areas.length
         this.totals= []
+        
+        
         for (let ar=0;ar<this.count;ar++){
           this.totals.push({
               f:[],
@@ -432,7 +429,9 @@ export default {
                 this.totals[ar].a.push(this.colTotal(ar,j))
               }
               
+              
         }
+        
     }
 }
 </script>

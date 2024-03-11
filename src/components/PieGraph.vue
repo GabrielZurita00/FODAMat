@@ -94,7 +94,7 @@ Chart.defaults.font.family = "Poppins"
                     label+=': '; 
                     label+=context.parsed
                     label+=' ('
-                    label+=sum!=0 ? Math.round((((context.parsed*100)/sum)+Number.EPSILON)*100)/100 : 0
+                    label+=sum!=0 ? Math.round((((context.parsed*100)/sum)+Number.EPSILON)) : 0
                     label+='%)'
                   }
                   console.log(label);
@@ -110,7 +110,7 @@ Chart.defaults.font.family = "Poppins"
           for (const element of context.dataset.data){
             sum += element
           }
-          return (sum!=0 ? Math.round((((value*100)/sum)+Number.EPSILON)*100)/100 : 0) + '%' 
+          return (sum!=0 ? Math.round((((value*100)/sum)+Number.EPSILON)) : 0) + '%' 
         },
         font: {
           weight: 'bold',

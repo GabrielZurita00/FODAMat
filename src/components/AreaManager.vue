@@ -38,7 +38,7 @@
   
         <div class="totalArea" @click="totalArea=!totalArea" v-bind:class="totalArea ? 'total-selected':''">
           <button class="add-button">
-          <h2>RESULTADO <br> COMPARATIVO</h2>
+          <h2>Resultado <br> Comparativo</h2>
         </button>
         </div>
   
@@ -51,7 +51,7 @@
           <h2 v-if="selected>0">{{ "Área "+selected }}</h2>          
         </div>
         <div v-else class="totalArea">
-          <h2>{{ "RESULTADO COMPARATIVO" }}</h2>
+          <h2>{{ "Resultado Comparativo" }}</h2>
         </div>
         <div v-if="totalArea">
           <div @click="saveRadar()">
@@ -78,7 +78,7 @@
               <td style="border:0"></td>
               <td style="border:0"></td>
                   <td style="border:0; border-right: 1px solid"></td>
-                  <th :colspan="values.o+values.a+1"> <h3>ÁMBITO EXTERNO</h3></th>
+                  <th :colspan="values.o+values.a+1"> <h3>Ámbito Externo</h3></th>
             </tr>
               <tr>
                   <td style="border:0"></td>
@@ -89,9 +89,7 @@
                       <button class="remove-button" @click="subtractO" v-if="values.o>1">
                         <img src="/rmbtn.png" alt="removearea" height="15" width="15">
                       </button>
-                      <h3 v-if="values.o<=2">O</h3>
-                      <h3 v-else-if="values.o<=4">Opo.</h3>
-                      <h3 v-else>Oportunidades</h3>
+                      <h3 v-bind:style="{ 'font-size': fontSize(values.o) + 'px' }">Oportunidades</h3>
                       <button class="add-button" @click="addO">
                         <img src="/addbtn.png" alt="addarea" width="15" height="15">
                       </button>
@@ -102,9 +100,7 @@
                       <button class="remove-button" @click="subtractA" v-if="values.a>1">
                         <img src="/rmbtn.png" alt="removearea" height="15" width="15">
                       </button>
-                      <h3 v-if="values.a<=2">A</h3>
-                      <h3 v-else-if="values.a<=4">Ame.</h3>
-                      <h3 v-else>Amenazas</h3>
+                      <h3 v-bind:style="{ 'font-size': fontSize(values.a) + 'px' }">Amenazas</h3>
                       <button class="add-button" @click="addA">
                         <img src="/addbtn.png" alt="addarea" width="15" height="15">
                       </button>
@@ -127,7 +123,7 @@
                   </th>
               </tr>
               <tr>
-                <th :rowspan="values.f+values.d+2" width="15"><h3 style="transform: rotate(-90deg); text-wrap: wrap;">ÁMBITO INTERNO</h3></th>
+                <th :rowspan="values.f+values.d+2" width="15"><h3 style="transform: rotate(-90deg); text-wrap: wrap;">Ámbito Interno</h3></th>
               </tr>
               <tr v-for="(row, rowIndex) in values.f" :key="rowIndex">
                 
@@ -136,9 +132,7 @@
                       <button class="add-button" @click="addF">
                         <img src="/addbtn.png" alt="addarea" width="15" height="15" style="transform: rotate(90deg);">
                       </button>
-                      <h3 v-if="values.f<=2">F</h3>
-                      <h3 v-else-if="values.f<=4">For.</h3>
-                      <h3 v-else>Fortalezas</h3>
+                      <h3 v-bind:style="{ 'font-size': fontSize(values.f) + 'px' }">Fortalezas</h3>
                       <button class="remove-button" @click="subtractF" v-if="values.f>1">
                         <img src="/rmbtn.png" alt="removearea" height="15" width="15" style="transform: rotate(90deg);">
                       </button>
@@ -162,9 +156,7 @@
                     <button class="add-button" @click="addD">
                       <img src="/addbtn.png" alt="addarea" width="15" height="15" style="transform: rotate(90deg);">
                     </button>
-                    <h3 v-if="values.d<=2">D</h3>
-                    <h3 v-else-if="values.d<=4">Deb.</h3>
-                    <h3 v-else>Debilidades</h3>
+                    <h3 v-bind:style="{ 'font-size': fontSize(values.d) + 'px' }">Debilidades</h3>
                     <button class="remove-button" @click="subtractD" v-if="values.d>1">
                       <img src="/rmbtn.png" alt="removearea" height="15" width="15" style="transform: rotate(90deg);">
                     </button>
@@ -207,15 +199,16 @@
   
       <!-- Total -->
       <div class="foda-manager" v-if="totalArea">
-  
+  <h1 style="font-size: 30px; padding-left: 5px;">Tabla por área</h1>
       <table>
         <thead>
           <tr>
             <th class="area-header area-1">Área</th>
-            <th class="totalf-header">Total F</th>
-            <th class="totald-header">Total D</th>
-            <th class="totala-header">Total O</th>
-            <th class="totalo-header">Total A</th>
+            <th class="totalf-header">Total <br> Fortalezas</th>
+            <th class="totald-header">Total <br>Debilidades</th>
+            <th class="totalo-header">Total <br>Oportunidades</th>
+            <th class="totala-header">Total <br>Amenazas</th>
+            <th class="area-header area-1">Suma <br>Total (Σ)</th>
           </tr>
         </thead>
         <tbody>
@@ -225,10 +218,55 @@
             <td>{{ DPercent(area) }}%</td>
             <td>{{ OPercent(area) }}%</td>
             <td>{{ APercent(area) }}%</td>
+            <td>100%</td>
+          </tr>
+        </tbody>
+      </table>
+      <h1 style="font-size: 30px; padding-left: 5px;">Tabla Comparativa Interárea</h1>
+      <table>
+        <thead>
+          <tr>
+            <th class="area-header area-1">Área</th>
+            <th class="totalf-header">Total <br> Fortalezas</th>
+            <th class="totald-header">Total <br>Debilidades</th>
+            <th class="totalo-header">Total <br>Oportunidades</th>
+            <th class="totala-header">Total <br>Amenazas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(area, index) in foda.areas" :key="index">
+            <td>Área {{ index + 1 }}</td>
+            <td>{{ area.totalf }}
+              ({{ (sumaF())!=0 ? Math.round((((area.totalf*100)/(sumaF()))+Number.EPSILON)) : 0 }} %)
+              </td>
+            <td>{{ area.totald }}
+              ({{ (sumaD())!=0 ? Math.round((((area.totald*100)/(sumaD()))+Number.EPSILON)) : 0 }} %)
+              </td>
+            <td>{{ area.totalo }}
+              ({{ (sumaO())!=0 ? Math.round((((area.totalo*100)/(sumaO()))+Number.EPSILON)) : 0 }} %)
+              </td>
+            <td>{{ area.totala }}
+                ({{ (sumaA())!=0 ? Math.round((((area.totala*100)/(sumaA()))+Number.EPSILON)) : 0 }} %)
+              </td>
+          </tr>
+          <tr>
+            <td>Suma Total</td>
+            <td>{{  sumaF()  }} (100%)</td>
+            <td>{{  sumaD()  }} (100%)</td>
+            <td>{{  sumaO()  }} (100%)</td>
+            <td>{{  sumaA()  }} (100%)</td>
           </tr>
         </tbody>
       </table>
       <h1 class="graph-title">Análisis FODA</h1>
+      <div class="area-graph">
+            <div class="pie-graph">
+              <pie-graph :totalf="[sumaF()]" :totalo="[sumaO()]" :totald="[sumaD()]" :totala="[sumaA()]" :graphW="400" :graphH="300"/>
+            </div>
+            <div class="bar-graph">
+              <bar-graph :totalf="guardarTotalf()" :totalo="guardarTotalo()" :totald="guardarTotald()" :totala="guardarTotala()"/>
+            </div>
+        </div>
       <div class="bar-graph" id="graph-radar">
             <radar-chart :areas="foda.areas"/>
       </div>
@@ -372,6 +410,107 @@
         }
       },
       methods: {
+        promedioF() {
+    let total = 0;
+    let count = 0;
+    for (const area of this.foda.areas) {
+      total += area.totalf;
+      count++;
+    }
+    return total / count;
+  },
+  promedioO() {
+    let total = 0;
+    let count = 0;
+    for (const area of this.foda.areas) {
+      total += area.totala;
+      count++;
+    }
+    return total / count;
+  },
+  promedioD() {
+    let total = 0;
+    let count = 0;
+    for (const area of this.foda.areas) {
+      total += area.totald;
+      count++;
+    }
+    return total / count;
+  },
+  promedioA() {
+    let total = 0;
+    let count = 0;
+    for (const area of this.foda.areas) {
+      total += area.totala;
+      count++;
+    }
+    return total / count;
+  },
+  sumaF() {
+    let total = 0;
+    for (const area of this.foda.areas) {
+      total += area.totalf;
+    }
+    return total;
+  },
+  sumaO() {
+    let total = 0;
+    for (const area of this.foda.areas) {
+      total += area.totala;
+    }
+    return total;
+  },
+  sumaD() {
+    let total = 0;
+    for (const area of this.foda.areas) {
+      total += area.totald;
+    }
+    return total;
+  },
+  sumaA() {
+    let total = 0;
+    for (const area of this.foda.areas) {
+      total += area.totala;
+    }
+    return total;
+  },
+  guardarTotalf() {
+    const totalf = [];
+    for (const area of this.foda.areas) {
+      totalf.push(area.totalf);
+    }
+    return totalf;
+  },
+  guardarTotald() {
+    const totald = [];
+    for (const area of this.foda.areas) {
+      totald.push(area.totald);
+    }
+    return totald;
+  },
+  guardarTotala() {
+    const totala = [];
+    for (const area of this.foda.areas) {
+      totala.push(area.totala);
+    }
+    return totala;
+  },
+  guardarTotalo() {
+    const totalo = [];
+    for (const area of this.foda.areas) {
+      totalo.push(area.totalo);
+    }
+    return totalo;
+  },
+        fontSize(value) {
+          if (value <= 2) {
+            return 12;
+          } else if (value <= 4) {
+            return 16;
+          } else {
+            return 20;
+          }
+        },
         rowTotal(index){
           return this.values.matriz[index].reduce((acc, cell) => acc+cell, 0)
         },
@@ -520,16 +659,16 @@
           this.updateFoda()
         },
         FPercent(area){
-          return (area.totalf+area.totald+area.totalo+area.totala)!=0 ? Math.round((((area.totalf*100)/(area.totalf+area.totald+area.totalo+area.totala))+Number.EPSILON)*100)/100 : 0
+          return (area.totalf+area.totald+area.totalo+area.totala)!=0 ? Math.round((((area.totalf*100)/(area.totalf+area.totald+area.totalo+area.totala))+Number.EPSILON)) : 0
         },
         DPercent(area){
-          return (area.totalf+area.totald+area.totalo+area.totala)!=0 ? Math.round((((area.totald*100)/(area.totalf+area.totald+area.totalo+area.totala))+Number.EPSILON)*100)/100 : 0
+          return (area.totalf+area.totald+area.totalo+area.totala)!=0 ? Math.round((((area.totald*100)/(area.totalf+area.totald+area.totalo+area.totala))+Number.EPSILON)) : 0
         },
         OPercent(area){
-          return (area.totalf+area.totald+area.totalo+area.totala)!=0 ? Math.round((((area.totalo*100)/(area.totalf+area.totald+area.totalo+area.totala))+Number.EPSILON)*100)/100 : 0
+          return (area.totalf+area.totald+area.totalo+area.totala)!=0 ? Math.round((((area.totalo*100)/(area.totalf+area.totald+area.totalo+area.totala))+Number.EPSILON)) : 0
         },
         APercent(area){
-          return (area.totalf+area.totald+area.totalo+area.totala)!=0 ? Math.round((((area.totala*100)/(area.totalf+area.totald+area.totalo+area.totala))+Number.EPSILON)*100)/100 : 0
+          return (area.totalf+area.totald+area.totalo+area.totala)!=0 ? Math.round((((area.totala*100)/(area.totalf+area.totald+area.totalo+area.totala))+Number.EPSILON)) : 0
         },
         saveRadar(){
           const radarCanvas = document.getElementById('graph-radar');
@@ -734,6 +873,7 @@
       justify-content: space-around;
       width: 30px;
       align-content: center;
+      height: 85px;
     }
     .modal-mask {
       position: fixed;

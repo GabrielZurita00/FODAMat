@@ -10,7 +10,7 @@
                         <td style="border:0"></td>
                         <td style="border:0"></td>
                             <td style="border:0; border-right: 1px solid"></td>
-                            <th :colspan="area.o+area.a+1"> <h3>ÁMBITO EXTERNO</h3></th>
+                            <th :colspan="area.o+area.a+1"> <h3>Ámbito Externo</h3></th>
                       </tr>
                         <tr>
                             <td style="border:0"></td>
@@ -18,14 +18,12 @@
                             <td style="border:0; border-right: 1px solid"></td>
                             <th :colspan="area.o" style="background-color: #9DBFE5;"> 
                               <div class="table-head">
-                                <h3 v-if="area.o<=4">Opo.</h3>
-                                <h3 v-else>Oportunidades</h3>
+                                <h3>Oportunidades</h3>
                               </div>
                             </th>
                             <th :colspan="area.a" style="background-color: #E46F6C;"> 
                               <div class="table-head">
-                                <h3 v-if="area.a<=4">Ame.</h3>
-                                <h3 v-else>Amenazas</h3>
+                                <h3>Amenazas</h3>
                               </div>
                             </th>
                             <th rowspan="2" style="background-color: #867A7A;">Total</th>
@@ -40,14 +38,14 @@
                             <th v-for="col in area.a" :key="col" style="background-color:#D9D9D9">{{ "A"+col }}</th>
                         </tr>
                         <tr>
-                          <th :rowspan="area.f+area.d+2" width="15"><h3 style="transform: rotate(-90deg); text-wrap: wrap;">ÁMBITO INTERNO</h3></th>
+                          <th :rowspan="area.f+area.d+2" width="15"><h3 style="transform: rotate(-90deg); text-wrap: wrap;">Ámbito Interno</h3></th>
                         </tr>
                         <tr v-for="(row, rowIndex) in area.f" :key="rowIndex">
                           
                             <th v-if="row==1" :rowspan="area.f" style="background-color: #C6E5B1;">
                               <div class="table-side" style="transform: rotate(-90deg);">
-                                <h3 v-if="area.f<=4">For.</h3>
-                                <h3 v-else>Fortalezas</h3>
+                                
+                                <h3>Fortalezas</h3>
                               </div>
                             </th>
                             <th style="background-color:#D9D9D9">{{ "F"+row }}</th>
@@ -62,8 +60,7 @@
                         <tr v-for="(row, rowIndex) in area.d" :key="rowIndex">
                           <th v-if="row==1" :rowspan="area.d" style="background-color: #F9F9B1;">
                             <div class="table-side" style="transform: rotate(-90deg);">
-                              <h3 v-if="area.d<=4">Deb.</h3>
-                              <h3 v-else>Debilidades</h3>
+                              <h3>Debilidades</h3>
                             </div>
                           </th>
                             <th style="background-color:#D9D9D9">{{ "D"+row }}</th>
@@ -528,6 +525,7 @@ export default {
       justify-content: space-around;
       width: 30px;
       align-content: center;
+      height: 85px;
     }
     .bar-graph{
       width: 50vw;

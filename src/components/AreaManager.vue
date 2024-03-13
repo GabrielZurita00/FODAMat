@@ -199,7 +199,7 @@
   
       <!-- Total -->
       <div class="foda-manager" v-if="totalArea">
-  <h1 style="font-size: 30px; padding-left: 5px;">Tabla por área</h1>
+  <h1 style="font-size: 30px; padding-left: 5px;">Tabla Comparativa Entre Atributos</h1>
       <table>
         <thead>
           <tr>
